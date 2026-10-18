@@ -1,0 +1,91 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 2026  Altera Corporation. All rights reserved.
+# Your use of Altera Corporation's design tools, logic functions 
+# and other software and tools, and any partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Altera Program License 
+# Subscription Agreement, the Altera Quartus Prime License Agreement,
+# the Altera IP License Agreement, or other applicable license
+# agreement, including, without limitation, that your use is for
+# the sole purpose of programming logic devices manufactured by
+# Altera and sold by Altera or its authorized distributors.  Please
+# refer to the Altera Software License Subscription Agreements 
+# on the Quartus Prime software download page.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus Prime
+# Version 26.1.1 Build 130 08/06/2026 SC Pro Edition
+# Date created = 20:21:34  September 10, 2026
+#
+# -------------------------------------------------------------------------- #
+set_global_assignment -name TOP_LEVEL_ENTITY tds_monitor_system
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 26.1.1
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "20:21:34  SEPTEMBER 10, 2026"
+set_global_assignment -name LAST_QUARTUS_VERSION "26.1.1 Pro Edition"
+set_global_assignment -name SDC_FILE tds_monitor_system.sdc
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 100
+set_global_assignment -name DEVICE A5ED013BB32AE4SCS
+set_global_assignment -name FAMILY "Agilex 5"
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
+set_global_assignment -name VHDL_INPUT_VERSION VHDL_2008
+
+
+#============================================================
+# System Clock & Reset
+#============================================================
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to clk
+set_instance_assignment -name IO_STANDARD "1.2-V" -to reset_n
+
+#============================================================
+# ADC
+#============================================================
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to adc_sclk
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to adc_dout
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to adc_din
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to adc_cs_n
+set_global_assignment -name PWRMGT_VOLTAGE_OUTPUT_FORMAT "LINEAR FORMAT"
+set_global_assignment -name PWRMGT_LINEAR_FORMAT_N "-12"
+
+#============================================================
+# Seg7
+#============================================================
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex0[0]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex0[1]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex0[2]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex0[3]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex0[4]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex0[5]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex0[6]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex1[0]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex1[1]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex1[2]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex1[3]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex1[4]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex1[5]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex1[6]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex2[0]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex2[1]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex2[2]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex2[3]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex2[4]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex2[5]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex2[6]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex3[0]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex3[1]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex3[2]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex3[3]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex3[4]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex3[5]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex3[6]
+
+
+#============================================================
+# LED
+#============================================================
+set_instance_assignment -name IO_STANDARD "1.2-V" -to led
