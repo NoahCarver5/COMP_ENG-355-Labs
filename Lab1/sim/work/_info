@@ -1,0 +1,229 @@
+m255
+K4
+z2
+!s11e vcom 2020.1 2020.01, Jan 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/kuj1990/CE 355/Lab1/sim
+T_opt
+Z1 !s110 1792379415
+VNf;6ilgE;?=V89ElNh;=Z1
+04 14 10 work tds_monitor_tb behavioral 1
+=1-a4bb6d3fef1e-6ad58a17-9c68e-175bb9
+o-quiet -auto_acc_if_foreign -work work +acc
+tCvgOpt 0
+n@_opt
+OL;O;2020.1;71
+Ebcd
+Z2 w1792105758
+Z3 DPx4 ieee 20 numeric_std_unsigned 0 22 L9z`>=>LNY9h8oAIomUKm3
+Z4 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z5 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 24
+R0
+Z6 8../vhdl/bcd.vhd
+Z7 F../vhdl/bcd.vhd
+l0
+L8 1
+Vo]=AVRSDE_;JR2K1;5ZMU1
+!s100 Sd2OK>>Y`;P@bICz07=O[3
+Z8 OL;C;2020.1;71
+33
+R1
+!i10b 1
+Z9 !s108 1792379415.000000
+Z10 !s90 -reportprogress|300|-2008|../vhdl/bcd.vhd|
+Z11 !s107 ../vhdl/bcd.vhd|
+!i113 0
+Z12 o-2008
+Z13 tExplicit 1 CvgOpt 0
+Abehavioral
+R3
+R4
+R5
+DEx4 work 3 bcd 0 22 o]=AVRSDE_;JR2K1;5ZMU1
+!i122 24
+l22
+L21 34
+V`>K9W34cf_zE9nmM[T9Pf2
+!s100 iGEZzO3OO<Zb_?k6df6NY3
+R8
+33
+R1
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+Edigit_display
+Z14 w1792111429
+R4
+R5
+!i122 23
+R0
+Z15 8../vhdl/digit_display.vhd
+Z16 F../vhdl/digit_display.vhd
+l0
+L4 1
+Vhnh:VgbEg8ke<Y:bAEoU:2
+!s100 fcVe<eF>hXNd>Yl@QKiPl2
+R8
+33
+R1
+!i10b 1
+R9
+Z17 !s90 -reportprogress|300|-2008|../vhdl/digit_display.vhd|
+Z18 !s107 ../vhdl/digit_display.vhd|
+!i113 0
+R12
+R13
+Adata_flow
+R4
+R5
+DEx4 work 13 digit_display 0 22 hnh:VgbEg8ke<Y:bAEoU:2
+!i122 23
+l12
+L11 26
+VNo2zG0V>f]NX14>Da`2UW1
+!s100 aUfQUW2N_ggW>WD9jF8?H2
+R8
+33
+R1
+!i10b 1
+R9
+R17
+R18
+!i113 0
+R12
+R13
+Etds_converter
+Z19 w1792378730
+R3
+R4
+R5
+!i122 25
+R0
+Z20 8../vhdl/tds_converter.vhd
+Z21 F../vhdl/tds_converter.vhd
+l0
+L8 1
+V=`T6o>>_1_3Ez>b[Va;[T0
+!s100 Y?24b^Df[gXYS6jEQHlZ02
+R8
+33
+R1
+!i10b 1
+R9
+Z22 !s90 -reportprogress|300|-2008|../vhdl/tds_converter.vhd|
+Z23 !s107 ../vhdl/tds_converter.vhd|
+!i113 0
+R12
+R13
+Adata_flow
+R3
+R4
+R5
+DEx4 work 13 tds_converter 0 22 =`T6o>>_1_3Ez>b[Va;[T0
+!i122 25
+l47
+L43 43
+V7iU9XjYchL<3>Gjkbb>JJ2
+!s100 ng3OJblZ1iQeHS1TOK<S20
+R8
+33
+R1
+!i10b 1
+R9
+R22
+R23
+!i113 0
+R12
+R13
+Etds_monitor
+Z24 w1792109632
+R4
+R5
+!i122 26
+R0
+Z25 8../vhdl/tds_monitor.vhd
+Z26 F../vhdl/tds_monitor.vhd
+l0
+L35 1
+Vcn?c9FY0B;nOc=H6@HhT`1
+!s100 afBI<4H7i]FmAAzLcb6<f0
+R8
+33
+R1
+!i10b 1
+R9
+Z27 !s90 -reportprogress|300|-2008|../vhdl/tds_monitor.vhd|
+Z28 !s107 ../vhdl/tds_monitor.vhd|
+!i113 0
+R12
+R13
+Astructural
+R4
+R5
+DEx4 work 11 tds_monitor 0 22 cn?c9FY0B;nOc=H6@HhT`1
+!i122 26
+l99
+L50 76
+VzaWhTLlf@aaU9=QA>:]DA2
+!s100 REaK?K9K?HbVd1=BhN@F00
+R8
+33
+R1
+!i10b 1
+R9
+R27
+R28
+!i113 0
+R12
+R13
+Etds_monitor_tb
+Z29 w1792379409
+R4
+R5
+!i122 27
+R0
+Z30 8../vhdl/tds_monitor_tb.vhd
+Z31 F../vhdl/tds_monitor_tb.vhd
+l0
+L4 1
+V[=`md>febbmzL:YS`556V3
+!s100 5X0JWfBj^6`DBT[6d4]dK2
+R8
+33
+R1
+!i10b 1
+R9
+Z32 !s90 -reportprogress|300|-2008|../vhdl/tds_monitor_tb.vhd|
+Z33 !s107 ../vhdl/tds_monitor_tb.vhd|
+!i113 0
+R12
+R13
+Abehavioral
+R4
+R5
+DEx4 work 14 tds_monitor_tb 0 22 [=`md>febbmzL:YS`556V3
+!i122 27
+l43
+L7 140
+VDi^_g?d]XHmcA6BOCzW4[1
+!s100 fQGPX7lh<NCS<k53eDzb_0
+R8
+33
+R1
+!i10b 1
+R9
+R32
+R33
+!i113 0
+R12
+R13

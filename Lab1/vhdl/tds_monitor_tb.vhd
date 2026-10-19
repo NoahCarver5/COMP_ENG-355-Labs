@@ -77,10 +77,66 @@ begin
         -- 0.000 V : 0000 ppm, LED off (dry probe)
         adc <= X"000";
         wait for 20 ns;
-
         ----------------------------------------------------------------
         -- TODO: Add more test cases for different ADC values 
         ----------------------------------------------------------------
+
+             --test case: approximately 250 ppm (threshold)
+        -- adc = 832, input voltage around 0.534 V
+        -- expected LED state: OFF
+        adc <= X"340";
+        wait for 20 ns;
+
+        --test case: max ppm (around 2416)
+        -- adc = 4095, input voltage around 3.3V
+        --expected LED state: ON
+        adc<= X"FFF";
+        wait for 20 ns;
+
+        --test case: min ppm (0)
+        -- adc = 0, input voltage around 0V
+        --expected LED state: OFF
+        adc<= X"000";
+        wait for 20 ns;
+
+        --test case: increasing ppm, from below to above threshold
+
+        -- around 93 ppm
+        --adc = 300, input voltage around 0.24V
+        -- expected LED state: off
+        adc<= X"12C";
+        wait for 20 ns;
+
+        -- around 160 ppm
+        --adc = 512, input voltage around 0.412V
+        -- expected LED state: OFF
+        adc<= X"200";
+        wait for 20 ns;
+
+         -- 196 ppm
+         --adc = 640, input voltage around 0.516V
+        -- expected LED state: OFF
+        adc<= X"280";
+        wait for 20 ns;
+
+        -- 268 ppm (crossing threshold)
+        --adc = 896, input voltage around 0.722V
+        -- expected LED state: ONN
+        adc <= X"380";
+        wait for 20 ns;
+    
+        -- 659 ppm
+        --adc = 2048, input voltage around 1.650 V
+        --expected LED state: ON
+        adc <= X"800";
+        wait for 20 ns;
+
+        --test case: going from above to below theshold
+        -- 80 ppm
+        --adc = 256, input voltage around 0.206 V
+        --expected LED state: OFF
+        adc <= X"100";
+        wait for 20 ns;
 
         -- wait forever
         wait;
