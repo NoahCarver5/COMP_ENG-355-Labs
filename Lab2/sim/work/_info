@@ -1,0 +1,186 @@
+m255
+K4
+z2
+!s11e vcom 2020.1 2020.01, Jan 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/qja7398/Documents/COMP_ENG-355-Labs/Lab2/sim
+T_opt
+!s110 1792470321
+VB3E<@32B3o`Fb::z8c[4;3
+04 15 10 work robotic_hand_tb behavioral 1
+=1-a4bb6d3fede8-6ad6ed30-ef7c3-1c9b78
+o-quiet -auto_acc_if_foreign -work work +acc
+tCvgOpt 0
+n@_opt
+OL;O;2020.1;71
+Egesture_controller
+Z1 w1792470290
+Z2 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 5
+R0
+Z5 8../vhdl/gesture_controller.vhd
+Z6 F../vhdl/gesture_controller.vhd
+l0
+L5 1
+VVFN[C[J1Gf8l^HdW[nYac1
+!s100 3G3FY[5Q7_mNK@F?OML<10
+Z7 OL;C;2020.1;71
+33
+Z8 !s110 1792470317
+!i10b 1
+Z9 !s108 1792470317.000000
+Z10 !s90 -reportprogress|300|-2008|../vhdl/gesture_controller.vhd|
+Z11 !s107 ../vhdl/gesture_controller.vhd|
+!i113 0
+Z12 o-2008
+Z13 tExplicit 1 CvgOpt 0
+Artl
+R2
+R3
+R4
+DEx4 work 18 gesture_controller 0 22 VFN[C[J1Gf8l^HdW[nYac1
+!i122 5
+l140
+L14 195
+VBOO]2GR:QPkYW997XcEAH1
+!s100 hk3daXQ0_;TCF@9Fec58E3
+R7
+33
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 0
+R12
+R13
+Epwm_servo
+Z14 w1792466815
+R3
+R4
+!i122 4
+R0
+Z15 8../vhdl/pwm_servo.vhd
+Z16 F../vhdl/pwm_servo.vhd
+l0
+L4 1
+VSRZ6QENfWaE:FA[RzUc8i3
+!s100 eg7Q0<Vi7R00dVVSUf;?e1
+R7
+33
+Z17 !s110 1792470316
+!i10b 1
+Z18 !s108 1792470316.000000
+Z19 !s90 -reportprogress|300|-2008|../vhdl/pwm_servo.vhd|
+Z20 !s107 ../vhdl/pwm_servo.vhd|
+!i113 0
+R12
+R13
+Artl
+R3
+R4
+DEx4 work 9 pwm_servo 0 22 SRZ6QENfWaE:FA[RzUc8i3
+!i122 4
+l32
+L16 49
+V99:m8F@:07khzSbJWB1A93
+!s100 KVA]XdHNZZzH4`ZZ6^eKS2
+R7
+33
+R17
+!i10b 1
+R18
+R19
+R20
+!i113 0
+R12
+R13
+Erobotic_hand
+R14
+R3
+R4
+!i122 6
+R0
+Z21 8../vhdl/robotic_hand.vhd
+Z22 F../vhdl/robotic_hand.vhd
+l0
+L4 1
+VhC45VGSeR1mLK`iV0fA6W3
+!s100 iUh^IN^<Df12VbN=G=G;K1
+R7
+33
+Z23 !s110 1792470318
+!i10b 1
+Z24 !s108 1792470318.000000
+Z25 !s90 -reportprogress|300|-2008|../vhdl/robotic_hand.vhd|
+Z26 !s107 ../vhdl/robotic_hand.vhd|
+!i113 0
+R12
+R13
+Astructure
+R3
+R4
+DEx4 work 12 robotic_hand 0 22 hC45VGSeR1mLK`iV0fA6W3
+!i122 6
+l56
+L14 81
+V5PbPDJ@26hOG8oD^kbP@O0
+!s100 z6^Tz:?LnW]^kCf3]4FP=2
+R7
+33
+R23
+!i10b 1
+R24
+R25
+R26
+!i113 0
+R12
+R13
+Erobotic_hand_tb
+Z27 w1792469963
+R3
+R4
+!i122 7
+R0
+Z28 8../vhdl/robotic_hand_tb.vhd
+Z29 F../vhdl/robotic_hand_tb.vhd
+l0
+L4 1
+VHNN]NYLT_k0C5BMQzCYl61
+!s100 >KR2;mO=6nz<MfI=b8:1k1
+R7
+33
+Z30 !s110 1792470319
+!i10b 1
+Z31 !s108 1792470319.000000
+Z32 !s90 -reportprogress|300|-2008|../vhdl/robotic_hand_tb.vhd|
+Z33 !s107 ../vhdl/robotic_hand_tb.vhd|
+!i113 0
+R12
+R13
+Abehavioral
+R3
+R4
+DEx4 work 15 robotic_hand_tb 0 22 HNN]NYLT_k0C5BMQzCYl61
+!i122 7
+l32
+L7 92
+VbMSL]==c_de8M1jzX:i9a2
+!s100 ;YYUb30;ii:[:KW84QFfZ3
+R7
+33
+R30
+!i10b 1
+R31
+R32
+R33
+!i113 0
+R12
+R13

@@ -1,6 +1,4 @@
 vlib work
-
-vlib work
 vcom -2008 ../vhdl/pwm_servo.vhd
 vcom -2008 ../vhdl/gesture_controller.vhd
 vcom -2008 ../vhdl/robotic_hand.vhd

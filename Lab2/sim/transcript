@@ -1,0 +1,78 @@
+# //  ModelSim SE-64 2020.1 Jan 28 2020 Linux 4.18.0-553.174.1.el8_10.x86_64
+# //
+# //  Copyright 1991-2020 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  ModelSim SE-64 and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# do sim.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Model Technology ModelSim SE-64 vcom 2020.1 Compiler 2020.01 Jan 28 2020
+# Start time: 23:25:16 on Oct 19,2026
+# vcom -reportprogress 300 -2008 ../vhdl/pwm_servo.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity pwm_servo
+# -- Compiling architecture rtl of pwm_servo
+# End time: 23:25:16 on Oct 19,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim SE-64 vcom 2020.1 Compiler 2020.01 Jan 28 2020
+# Start time: 23:25:17 on Oct 19,2026
+# vcom -reportprogress 300 -2008 ../vhdl/gesture_controller.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity gesture_controller
+# -- Compiling architecture rtl of gesture_controller
+# End time: 23:25:17 on Oct 19,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim SE-64 vcom 2020.1 Compiler 2020.01 Jan 28 2020
+# Start time: 23:25:18 on Oct 19,2026
+# vcom -reportprogress 300 -2008 ../vhdl/robotic_hand.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity robotic_hand
+# -- Compiling architecture structure of robotic_hand
+# End time: 23:25:18 on Oct 19,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim SE-64 vcom 2020.1 Compiler 2020.01 Jan 28 2020
+# Start time: 23:25:19 on Oct 19,2026
+# vcom -reportprogress 300 -2008 ../vhdl/robotic_hand_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity robotic_hand_tb
+# -- Compiling architecture behavioral of robotic_hand_tb
+# End time: 23:25:19 on Oct 19,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -voptargs="+acc" robotic_hand_tb 
+# Start time: 23:25:20 on Oct 19,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.robotic_hand_tb(behavioral)#1
+# Loading work.robotic_hand(structure)#1
+# Loading ieee.numeric_std(body)
+# Loading work.gesture_controller(rtl)#1
+# Loading work.pwm_servo(rtl)#1
+# Loading work.pwm_servo(rtl)#2
+# ** Fatal: (vsim-3421) Value 1000000 is out of range 0 to 999999.
+#    Time: 20000090 ns  Iteration: 1  Process: /robotic_hand_tb/dut/pwm_servos(4)/servo_i/pwm_process File: ../vhdl/pwm_servo.vhd Line: 52
+# Fatal error in Process pwm_process at ../vhdl/pwm_servo.vhd line 52
+# 
+# HDL call sequence:
+# Stopped at ../vhdl/pwm_servo.vhd 52 Process pwm_process
+# 
+# Causality operation skipped due to absence of debug database file
+# End time: 23:32:28 on Oct 19,2026, Elapsed time: 0:07:08
+# Errors: 1, Warnings: 0
