@@ -16,7 +16,7 @@ architecture rtl of gesture_controller is
     ----------------------------------------------------------------
     -- Type and constant declarations
     ----------------------------------------------------------------
-    constant ANIMATION_PERIOD : natural := 10000000;
+    constant ANIMATION_PERIOD : natural := 500000; -- default: 10000000 = 0.2s per step
 
     subtype servo_position is std_logic_vector(2 downto 0);
     type servo_pose_t is array (0 to 4) of servo_position;
