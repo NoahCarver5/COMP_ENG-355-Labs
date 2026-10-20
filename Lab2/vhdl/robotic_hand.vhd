@@ -20,12 +20,37 @@ architecture structure of robotic_hand is
     constant THUMB_SERVO : natural := 0;
 
     signal rst : std_logic;
+    signal pos : std_logic_vector(14 downto 0);
+
 
     ----------------------------------------------------------------
     -- Component Declarations
     --
     -- TODO: declare the gesture_controller and pwm_servo components here.
     ----------------------------------------------------------------
+
+    component gesture_controller is
+        port (
+            clk     : in  std_logic;
+            reset   : in  std_logic;
+            sel     : in  std_logic_vector(9 downto 0);
+            pos     : out std_logic_vector(14 downto 0)
+        );
+
+    end component gesture_controller;
+
+    component pwm_servo is
+        generic(
+            INVERT : boolean := false
+        );
+        port(
+        clk   : in  std_logic;
+        reset : in  std_logic;
+        deg   : in  std_logic_vector(2 downto 0);
+        pwm   : out std_logic
+    );
+
+    end component pwm_servo;
     
     
 begin
@@ -40,6 +65,23 @@ begin
     -- constant to identify the thumb servo in the generate loop.
     ----------------------------------------------------------------
 
+    gesture_controller_inst: gesture_controller
+    port map(clk => clk, reset => rst, sel => sw, pos => pos);
+
+    pwm_servos : for i in 0 to 4 generate
+    begin
+        servo_i : pwm_servo
+            generic map(
+                INVERT => (i = THUMB_SERVO)
+            )
+            port map(
+                clk => clk,
+                reset => rst,
+                deg => pos(3*i+2 downto 3*i),
+                pwm => pwm(i)
+            );
+    end generate pwm_servos;
+
     
     ----------------------------------------------------------------
     -- Concurrent statements
@@ -47,5 +89,6 @@ begin
     -- TODO: Add concurrent statements to drive the led outputs. 
     ----------------------------------------------------------------
     rst <= not rst_n;
+    led <= sw;
 
 end architecture structure;

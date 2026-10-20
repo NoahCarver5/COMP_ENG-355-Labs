@@ -34,12 +34,77 @@ architecture rtl of gesture_controller is
     -- TODO: define the poses for the five gestures here. 
     ----------------------------------------------------------------
     constant closed_pose : servo_pose_t := (
-        0 => "000",
+        0 => "000", -- pose(0) = "000"
         1 => "000",
         2 => "000",
         3 => "000",
         4 => "000"
     );
+
+    constant one_pose : servo_pose_t := (
+        0 => "000",
+        1 -> "000",
+        2 => "000",
+        3 => "100", 
+        4 => "000"
+    )
+
+    constant two_pose : servo_pose_t := (
+        0 => "000",
+        1 => "000",
+        2 => "100",
+        3 => "100", 
+        4 => "000"
+    )
+
+    constant three_pose : servo_pose_t := (
+        0 => "000",
+        1 => "100",
+        2 => "100",
+        3 => "100", 
+        4 => "000"
+    )
+
+    constant four_pose : servo_pose_t := (
+        0 => "100",
+        1 => "100",
+        2 => "100",
+        3 => "100", 
+        4 => "000"
+    )
+
+    constant five_pose : servo_pose_t := (
+        0 => "100",
+        1 => "100",
+        2 => "100",
+        3 => "100", 
+        4 => "100"
+    )
+
+    constant half_pose : servo_pose_t := (
+        0 => "010",
+        1 => "010",
+        2 => "010",
+        3 => "010", 
+        4 => "010"
+    )
+
+    constant ok_pose : servo_pose_t := (
+        0 => "000",
+        1 => "000",
+        2 => "000",
+        3 => "000", 
+        4 => "100"
+    )
+
+    constant rock_pose : servo_pose_t := (
+        0 => "100",
+        1 => "000",
+        2 => "000",
+        3 => "100", 
+        4 => "100"
+    )
+
 
     ----------------------------------------------------------------
     -- Signal declarations
@@ -109,11 +174,34 @@ begin
     -- Use the mask_pose function to combine poses for gestures that require
     -- multiple fingers to be open. The default pose should be closed_pose.
     -----------------------------------------------------------------------
-    gesture_process: process()
+    gesture_process: process(sel, step)
     begin
 
-        active_pose <= closed_pose;  -- default to closed pose
+        if    sel(0) = '1' then active_pose <= one_pose;
+        elsif sel(1) = '1' then active_pose <= two_pose;
+        elsif sel(2) = '1' then active_pose <= three_pose;
+        elsif sel(3) = '1' then active_pose <= four_pose;
+        elsif sel(4) = '1' then active_pose <= five_pose;
+        elsif sel(5) = '1' then active_pose <= half_pose;
+        elsif sel(6) = '1' then active_pose <= ok_pose;
+        elsif sel(7) = '1' then active_pose <= rock_pose;
+        elsif sel(8) = '1' then
+            if (step mod 2) = 0 then
+                active_pose <= closed_pose;
+            else
+                active_pose <= five_pose;
+            end if;
+        elsif sel(9) = '1' then
 
+            case step is
+                when 1 | 9  => active_pose <= one_pose;
+                when 2 | 8  => active_pose <= two_pose;
+                when 3 | 7  => active_pose <= three_pose;
+                when 4 | 6  => active_pose <= four_pose;
+                when 5      => active_pose <= five_pose;
+                when others => active_pose <= closed_pose;
+                end case;
+        end if;
     end process gesture_process;
 
 
