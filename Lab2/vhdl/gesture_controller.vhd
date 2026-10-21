@@ -195,10 +195,10 @@ begin
         elsif sel(9) = '1' then
 
             case step is
-                when 1 | 9  => active_pose <= one_pose;
-                when 2 | 8  => active_pose <= two_pose;
-                when 3 | 7  => active_pose <= three_pose;
-                when 4 | 6  => active_pose <= four_pose;
+                when 1 | 9  => active_pose <= ok_pose;
+                when 2 | 8  => active_pose <= mask_pose(ok_pose, one_pose);
+                when 3 | 7  => active_pose <= mask_pose(ok_pose, two_pose);
+                when 4 | 6  => active_pose <= mask_pose(ok_pose, three_pose);
                 when 5      => active_pose <= five_pose;
                 when others => active_pose <= closed_pose;
                 end case;
