@@ -48,10 +48,11 @@ begin
         if (reset = '1') then
             counter <= 0;
             pwm <= '0';
-        elsif ( rising_edge(clk) ) then
-            counter <= counter + 1;
+        elsif (rising_edge(clk) ) then
             if (counter = PERIOD_CYCLES - 1) then
                 counter <= 0;
+            else
+                counter <= counter + 1;
             end if;
             if ( counter < pulse_high) then
                 pwm <= '1';
