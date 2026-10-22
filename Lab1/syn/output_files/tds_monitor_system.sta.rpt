@@ -1,0 +1,123 @@
+Timing Analyzer report for tds_monitor_system
+Mon Oct 19 16:51:53 2026
+Quartus Prime Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Timing Analyzer Summary
+  3. Timing Delays: Final Snapshot
+  4. Parallel Compilation
+  5. Timing Analyzer Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2025  Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Altera and sold by Altera or its authorized distributors.  Please
+refer to the Altera Software License Subscription Agreements 
+on the Quartus Prime software download page.
+
+
+
++----------------------------------------------------------------------------+
+; Timing Analyzer Summary                                                    ;
++-----------------------+----------------------------------------------------+
+; Quartus Prime Version ; Version 25.1.1 Build 125 07/31/2025 SC Pro Edition ;
+; Timing Analyzer       ; Timing Analyzer                                    ;
+; Revision Name         ; tds_monitor_system                                 ;
+; Device Family         ; Agilex 5                                           ;
+; Device                ; A5ED013BB32AE4SR1                                  ;
+; Snapshot              ; final                                              ;
+; Timing Models         ; Preliminary                                        ;
+; Power Models          ; Preliminary                                        ;
+; Device Status         ; Advance                                            ;
+; Rise/Fall Delays      ; Enabled                                            ;
++-----------------------+----------------------------------------------------+
+
+
++---------------------------------------------+
+; Timing Delays: Final Snapshot               ;
++----------------------------------+----------+
+; Snapshot                         ; final    ;
+; Periphery block cell delays      ; Sign-off ;
+; Core block cell delays           ; Sign-off ;
+; Routing interconnect (IC) delays ; Sign-off ;
++----------------------------------+----------+
+
+
++-------------------------------------+
+; Parallel Compilation                ;
++----------------------------+--------+
+; Processors                 ; Number ;
++----------------------------+--------+
+; Number detected on machine ; 12     ;
+; Maximum allowed            ; 10     ;
++----------------------------+--------+
+
+
++--------------------------+
+; Timing Analyzer Messages ;
++--------------------------+
+Info (20030): Parallel compilation is enabled and will use 10 of the 10 processors detected
+Info: *******************************************************************
+Info: Running Quartus Prime Timing Analyzer
+    Info: Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+    Info: Processing started: Mon Oct 19 16:51:49 2026
+    Info: System process ID: 34588
+Info: Command: quartus_sta tds_monitor_system -c tds_monitor_system --mode=finalize
+Info: qsta_default_script.tcl version: #1
+Info (16677): Loading final database.
+Info (16734): Loading "final" snapshot for partition "root_partition".
+Info (16678): Successfully loaded final database: elapsed time is 00:00:02.
+Info (21077): Low junction temperature is 0 degrees C
+Info (21077): High junction temperature is 100 degrees C
+Info (19539): Reading the HDL-embedded SDC files elapsed 00:00:00.
+Info (23353): No SDC file assignments detected, attempting to load a default SDC file: tds_monitor_system.sdc.
+Critical Warning (332012): Synopsys Design Constraints File file not found: 'tds_monitor_system.sdc'. A Synopsys Design Constraints File is required by the Timing Analyzer to get proper timing constraints. Without it, the Compiler will not properly optimize the design.
+Info (19449): Reading SDC files elapsed 00:00:00.
+Info (23800): Derived clock name suffix defaults to '~derived'.
+Critical Warning (19317): No user constrained base clocks found in the design. Calling "derive_clocks -period 1.0 -suffix derived"
+Info (332105): Deriving Clocks
+    Info (332105): create_clock -period 1.000 -name clk~derived [get_ports {clk}]
+Info (332143): No user constrained clock uncertainty found in the design. Calling "derive_clock_uncertainty"
+Warning (332158): Clock uncertainty characteristics of the Agilex 5 device family are preliminary
+Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
+Info: Found TIMING_ANALYZER_REPORT_SCRIPT_INCLUDE_DEFAULT_ANALYSIS = ON
+Error (23035): Tcl error: can't create directory ""C:": no such file or directory
+    while executing
+"file mkdir $output_dir"
+    (procedure "generate_default_reports" line 18)
+    invoked from within
+"generate_default_reports options"
+    invoked from within
+"if [is_project_open] {
+
+        # The all_corners option can be set by INI as well.
+        set all_corners_ini [get_ini_var -name "qsta_all_corners"]
+        if {[stri..."
+    (procedure "main" line 140)
+    invoked from within
+"main"
+    (file "c:/altera_pro/25.1.1/quartus/common/tcl/internal/qsta_default_script.tcl" line 1656)
+Error: Quartus Prime Timing Analyzer was unsuccessful. 1 error, 3 warnings
+    Error: Peak virtual memory: 889 megabytes
+    Error: Processing ended: Mon Oct 19 16:51:53 2026
+    Error: Elapsed time: 00:00:04
+    Error: System process ID: 34588
+
+

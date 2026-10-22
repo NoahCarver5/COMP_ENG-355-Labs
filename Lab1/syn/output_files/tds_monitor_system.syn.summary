@@ -1,0 +1,9 @@
+Synthesis Status : Successful - Mon Oct 19 16:43:00 2026
+Revision Name : tds_monitor_system
+Top-level Entity Name : tds_monitor_system
+Family : Agilex 5
+Quartus Prime Version : 25.1.1 Build 125 07/31/2025 SC Pro Edition
+Device : A5ED013BB32AE4SR1
+Logic utilization estimate (in ALMs) : 172 / 46,800 ( < 1 % )
+Total dedicated logic registers : 65
+Estimated DSP Blocks Post-Merging : 0

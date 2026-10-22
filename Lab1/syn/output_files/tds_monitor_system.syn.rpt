@@ -1,0 +1,468 @@
+Synthesis report
+Mon Oct 19 16:43:01 2026
+Quartus Prime Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Synthesis Summary
+  3. Synthesis Settings
+  4. Synthesis Source Files Read
+  5. Synthesis Partition Summary
+---- Analysis & Elaboration Stage Reports ----
+       6. Parameter Settings for User Entity tla2518_adc Instance: adc_inst
+       7. Parameter Settings for User Entity tds_converter Instance: tds_monitor_inst|tds_converter_instance
+       8. Top Causes of Logic Optimized Away During Sweep
+---- Logic Synthesis Stage Reports ----
+       9. Partition "root_partition" Resource Utilization by Entity
+      10. State Machine - Summary
+      11. State Machine - adc_inst|state
+      12. General Register Statistics for Partition "root_partition"
+      13. Inverted Register Statistics
+      14. Multiplexer Restructuring Statistics (Restructuring Performed)
+      15. Post-Synthesis Netlist Statistics for Partition "root_partition"
+      16. Synthesis Resource Usage Summary for Partition "root_partition"
+ 17. Warnings for ../../../Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tds_monitor_system.vhd
+ 18. General Warnings
+ 19. Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2025  Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Altera and sold by Altera or its authorized distributors.  Please
+refer to the Altera Software License Subscription Agreements 
+on the Quartus Prime software download page.
+
+
+
++-----------------------------------------------------------------------------------+
+; Synthesis Summary                                                                 ;
++--------------------------------------+--------------------------------------------+
+; Synthesis Status                     ; Successful - Mon Oct 19 16:43:00 2026      ;
+; Revision Name                        ; tds_monitor_system                         ;
+; Top-level Entity Name                ; tds_monitor_system                         ;
+; Family                               ; Agilex 5                                   ;
+; Quartus Prime Version                ; 25.1.1 Build 125 07/31/2025 SC Pro Edition ;
+; Device                               ; A5ED013BB32AE4SR1                          ;
+; Logic utilization estimate (in ALMs) ; 172 / 46,800 ( < 1 % )                     ;
+; Total dedicated logic registers      ; 65                                         ;
+; Estimated DSP Blocks Post-Merging    ; 0                                          ;
++--------------------------------------+--------------------------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------+
+; Synthesis Settings                                                                                                                  ;
++---------------------------------------------------------------------------------+-------------------------+-------------------------+
+; Option                                                                          ; Setting                 ; Default Value           ;
++---------------------------------------------------------------------------------+-------------------------+-------------------------+
+; Device                                                                          ; A5ED013BB32AE4SR1       ;                         ;
+; Top-level entity name                                                           ; tds_monitor_system      ; tds_monitor_system      ;
+; Family name                                                                     ; Agilex 5                ; Cyclone 10 GX           ;
+; VHDL Version                                                                    ; VHDL_2008               ; VHDL_1993               ;
+; Enable parallel Assembler and Timing Analyzer during compilation                ; On                      ; On                      ;
+; Enable compact report table                                                     ; Off                     ; Off                     ;
+; Enable Design Assistant in the compilation flow                                 ; On                      ; On                      ;
+; Design Assistant include IP blocks                                              ; Off                     ; Off                     ;
+; High fanout net threshold for RAM inference                                     ; 15                      ; 15                      ;
+; Design Assistant limit on reported violations per rule                          ; 5000                    ; 5000                    ;
+; Optimization Mode                                                               ; Balanced                ; Balanced                ;
+; Allow Register Retiming                                                         ; On                      ; On                      ;
+; Allow RAM Retiming                                                              ; Off                     ; Off                     ;
+; Allow DSP Retiming                                                              ; Off                     ; Off                     ;
+; Restructure Multiplexers                                                        ; Auto                    ; Auto                    ;
+; Waive gated clock synchronizer check                                            ; On                      ; On                      ;
+; MLAB Add Timing Constraints For Mixed-Port Feed-Through Mode Setting Don't Care ; Off                     ; Off                     ;
+; Preserve fewer node names                                                       ; On                      ; On                      ;
+; Intel FPGA IP Evaluation Mode                                                   ; Enable                  ; Enable                  ;
+; Verilog Version                                                                 ; Verilog_2001            ; Verilog_2001            ;
+; State Machine Processing                                                        ; Auto                    ; Auto                    ;
+; Safe State Machine                                                              ; Auto                    ; Auto                    ;
+; Iteration limit for constant Verilog loops                                      ; 5000                    ; 5000                    ;
+; Iteration limit for non-constant Verilog loops                                  ; 250                     ; 250                     ;
+; Infer RAMs from Raw Logic                                                       ; On                      ; On                      ;
+; DSP Action on miss                                                              ; Ignore                  ; Ignore                  ;
+; DSP Block Balancing                                                             ; Auto                    ; Auto                    ;
+; NOT Gate Push-Back                                                              ; On                      ; On                      ;
+; Power-Up Don't Care                                                             ; On                      ; On                      ;
+; Remove Redundant Logic Cells                                                    ; Off                     ; Off                     ;
+; Remove Duplicate Registers                                                      ; On                      ; On                      ;
+; Ignore GLOBAL Buffers                                                           ; Off                     ; Off                     ;
+; Ignore LCELL Buffers                                                            ; Off                     ; Off                     ;
+; Ignore SOFT Buffers                                                             ; On                      ; On                      ;
+; Optimization Technique                                                          ; Balanced                ; Balanced                ;
+; Auto Open-Drain Pins                                                            ; On                      ; On                      ;
+; Perform WYSIWYG Primitive Resynthesis                                           ; Off                     ; Off                     ;
+; Auto ROM Replacement                                                            ; On                      ; On                      ;
+; Auto RAM Replacement                                                            ; On                      ; On                      ;
+; Auto DSP Block Replacement                                                      ; On                      ; On                      ;
+; Auto Shift Register Replacement                                                 ; Auto                    ; Auto                    ;
+; Allow Shift Register Merging across Hierarchies                                 ; Auto                    ; Auto                    ;
+; Physical Shift Register Inference                                               ; On                      ; On                      ;
+; Auto Clock Enable Replacement                                                   ; On                      ; On                      ;
+; Strict RAM Replacement                                                          ; Off                     ; Off                     ;
+; Allow Synchronous Control Signals                                               ; On                      ; On                      ;
+; Force Use of Synchronous Clear Signals                                          ; Off                     ; Off                     ;
+; Auto Resource Sharing                                                           ; Off                     ; Off                     ;
+; Allow Any RAM Size For Recognition                                              ; Off                     ; Off                     ;
+; Allow Any Shift Register Size For Recognition                                   ; Off                     ; Off                     ;
+; Ignore translate_off and synthesis_off directives                               ; Off                     ; Off                     ;
+; Report Propagation of Constraints                                               ; On                      ; On                      ;
+; Ignore Maximum Fan-Out Assignments                                              ; Off                     ; Off                     ;
+; Synchronization Register Chain Length                                           ; 3                       ; 3                       ;
+; Power Optimization During Synthesis                                             ; Normal compilation      ; Normal compilation      ;
+; HDL message level                                                               ; Level2                  ; Level2                  ;
+; Number of Protected Registers Reported in Synthesis Report                      ; 100                     ; 100                     ;
+; Number of Removed Registers Reported in Synthesis Report                        ; 5000                    ; 5000                    ;
+; Number of Optimized Away Hierarchies Reported in Synthesis Report               ; 100                     ; 100                     ;
+; Number of Top Root Causes Reported in Synthesis Report                          ; 10                      ; 10                      ;
+; Group Identical Hierarchies in Optimized Away Hierarchies Report                ; On                      ; On                      ;
+; Number of Swept Nodes Reported in Synthesis Report                              ; 5000                    ; 5000                    ;
+; Number of Inverted Registers Reported in Synthesis Report                       ; 100                     ; 100                     ;
+; Clock MUX Protection                                                            ; On                      ; On                      ;
+; Auto Gated Clock Conversion                                                     ; Off                     ; Off                     ;
+; Block Design Naming                                                             ; Auto                    ; Auto                    ;
+; SDC constraint protection                                                       ; Off                     ; Off                     ;
+; Optimization and Constraint Precedence                                          ; Prioritize Optimization ; Prioritize Optimization ;
+; Synthesis Effort                                                                ; Auto                    ; Auto                    ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal                    ; On                      ; On                      ;
+; Analysis & Synthesis Message Level                                              ; Medium                  ; Medium                  ;
+; Disable Register Merging Across Hierarchies                                     ; Auto                    ; Auto                    ;
+; Resource Aware Inference For Block RAM                                          ; On                      ; On                      ;
+; Automatic Parallel Synthesis                                                    ; On                      ; On                      ;
+; Partial Reconfiguration Bitstream ID                                            ; Off                     ; Off                     ;
+; Disable DSP Negate Inferencing                                                  ; Off                     ; Off                     ;
+; Report Parameter Settings                                                       ; On                      ; On                      ;
+; Report Parameter Settings to ASCII                                              ; On                      ; On                      ;
+; Report Source Assignments                                                       ; On                      ; On                      ;
+; Report Source Assignments to ASCII                                              ; On                      ; On                      ;
+; Report Resource Utilization by Entity to ASCII                                  ; On                      ; On                      ;
+; Size of the Latch Report                                                        ; 100                     ; 100                     ;
+; Enable VHDL static assertion support                                            ; Off                     ; Off                     ;
+; Enable SystemVerilog static assertion support                                   ; Off                     ; Off                     ;
+; Enable State Machines Inference                                                 ; On                      ; On                      ;
+; Allow RAMs Inferred In Generate-For Loop For Verilog                            ; Off                     ; Off                     ;
+; Enable formal verification support during compilation                           ; Off                     ; Off                     ;
+; Size of the PR Initial Conditions Report                                        ; 100                     ; 100                     ;
+; Number of Registers with Ignored Power-Up Settings Reported in Synthesis Report ; 500                     ; 500                     ;
+; Report PR Initial Values as Errors                                              ; Off                     ; Off                     ;
+; Fractal Synthesis                                                               ; Off                     ; Off                     ;
+; Aggressive Multiplexer Area Optimization                                        ; Auto                    ; Auto                    ;
+; 6LUT to Extended Mode Conversion                                                ; Auto                    ; Auto                    ;
+; Synthesis Available Resource Multiplier                                         ; 1                       ; 1                       ;
+; Message Level for Unconnected Output Ports                                      ; Warning                 ; Warning                 ;
+; Pack Barrelshifters into Carry Chains for Better Area                           ; Auto                    ; Auto                    ;
+; Initialize Verilog enums to X                                                   ; Off                     ; Off                     ;
+; Enable dynamic report                                                           ; Off                     ; Off                     ;
+; Show Collapsible Rows in Ascii Report for Warning Summary Reports               ; On                      ; On                      ;
+; Enable RTL Analysis Debug Mode                                                  ; Off                     ; Off                     ;
+; Enable preserve for debug assignments                                           ; Off                     ; Off                     ;
++---------------------------------------------------------------------------------+-------------------------+-------------------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Synthesis Source Files Read                                                                                                                                                                                                                                            ;
++------------------------------------------------------------------------------+---------------------------+------------------------------------------------------------------------------------+---------+-----------+---------------+----------------------------------+
+; File Name with User-Entered Path                                             ; File Type                 ; File Name with Absolute Path                                                       ; Library ; IP Source ; Include Files ; MD5                              ;
++------------------------------------------------------------------------------+---------------------------+------------------------------------------------------------------------------------+---------+-----------+---------------+----------------------------------+
+; ../../../Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tla2518_adc.vhd        ; User-Specified VHDL File  ; C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tla2518_adc.vhd        ;         ;           ;               ; 1bec4296add1a64b35c79127838de1be ;
+; ../../../Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tds_monitor_system.vhd ; User-Specified VHDL File  ; C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tds_monitor_system.vhd ;         ;           ;               ; 3d18922cb278cf7b4f469fddf6f14314 ;
+; ../../../Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tds_monitor.vhd        ; User-Specified VHDL File  ; C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tds_monitor.vhd        ;         ;           ;               ; dd932995f2359e6745a3c9d6a0449ff7 ;
+; ../../../Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tds_converter.vhd      ; User-Specified VHDL File  ; C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tds_converter.vhd      ;         ;           ;               ; 013944608b36cd99be4b7dd3f38a1ef9 ;
+; ../../../Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/digit_display.vhd      ; User-Specified VHDL File  ; C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/digit_display.vhd      ;         ;           ;               ; aa3fce2e41adf137a733cbaaf270d167 ;
+; ../../../Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/bcd.vhd                ; User-Specified VHDL File  ; C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/bcd.vhd                ;         ;           ;               ; 4f21756025000079322d0478b8708af8 ;
++------------------------------------------------------------------------------+---------------------------+------------------------------------------------------------------------------------+---------+-----------+---------------+----------------------------------+
+
+
++--------------------------------------------------------------------------------------------+
+; Synthesis Partition Summary                                                                ;
++----------------+----------------+---------+--------------+-------+-------------------------+
+; Partition Name ; Hierarchy Path ; Type    ; Preservation ; Empty ; Partition Database File ;
++----------------+----------------+---------+--------------+-------+-------------------------+
+; root_partition ; |              ; Default ;              ;       ;                         ;
++----------------+----------------+---------+--------------+-------+-------------------------+
+
+
++-------------------------------------------------------------------+
+; Parameter Settings for User Entity tla2518_adc Instance: adc_inst ;
++----------------+-----------+--------------------------------------+
+; Parameter Name ; Value     ; Type                                 ;
++----------------+-----------+--------------------------------------+
+; CLOCK_DIVIDER  ; 25        ; Untyped                              ;
+; PAUSE_CYCLES   ; 200000000 ; Untyped                              ;
++----------------+-----------+--------------------------------------+
+All Instances:
+adc_inst
+
+
+
++----------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity tds_converter Instance: tds_monitor_inst|tds_converter_instance ;
++----------------+-------+---------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                      ;
++----------------+-------+---------------------------------------------------------------------------+
+; TDS_THRESHOLD  ; 250   ; Untyped                                                                   ;
++----------------+-------+---------------------------------------------------------------------------+
+All Instances:
+tds_monitor_inst|tds_converter_instance
+
+
+
+Top root causes of logic optimization that have been identified during sweep. For more details and filtering options, ensure that you have compiled with the "Enable RTL Analysis Debug Mode " setting turned on under Assignments->Settings->Compiler Settings, then go to the " Root Causes Tab " in the " Sweep Hints Viewer " tool in the " RTL Analyzer ".
++----------------------------------------------------------------------------------------------------------------------+
+; Top Causes of Logic Optimized Away During Sweep                                                                      ;
++--------------------------------------------+------------------+--------------------------------+---------------------+
+; Root Object Path                           ; Root Object Type ; Root Reason                    ; Swept Objects Count ;
++--------------------------------------------+------------------+--------------------------------+---------------------+
+; tds_monitor_inst|bcd_instance|thousands[3] ; OUTPUT_PORT      ; stuck at 0                     ; 7                   ;
+; adc_inst|din_reg                           ; DFFE             ; stuck at 0 due to stuck port d ; 2                   ;
++--------------------------------------------+------------------+--------------------------------+---------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Partition "root_partition" Resource Utilization by Entity                                                                                                                                                                  ;
++-----------------------------------+---------------------+---------------------------+-------------------+------------+------+-------------+--------------------------------------------+--------------------+--------------+
+; Compilation Hierarchy Node        ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Max Depth   ; Full Hierarchy Name                        ; Entity Name        ; Library Name ;
++-----------------------------------+---------------------+---------------------------+-------------------+------------+------+-------------+--------------------------------------------+--------------------+--------------+
+; |                                 ; 258 (1)             ; 65 (0)                    ; 0                 ; 0          ; 35   ; 10.5 (0.0)  ; |                                          ; tds_monitor_system ; altera_work  ;
+;    |adc_inst|                     ; 57 (57)             ; 65 (65)                   ; 0                 ; 0          ; 0    ; 10.5 (10.5) ; adc_inst                                   ; tla2518_adc        ; altera_work  ;
+;    |tds_monitor_inst|             ; 200 (0)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 10.5 (0.0)  ; tds_monitor_inst                           ; tds_monitor        ; altera_work  ;
+;       |bcd_instance|              ; 52 (52)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 10.5 (10.5) ; tds_monitor_inst|bcd_instance              ; bcd                ; altera_work  ;
+;       |digital_display_hundreds|  ; 10 (10)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 10.5 (10.5) ; tds_monitor_inst|digital_display_hundreds  ; digit_display      ; altera_work  ;
+;       |digital_display_ones|      ; 10 (10)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 9.7 (9.7)   ; tds_monitor_inst|digital_display_ones      ; digit_display      ; altera_work  ;
+;       |digital_display_tens|      ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 9.5 (9.5)   ; tds_monitor_inst|digital_display_tens      ; digit_display      ; altera_work  ;
+;       |digital_display_thousands| ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 8.7 (8.7)   ; tds_monitor_inst|digital_display_thousands ; digit_display      ; altera_work  ;
+;       |tds_converter_instance|    ; 114 (114)           ; 0 (0)                     ; 0                 ; 0          ; 0    ; 10.5 (10.5) ; tds_monitor_inst|tds_converter_instance    ; tds_converter      ; altera_work  ;
++-----------------------------------+---------------------+---------------------------+-------------------+------------+------+-------------+--------------------------------------------+--------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++----------------------------------------------------------------------------+
+; State Machine - Summary                                                    ;
++----------------+------------------+------------+----------------+----------+
+; Name           ; Number of States ; Using aclr ; Encoding Style ; Safeness ;
++----------------+------------------+------------+----------------+----------+
+; adc_inst|state ; 3                ; Yes        ; One-Hot        ; Safe     ;
++----------------+------------------+------------+----------------+----------+
+
+
+Encoding Type: Safe One-Hot
++-------------------------------------------------------------+
+; State Machine - adc_inst|state                              ;
++----------------+--------------+----------------+------------+
+; Name           ; state.finish ; state.transfer ; state.idle ;
++----------------+--------------+----------------+------------+
+; state.idle     ; 0            ; 0              ; 0          ;
+; state.transfer ; 0            ; 1              ; 1          ;
+; state.finish   ; 1            ; 0              ; 1          ;
++----------------+--------------+----------------+------------+
+
+
++------------------------------------------------------------+
+; General Register Statistics for Partition "root_partition" ;
++----------------------------------------------+-------------+
+; Statistic                                    ; Value       ;
++----------------------------------------------+-------------+
+; Total registers                              ; 65          ;
+; Number of registers using Synchronous Clear  ; 39          ;
+; Number of registers using Synchronous Load   ; 0           ;
+; Number of registers using Asynchronous Clear ; 65          ;
+; Number of registers using Asynchronous Load  ; 0           ;
+; Number of registers using Clock Enable       ; 55          ;
+; Number of registers using Preset             ; 0           ;
++----------------------------------------------+-------------+
+
+
++--------------------------------------------------+
+; Inverted Register Statistics                     ;
++----------------------------------------+---------+
+; Inverted Register                      ; Fan out ;
++----------------------------------------+---------+
+; adc_inst|cs_reg                        ; 2       ;
+; Total number of inverted registers = 1 ;         ;
++----------------------------------------+---------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                             ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------+-------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                         ; Restructuring Performed ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------+-------------------------+
+; 5:1                ; 28 bits   ; 84 LEs        ; 0 LEs                ; 84 LEs                 ; Yes        ; adc_inst|pause_count[12]                           ; Yes                     ;
+; 5:1                ; 11 bits   ; 33 LEs        ; 0 LEs                ; 33 LEs                 ; Yes        ; adc_inst|shift_reg[5]                              ; Yes                     ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; adc_inst|bit_count[0]                              ; Yes                     ;
+; 8:1                ; 8 bits    ; 40 LEs        ; 40 LEs               ; 0 LEs                  ; No         ; tds_monitor_inst|tds_converter_instance|Mux_4      ; Yes                     ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; No         ; tds_monitor_inst|digital_display_ones|dout[6]      ; Yes                     ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; No         ; tds_monitor_inst|digital_display_tens|dout[5]      ; Yes                     ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; No         ; tds_monitor_inst|digital_display_hundreds|dout[5]  ; Yes                     ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; No         ; tds_monitor_inst|digital_display_thousands|dout[5] ; Yes                     ;
+; 6:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; No         ; tds_monitor_inst|digital_display_ones|dout[2]      ; Yes                     ;
+; 6:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; No         ; tds_monitor_inst|digital_display_tens|dout[0]      ; Yes                     ;
+; 6:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; No         ; tds_monitor_inst|digital_display_hundreds|dout[0]  ; Yes                     ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; No         ; tds_monitor_inst|digital_display_ones|dout[4]      ; Yes                     ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; No         ; tds_monitor_inst|digital_display_tens|dout[4]      ; Yes                     ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; No         ; tds_monitor_inst|digital_display_hundreds|dout[4]  ; Yes                     ;
+; 6:1                ; 3 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; No         ; adc_inst|Select_52                                 ; Yes                     ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------+-------------------------+
+
+
++------------------------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Partition "root_partition" ;
++------------------------+-----------------------------------------+
+; Type                   ; Count                                   ;
++------------------------+-----------------------------------------+
+; boundary_port          ; 35                                      ;
+; tennm_ff               ; 65                                      ;
+;     CLR                ; 10                                      ;
+;     ENA CLR            ; 16                                      ;
+;     ENA CLR SCLR       ; 39                                      ;
+; tennm_lcell_comb       ; 258                                     ;
+;     arith              ; 93                                      ;
+;         0 data inputs  ; 11                                      ;
+;         1 data inputs  ; 40                                      ;
+;         2 data inputs  ; 28                                      ;
+;         3 data inputs  ; 6                                       ;
+;         4 data inputs  ; 8                                       ;
+;     extend             ; 15                                      ;
+;         7 data inputs  ; 3                                       ;
+;         8 data inputs  ; 12                                      ;
+;     normal             ; 150                                     ;
+;         0 data inputs  ; 1                                       ;
+;         1 data inputs  ; 2                                       ;
+;         2 data inputs  ; 8                                       ;
+;         3 data inputs  ; 9                                       ;
+;         4 data inputs  ; 24                                      ;
+;         5 data inputs  ; 39                                      ;
+;         6 data inputs  ; 67                                      ;
+;                        ;                                         ;
+; Number of carry chains ; 8                                       ;
+; Max carry chain length ; 28                                      ;
+;                        ;                                         ;
+; Max LUT depth          ; 10.50                                   ;
+; Average LUT depth      ; 6.76                                    ;
++------------------------+-----------------------------------------+
+
+
++-----------------------------------------------------------------+
+; Synthesis Resource Usage Summary for Partition "root_partition" ;
++---------------------------------------------+-------------------+
+; Resource                                    ; Usage             ;
++---------------------------------------------+-------------------+
+; Estimate of Logic utilization (ALMs needed) ; 172               ;
+;                                             ;                   ;
+; Combinational ALUT usage for logic          ; 258               ;
+;     -- 8 input functions                    ; 12                ;
+;     -- 7 input functions                    ; 3                 ;
+;     -- 6 input functions                    ; 67                ;
+;     -- 5 input functions                    ; 39                ;
+;     -- 4 input functions                    ; 32                ;
+;     -- <=3 input functions                  ; 105               ;
+;                                             ;                   ;
+; Dedicated logic registers                   ; 65                ;
+;                                             ;                   ;
+; I/O pins                                    ; 35                ;
+;                                             ;                   ;
+; Total DSP Blocks                            ; 0                 ;
+;     -- [A] Total Fixed Point DSP Blocks     ; 0                 ;
+;     -- [B] Total Floating Point DSP Blocks  ; 0                 ;
+;     -- [C] Total DSP_PRIME Blocks           ; 0                 ;
+;                                             ;                   ;
+; Maximum fan-out node                        ; clk               ;
+; Maximum fan-out                             ; 65                ;
+; Total fan-out                               ; 1407              ;
+; Average fan-out                             ; 3.93              ;
++---------------------------------------------+-------------------+
+
+
++------------------------------------------------------------------------------------------------------+
+; Warnings for ../../../Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tds_monitor_system.vhd            ;
++-------------+----------+-------+---------------------------------------------------------------------+
+; Message ID  ; Severity ; Count ; Sample Warning                                                      ;
++-------------+----------+-------+---------------------------------------------------------------------+
+; 13024:13410 ; Warning  ; 1     ; Output pins are stuck at VCC or GND : Pin "adc_din" is stuck at GND ;
++-------------+----------+-------+---------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; General Warnings                                                                                                                                                                                                                                                                                                                                 ;
++------------+------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Message ID ; Severity         ; Count ; Sample Warning                                                                                                                                                                                                                                                                                           ;
++------------+------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; 20759      ; Critical Warning ; 1     ; Use the Reset Release IP in Intel Agilex 5 FPGA designs to ensure a successful configuration. For more information about the Reset Release IP, refer to the Configuration User Guide.                                                                                                                    ;
+; 21620      ; Warning          ; 1     ; Design Assistant Results: 1 of 1 High severity rules issued violations in snapshot 'partitioned'. Please refer to DRC report 'C:/Users/noahc/AppData/Local/quartus/"C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/syn/output_files/tds_monitor_system.drc.partitioned.rpt' for more information ;
+; 23202      ; Warning          ; 1     ; Intel FPGA IP Evaluation Mode feature is not used - it is not supported for this device                                                                                                                                                                                                                  ;
++------------+------------------+-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------+
+; Synthesis Messages ;
++--------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Synthesis
+    Info: Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+    Info: Processing started: Mon Oct 19 16:42:49 2026
+    Info: System process ID: 5024
+Info: Command: quartus_syn --read_settings_files=on --write_settings_files=off tds_monitor_system -c tds_monitor_system
+Info: qis_default_flow_script.tcl version: #1
+Info: Initializing Synthesis...
+Info: Project = "tds_monitor_system"
+Info: Revision = "tds_monitor_system"
+Info (21958): Initialized Quartus Message Database
+Info: Analyzing source files
+Critical Warning (20759): Use the Reset Release IP in Intel Agilex 5 FPGA designs to ensure a successful configuration. For more information about the Reset Release IP, refer to the Configuration User Guide.
+Info: Elaborating from top-level entity "tds_monitor_system"
+Info (19337): VHDL info at tds_monitor_system.vhd(7): executing entity "tds_monitor_system" with architecture "structural" File: C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tds_monitor_system.vhd Line: 7
+Info (19337): VHDL info at tla2518_adc.vhd(5): executing entity "tla2518_adc" with architecture "rtl" File: C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tla2518_adc.vhd Line: 5
+Info (19337): VHDL info at tds_monitor.vhd(35): executing entity "tds_monitor" with architecture "structural" File: C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tds_monitor.vhd Line: 35
+Info (19337): VHDL info at tds_converter.vhd(8): executing entity "tds_converter" with architecture "data_flow" File: C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tds_converter.vhd Line: 8
+Info (19337): VHDL info at bcd.vhd(8): executing entity "bcd" with architecture "behavioral" File: C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/bcd.vhd Line: 8
+Info (19337): VHDL info at digit_display.vhd(4): executing entity "digit_display" with architecture "data_flow" File: C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/digit_display.vhd Line: 4
+Info: Found 6 design entities
+Info: There are 9 partitions after elaboration.
+Info: Running rule checking for Agilex5 protocol IPs...
+Warning (23202): Intel FPGA IP Evaluation Mode feature is not used - it is not supported for this device
+Info: DA report generation in native DNI mode
+Info (21615): Running Design Assistant Rules for snapshot 'partitioned'
+Info: No waiver waived any violations
+Info (22360): Design Assistant Results: 28 of 29 enabled rules passed, and 1 rules was disabled, in snapshot 'partitioned'
+Info (21660): Design Assistant Results: 0 of 19 Critical severity rules issued violations in snapshot 'partitioned'
+Warning (21620): Design Assistant Results: 1 of 1 High severity rules issued violations in snapshot 'partitioned'. Please refer to DRC report 'C:/Users/noahc/AppData/Local/quartus/"C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/syn/output_files/tds_monitor_system.drc.partitioned.rpt' for more information
+Info (21621): Design Assistant Results: 0 of 1 Medium severity rules issued violations in snapshot 'partitioned'
+Info (21622): Design Assistant Results: 0 of 8 Low severity rules issued violations in snapshot 'partitioned'
+Info: Synthesizing partition "root_partition"
+Info (284007): State machine "adc_inst|state" will be implemented as a safe state machine. File: C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tla2518_adc.vhd Line: 50
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "adc_din" is stuck at GND File: C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tds_monitor_system.vhd Line: 14
+Info (21057): Implemented 316 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 3 input pins
+    Info (21059): Implemented 32 output pins
+    Info (21061): Implemented 281 logic cells
+Info: Successfully synthesized partition
+Info: Saving post-synthesis snapshots for 1 partition(s)
+Info (21615): Running Design Assistant Rules for snapshot 'synthesized'
+Info: No waiver waived any violations
+Info (22360): Design Assistant Results: 12 of 13 enabled rules passed, and 7 rules was disabled, in snapshot 'synthesized'
+Info (21661): Design Assistant Results: 0 of 1 High severity rules issued violations in snapshot 'synthesized'
+Info (21621): Design Assistant Results: 1 of 6 Medium severity rules issued violations in snapshot 'synthesized'. Please refer to DRC report 'C:/Users/noahc/AppData/Local/quartus/"C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/syn/output_files/tds_monitor_system.drc.synthesized.rpt' for more information
+Info (21622): Design Assistant Results: 0 of 6 Low severity rules issued violations in snapshot 'synthesized'
+Info: Quartus Prime Synthesis was successful. 0 errors, 3 warnings
+    Info: Peak virtual memory: 795 megabytes
+    Info: Processing ended: Mon Oct 19 16:43:01 2026
+    Info: Elapsed time: 00:00:12
+    Info: System process ID: 5024
+
+

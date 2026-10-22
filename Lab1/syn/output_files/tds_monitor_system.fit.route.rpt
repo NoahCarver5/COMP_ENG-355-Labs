@@ -1,0 +1,328 @@
+Fitter Route Stage Report for tds_monitor_system
+Mon Oct 19 16:44:33 2026
+Quartus Prime Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Delay Chain Summary
+  3. Routing Usage Summary
+  4. Route Messages
+  5. Global Router Wire Utilization Map
+  6. Peak Wire Demand Summary
+  7. Peak Wire Demand Details
+  8. Peak Total Grid Crossings
+  9. Global Router Congestion Hotspot Summary
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2025  Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Altera and sold by Altera or its authorized distributors.  Please
+refer to the Altera Software License Subscription Agreements 
+on the Quartus Prime software download page.
+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Delay Chain Summary                                                                                                                                       ;
++----------+----------+---------------------+--------------------+----------------+-----------------------------------+-------------------------------------+
+; Name     ; Pin Type ; Input Delay Chain 0 ; Output Delay Chain ; OE Delay Chain ; IO_12_LANE Input Data Delay Chain ; IO_12_LANE Input Strobe Delay Chain ;
++----------+----------+---------------------+--------------------+----------------+-----------------------------------+-------------------------------------+
+; adc_din  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; adc_sclk ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; adc_cs_n ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex0[0]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex0[1]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex0[2]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex0[3]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex0[4]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex0[5]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex0[6]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex1[0]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex1[1]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex1[2]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex1[3]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex1[4]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex1[5]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex1[6]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex2[0]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex2[1]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex2[2]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex2[3]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex2[4]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex2[5]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex2[6]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex3[0]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex3[1]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex3[2]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex3[3]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex3[4]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex3[5]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; hex3[6]  ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; led      ; Output   ; --                  ; 0                  ; --             ; --                                ; --                                  ;
+; clk      ; Input    ; 0                   ; --                 ; --             ; --                                ; --                                  ;
+; reset_n  ; Input    ; 0                   ; --                 ; --             ; --                                ; --                                  ;
+; adc_dout ; Input    ; 0                   ; --                 ; --             ; --                                ; --                                  ;
++----------+----------+---------------------+--------------------+----------------+-----------------------------------+-------------------------------------+
+
+
++------------------------------------------------------------------+
+; Routing Usage Summary                                            ;
++--------------------------------------+---------------------------+
+; Routing Resource Type                ; Usage                     ;
++--------------------------------------+---------------------------+
+; Block Input Mux Wrapbacks            ; 0 / 43,616 ( 0 % )        ;
+; Block Input Muxes                    ; 1,129 / 500,456 ( < 1 % ) ;
+; Block interconnects                  ; 662 / 526,400 ( < 1 % )   ;
+; C1 interconnects                     ; 238 / 234,240 ( < 1 % )   ;
+; C4 interconnects                     ; 9 / 229,360 ( < 1 % )     ;
+; C8 interconnects                     ; 0 / 22,936 ( 0 % )        ;
+; DCM_muxes                            ; 1 / 216 ( < 1 % )         ;
+; DELAY_CHAINs                         ; 0 / 1,262 ( 0 % )         ;
+; Direct links                         ; 125 / 526,400 ( < 1 % )   ;
+; HIO Buffers                          ; 1 / 10,528 ( < 1 % )      ;
+; IO75XDDRFMXCKTREE_CLKDRV_BIG_VCO_REs ; 0 / 8 ( 0 % )             ;
+; IO75XDDRFMXCKTREE_CLKDRV_GM0_REs     ; 0 / 8 ( 0 % )             ;
+; IO75XDDRFMXCKTREE_CLKDRV_VCO_INPUTs  ; 0 / 4 ( 0 % )             ;
+; IO75XDDRFMXCKTREE_CLKDRV_VCO_OUTPUTs ; 0 / 4 ( 0 % )             ;
+; IO75XDDRFMXCKTREE_FB_MUX31_REs       ; 0 / 24 ( 0 % )            ;
+; IOFBRADAPT_C2P_BUF_INPUTs            ; 0 / 66 ( 0 % )            ;
+; IOFBRADAPT_C2P_BUF_OUTPUTs           ; 0 / 66 ( 0 % )            ;
+; IOFBRADAPT_FRZ_BUFS_REs              ; 0 / 308 ( 0 % )           ;
+; IOFBRADAPT_P2C_BUF_INPUTs            ; 0 / 142 ( 0 % )           ;
+; IOFBRADAPT_P2C_BUF_OUTPUTs           ; 0 / 142 ( 0 % )           ;
+; Programmable Invert Buffers          ; 0 / 208 ( 0 % )           ;
+; Programmable Invert Inputs           ; 43 / 57,078 ( < 1 % )     ;
+; Programmable Inverts                 ; 43 / 57,078 ( < 1 % )     ;
+; R0 interconnects                     ; 342 / 401,380 ( < 1 % )   ;
+; R1 interconnects                     ; 212 / 229,360 ( < 1 % )   ;
+; R12 interconnects                    ; 6 / 34,404 ( < 1 % )      ;
+; R2 interconnects                     ; 76 / 115,620 ( < 1 % )    ;
+; R4 interconnects                     ; 12 / 117,500 ( < 1 % )    ;
+; R6 interconnects                     ; 20 / 118,440 ( < 1 % )    ;
+; Redundancy Muxes                     ; 3 / 20,728 ( < 1 % )      ;
+; Row Clock Tap-Offs                   ; 6 / 34,404 ( < 1 % )      ;
+; Switchbox_clock_muxes                ; 4 / 1,920 ( < 1 % )       ;
+; VIO Buffers                          ; 1 / 8,320 ( < 1 % )       ;
+; Vertical_seam_tap_muxes              ; 2 / 576 ( < 1 % )         ;
++--------------------------------------+---------------------------+
+
+
++----------------+
+; Route Messages ;
++----------------+
+Info (20030): Parallel compilation is enabled and will use 10 of the 10 processors detected
+Info: *******************************************************************
+Info: Running Quartus Prime Fitter
+    Info: Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+    Info: Processing started: Mon Oct 19 16:43:02 2026
+    Info: System process ID: 5308
+Info: Command: quartus_fit --read_settings_files=on --write_settings_files=off tds_monitor_system -c tds_monitor_system
+Info: qfit2_default_script.tcl version: #1
+Info: Project  = tds_monitor_system
+Info: Revision = tds_monitor_system
+Info (22300): Design uses Placement Effort Multiplier = 1.0.
+Info (170193): Fitter routing operations beginning
+Info (20215): Router estimated peak short interconnect demand : 0% of left directional wire in region X84_Y0 to X95_Y7
+    Info (20265): Estimated peak short right directional wire demand : 0% in region X72_Y8 to X83_Y15
+    Info (20265): Estimated peak short left directional wire demand : 0% in region X84_Y0 to X95_Y7
+    Info (20265): Estimated peak short up directional wire demand : 0% in region X0_Y0 to X11_Y7
+    Info (20265): Estimated peak short down directional wire demand : 0% in region X0_Y0 to X11_Y7
+Info (20215): Router estimated peak long high speed interconnect demand : 58% of down directional wire in region X72_Y8 to X83_Y15
+    Info (20265): Estimated peak long high speed right directional wire demand : 11% in region X108_Y0 to X119_Y7
+    Info (20265): Estimated peak long high speed left directional wire demand : 10% in region X72_Y0 to X83_Y7
+    Info (20265): Estimated peak long high speed up directional wire demand : 25% in region X72_Y0 to X83_Y7
+    Info (20265): Estimated peak long high speed down directional wire demand : 58% in region X72_Y8 to X83_Y15
+    Info (20315): Note that the router may use short wires to implement long connections at higher delay
+Info (170239): Router is attempting to preserve 0.36 percent of routes from an earlier compilation, a user specified Routing Constraints File, or internal routing requirements.
+Info (11888): Total time spent on timing analysis during Routing is 0.04 seconds.
+Warning (18291): Timing characteristics of device A5ED013BB32AE4SR1 are preliminary
+Info (16607): Fitter routing operations ending: elapsed time is 00:00:15
+
+
+--------------------------------------
+; Global Router Wire Utilization Map ;
+--------------------------------------
+This report is unavailable in plain text report export.
+
+
++-------------------------------------------------------------------------------+
+; Peak Wire Demand Summary                                                      ;
++-----------------+-----------+-----------------------------------+-------------+
+; Wire            ; Direction ; Grid [(Xmin, Ymin), (Xmax, Ymax)] ; Peak Demand ;
++-----------------+-----------+-----------------------------------+-------------+
+; short           ; right     ; [(72, 8), (83, 15)]               ; 0.104 %     ;
+; short           ; left      ; [(84, 0), (95, 7)]                ; 0.238 %     ;
+; long high speed ; right     ; [(108, 0), (119, 7)]              ; 11.111 %    ;
+; long high speed ; left      ; [(72, 0), (83, 7)]                ; 10.185 %    ;
+; long high speed ; up        ; [(72, 0), (83, 7)]                ; 25.000 %    ;
+; long high speed ; down      ; [(72, 8), (83, 15)]               ; 58.333 %    ;
++-----------------+-----------+-----------------------------------+-------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------+
+; Peak Wire Demand Details                                                                                                             ;
++-----------------+-----------+-----------------------------------+-------------+------------------------------------------------------+
+; Wire            ; Direction ; Grid [(Xmin, Ymin), (Xmax, Ymax)] ; Peak Demand ; Net Names                                            ;
++-----------------+-----------+-----------------------------------+-------------+------------------------------------------------------+
+; short           ; right     ; [(72, 8), (83, 15)]               ; 0.104 %     ;    High Routing Fan-Out                              ;
+;     --          ;           ;                                   ;             ; adc_inst|cs_reg                                      ;
+; short           ; right     ; [(72, 8), (83, 15)]               ; 0.104 %     ;    Long Distance                                     ;
+;     --          ;           ;                                   ;             ; adc_inst|cs_reg                                      ;
+; short           ; left      ; [(84, 0), (95, 7)]                ; 0.238 %     ;    High Routing Fan-Out                              ;
+;     --          ;           ;                                   ;             ; adc_dout~input                                       ;
+; short           ; left      ; [(84, 0), (95, 7)]                ; 0.238 %     ;    Long Distance                                     ;
+;     --          ;           ;                                   ;             ; adc_dout~input                                       ;
+; long high speed ; right     ; [(108, 0), (119, 7)]              ; 11.111 %    ;    High Routing Fan-Out                              ;
+;     --          ;           ;                                   ;             ; adc_inst|cs_reg                                      ;
+; long high speed ; right     ; [(108, 0), (119, 7)]              ; 11.111 %    ;    Long Distance                                     ;
+;     --          ;           ;                                   ;             ; adc_inst|cs_reg                                      ;
+; long high speed ; left      ; [(72, 0), (83, 7)]                ; 10.185 %    ;    High Routing Fan-Out                              ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|i63~0                  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|i56~0                  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|i62~0                  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|i61~0                  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|LessThan_11~0          ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|shift[20]~7            ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|shift[25]~11           ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|digital_display_tens|dout[2]~5      ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|digital_display_tens|dout[3]~4      ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|digital_display_tens|dout[5]~1      ;
+; long high speed ; left      ; [(72, 0), (83, 7)]                ; 10.185 %    ;    Long Distance                                     ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|i63~0                  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|i56~0                  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|i62~0                  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|i61~0                  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|LessThan_11~0          ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|shift[20]~7            ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|shift[25]~11           ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|digital_display_tens|dout[2]~5      ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|digital_display_tens|dout[3]~4      ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|digital_display_tens|dout[5]~1      ;
+; long high speed ; up        ; [(72, 0), (83, 7)]                ; 25.000 %    ;    High Routing Fan-Out                              ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_6~0xsyn  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_7~0xsyn  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_9~0xsyn  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_5~0xsyn  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_10~0xsyn ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_11~1xsyn ;
+;     --          ;           ;                                   ;             ; reset_n~input                                        ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_3~0xsyn  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|add_12~41    ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_2~2xsyn  ;
+; long high speed ; up        ; [(72, 0), (83, 7)]                ; 25.000 %    ;    Long Distance                                     ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_6~0xsyn  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_7~0xsyn  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_9~0xsyn  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_5~0xsyn  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_10~0xsyn ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_11~1xsyn ;
+;     --          ;           ;                                   ;             ; reset_n~input                                        ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_3~0xsyn  ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|add_12~41    ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|tds_converter_instance|Mux_2~2xsyn  ;
+; long high speed ; down      ; [(72, 8), (83, 15)]               ; 58.333 %    ;    High Routing Fan-Out                              ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[9]                               ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[10]                              ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[11]                              ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[5]                               ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[6]                               ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[7]                               ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[8]                               ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[3]                               ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[4]                               ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|i24~0                  ;
+; long high speed ; down      ; [(72, 8), (83, 15)]               ; 58.333 %    ;    Long Distance                                     ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[9]                               ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[10]                              ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[11]                              ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[5]                               ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[6]                               ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[7]                               ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[8]                               ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[3]                               ;
+;     --          ;           ;                                   ;             ; adc_inst|sample_reg[4]                               ;
+;     --          ;           ;                                   ;             ; tds_monitor_inst|bcd_instance|i24~0                  ;
++-----------------+-----------+-----------------------------------+-------------+------------------------------------------------------+
+
+
++-----------------------------------------------------------------------------------+
+; Peak Total Grid Crossings                                                         ;
++------------------------------------------------------------+----------------------+
+; Net Name                                                   ; Total Grid Crossings ;
++------------------------------------------------------------+----------------------+
+; adc_dout~input                                             ; 6                    ;
+; adc_inst|cs_reg                                            ; 5                    ;
+; tds_monitor_inst|tds_converter_instance|LessThan_0~2xsyn_4 ; 4                    ;
+; adc_inst|sclk_reg                                          ; 4                    ;
+; tds_monitor_inst|bcd_instance|shift[25]~11                 ; 1                    ;
+; tds_monitor_inst|bcd_instance|i61~0                        ; 1                    ;
+; tds_monitor_inst|bcd_instance|i62~0                        ; 1                    ;
+; tds_monitor_inst|bcd_instance|shift[20]~7                  ; 1                    ;
+; tds_monitor_inst|bcd_instance|LessThan_11~0                ; 1                    ;
+; tds_monitor_inst|bcd_instance|i56~0                        ; 1                    ;
+; tds_monitor_inst|bcd_instance|i63~0                        ; 1                    ;
+; tds_monitor_inst|bcd_instance|i40~0                        ; 1                    ;
+; tds_monitor_inst|bcd_instance|i32~0                        ; 1                    ;
+; tds_monitor_inst|bcd_instance|shift[16]~3                  ; 1                    ;
+; tds_monitor_inst|bcd_instance|i16~0                        ; 1                    ;
+; tds_monitor_inst|bcd_instance|i12~0                        ; 1                    ;
+; tds_monitor_inst|bcd_instance|LessThan_0~0                 ; 1                    ;
+; tds_monitor_inst|bcd_instance|i24~0                        ; 1                    ;
+; tds_monitor_inst|bcd_instance|i8~0                         ; 1                    ;
+; tds_monitor_inst|bcd_instance|i52~0                        ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|Mux_7~0xsyn        ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|Mux_6~0xsyn        ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|Mux_5~0xsyn        ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|Mux_4~xsyn         ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|Mux_8~xsyn         ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|add_6~1xsyn        ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|add_1~6            ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|add_3~11           ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|add_3~6            ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|add_5~36           ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|add_5~31           ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|Mux_8~0            ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|add_12~41          ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|add_12~31          ; 1                    ;
+; adc_inst|shift_reg[1]                                      ; 1                    ;
+; adc_inst|sample_reg[11]~1                                  ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|Mux_4~0            ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|add_9~54           ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|Mux_3~0xsyn        ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|Mux_11~1xsyn       ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|Mux_10~0xsyn       ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|Mux_9~0xsyn        ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|Mux_1~2            ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|Mux_2~2xsyn        ; 1                    ;
+; tds_monitor_inst|tds_converter_instance|add_12~36          ; 1                    ;
+; adc_inst|sample_reg[3]                                     ; 1                    ;
+; adc_inst|sample_reg[6]                                     ; 1                    ;
+; adc_inst|sample_reg[5]                                     ; 1                    ;
+; adc_inst|sample_reg[4]                                     ; 1                    ;
+; adc_inst|sample_reg[1]                                     ; 1                    ;
++------------------------------------------------------------+----------------------+
+
+
+--------------------------------------------
+; Global Router Congestion Hotspot Summary ;
+--------------------------------------------
+No congestion hotspots found where global router short wire usage exceeded 100%.
+If the design is hard to route, use other techniques to analyze congestion. Refer to the Estimated Delay Added for Hold Timing section in the Fitter report and routing utilization in the Chip Planner.
+
+

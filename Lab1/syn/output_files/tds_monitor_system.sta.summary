@@ -1,0 +1,20 @@
+------------------------------------------------------------
+Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Setup 'clk~derived'
+Slack : -0.924
+TNS   : -42.439
+Corner: N/A
+
+Type  : Hold 'clk~derived'
+Slack : 0.173
+TNS   : 0.000
+Corner: N/A
+
+Type  : Minimum Pulse Width 'clk~derived'
+Slack : 0.500
+TNS   : 0.000
+Corner: N/A
+
+------------------------------------------------------------

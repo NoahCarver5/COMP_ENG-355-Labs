@@ -1,0 +1,160 @@
+Assembler report for tds_monitor_system
+Mon Oct 19 00:19:30 2026
+Quartus Prime Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Assembler Summary
+  3. Assembler Settings
+  4. Assembler Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2025  Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Altera and sold by Altera or its authorized distributors.  Please
+refer to the Altera Software License Subscription Agreements 
+on the Quartus Prime software download page.
+
+
+
++---------------------------------------------------------------+
+; Assembler Summary                                             ;
++-----------------------+---------------------------------------+
+; Assembler Status      ; Successful - Mon Oct 19 00:19:30 2026 ;
+; Revision Name         ; tds_monitor_system                    ;
+; Top-level Entity Name ; tds_monitor_system                    ;
+; Family                ; Agilex 5                              ;
+; Device                ; A5ED013BB32AE4SR1                     ;
+; Timing Models         ; Preliminary                           ;
+; Power Models          ; Preliminary                           ;
+; Device Status         ; Advance                               ;
++-----------------------+---------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------+
+; Assembler Settings                                                                                         ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                           ; Setting            ; Default Value      ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Enable parallel Assembler and Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                      ; Off                ; Off                ;
+; Enable Design Assistant in the compilation flow                  ; On                 ; On                 ;
+; Design Assistant include IP blocks                               ; Off                ; Off                ;
+; High fanout net threshold for RAM inference                      ; 15                 ; 15                 ;
+; Design Assistant limit on reported violations per rule           ; 5000               ; 5000               ;
+; Voltage output format                                            ; Linear format      ; Auto discovery     ;
+; Linear format N                                                  ; -12                ; 0                  ;
+; Auto user code                                                   ; On                 ; On                 ;
+; Configuration device                                             ; Auto               ; Auto               ;
+; Voltage stable delay                                             ; 10                 ; 10                 ;
+; FPGA release delay                                               ; 10                 ; 10                 ;
+; Initial delay                                                    ; 0                  ; 0                  ;
+; Bus speed mode                                                   ; 100 KHz            ; 100 KHz            ;
+; Slave device type                                                ; LTM4677            ; LTM4677            ;
+; Device address in PMBus Slave mode                               ; 00                 ; 00                 ;
+; PMBus device 0 slave address                                     ; 00                 ; 00                 ;
+; PMBus device 1 slave address                                     ; 00                 ; 00                 ;
+; PMBus device 2 slave address                                     ; 00                 ; 00                 ;
+; PMBus device 3 slave address                                     ; 00                 ; 00                 ;
+; PMBus device 4 slave address                                     ; 00                 ; 00                 ;
+; PMBus device 5 slave address                                     ; 00                 ; 00                 ;
+; PMBus device 6 slave address                                     ; 00                 ; 00                 ;
+; PMBus device 7 slave address                                     ; 00                 ; 00                 ;
+; Direct format coefficient m                                      ; 0                  ; 0                  ;
+; Direct format coefficient b                                      ; 0                  ; 0                  ;
+; Direct format coefficient R                                      ; 0                  ; 0                  ;
+; Translated voltage value unit                                    ; Volts              ; Volts              ;
+; VID format base voltage in mv                                    ; 0                  ; 0                  ;
+; VID format step size in mv                                       ; 0                  ; 0                  ;
+; obsolete - Data setup time in nanoseconds                        ; 0                  ; 0                  ;
+; obsolete - Data hold time in nanoseconds                         ; 0                  ; 0                  ;
+; obsolete - Clock/data fall time in nanoseconds                   ; 0                  ; 0                  ;
+; obsolete - Clock/data rise time in nanoseconds                   ; 0                  ; 0                  ;
+; Enable PAGE command                                              ; Off                ; Off                ;
+; VOUT reading error margin index                                  ; 8                  ; 8                  ;
+; Configuration device auto user code                              ; Off                ; Off                ;
+; Generate Partial Reconfiguration Raw Binary File (.rbf)          ; On                 ; On                 ;
+; HPS/FPGA configuration order                                     ; After INIT_DONE    ; After INIT_DONE    ;
+; HPS debug access port (DAP)                                      ; Disabled           ; Disabled           ;
+; Enable configuration bitstream encryption                        ; Off                ; Off                ;
+; Encryption key storage location                                  ; Battery Backup RAM ; Battery Backup RAM ;
+; Allow HPS debug without certificate                              ; Off                ; Off                ;
+; Remote system update max retry count                             ; 1                  ; 1                  ;
+; Disable JTAG                                                     ; Off                ; Off                ;
+; Force SDM clock to internal oscillator                           ; Off                ; Off                ;
+; Disable virtual eFuses                                           ; Off                ; Off                ;
+; Lock security eFuses                                             ; Off                ; Off                ;
+; Disable HPS debug                                                ; Off                ; Off                ;
+; Disable encryption key in eFuses                                 ; Off                ; Off                ;
+; Disable encryption key in BBRAM                                  ; Off                ; Off                ;
+; Disable Intrinsic ID PUF-wrapped encryption key in Quad SPI      ; Off                ; Off                ;
+; Enable frequency tamper detection                                ; Off                ; Off                ;
+; Enable temperature tamper detection                              ; Off                ; Off                ;
+; Enable voltage tamper detection                                  ; Off                ; Off                ;
+; Anti-tamper response                                             ; Disabled           ; Disabled           ;
+; Frequency tamper detection range                                 ; 35                 ; 35                 ;
+; Temperature tamper upper bound                                   ; 110                ; 110                ;
+; Temperature tamper lower bound                                   ; -40                ; -40                ;
+; Enable VCCL voltage tamper detection                             ; Off                ; Off                ;
+; Enable VCCL SDM voltage tamper detection                         ; Off                ; Off                ;
+; Enable VCCL HPS voltage tamper detection                         ; Off                ; Off                ;
+; Voltage tamper detection trigger                                 ; 15                 ; 15                 ;
+; VCCL voltage difference in percentage                            ; 0                  ; 0                  ;
+; VCCL_SDM voltage difference in percentage                        ; 0                  ; 0                  ;
+; Run configuration CPU from internal oscillator                   ; Off                ; Off                ;
+; Generate compressed sof                                          ; On                 ; On                 ;
+; PAGE command payload                                             ; 255                ; 255                ;
+; Enable partial reconfiguration bitstream encryption              ; Off                ; Off                ;
+; Enable AliasL1 certificate                                       ; Off                ; Off                ;
+; Enable multi-authority                                           ; Off                ; Off                ;
+; Enable device self-kill                                          ; Off                ; Off                ;
+; Enable device self-kill                                          ; Off                ; Off                ;
+; Enable device self-kill                                          ; Off                ; Off                ;
+; Enable device self-kill                                          ; Off                ; Off                ;
+; Enable external voltage reference                                ; Off                ; Off                ;
+; Generate programming files                                       ; Off                ; Off                ;
+; Temperature threshold value                                      ; 120                ; 120                ;
+; Enable external scrubbing                                        ; Off                ; Off                ;
+; Enable status_byte for polling                                   ; On                 ; On                 ;
+; Disable VID for debug purpose only                               ; Off                ; Off                ;
+; Diagnostic Boot                                                  ; Off                ; Off                ;
+; seu_error_out signal behavior                                    ; Only uncorrectable ; Only uncorrectable ;
++------------------------------------------------------------------+--------------------+--------------------+
+
+
++--------------------+
+; Assembler Messages ;
++--------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Assembler
+    Info: Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+    Info: Processing started: Mon Oct 19 00:19:23 2026
+    Info: System process ID: 53916
+Info: Command: quartus_asm --read_settings_files=on --write_settings_files=off tds_monitor_system -c tds_monitor_system
+Info (16677): Loading final database.
+Info (16734): Loading "final" snapshot for partition "root_partition".
+Info (16678): Successfully loaded final database: elapsed time is 00:00:02.
+Critical Warning (18636): Compilation Report contains advance information. Specifications for device A5ED013BB32AE4SR1 are subject to change. Contact Intel for information on availability. No programming file will be generated.
+Info: Quartus Prime Assembler was successful. 0 errors, 1 warning
+    Info: Peak virtual memory: 926 megabytes
+    Info: Processing ended: Mon Oct 19 00:19:30 2026
+    Info: Elapsed time: 00:00:07
+    Info: System process ID: 53916
+
+

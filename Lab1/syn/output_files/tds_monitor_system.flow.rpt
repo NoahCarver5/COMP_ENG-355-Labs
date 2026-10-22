@@ -1,0 +1,127 @@
+Flow report for tds_monitor_system
+Mon Oct 19 16:51:53 2026
+Quartus Prime Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Flow Summary
+  2. Flow Settings
+  3. Flow Non-Default Global Settings
+  4. Flow Elapsed Time
+  5. Flow OS Summary
+  6. Flow Log
+  7. Legal Notice
+
+
+
++------------------------------------------------------------------------------+
+; Flow Summary                                                                 ;
++---------------------------------+--------------------------------------------+
+; Flow Status                     ; Successful - Mon Oct 19 16:46:52 2026      ;
+; Quartus Prime Version           ; 25.1.1 Build 125 07/31/2025 SC Pro Edition ;
+; Revision Name                   ; tds_monitor_system                         ;
+; Top-level Entity Name           ; tds_monitor_system                         ;
+; Family                          ; Agilex 5                                   ;
+; Device                          ; A5ED013BB32AE4SR1                          ;
+; Timing Models                   ; Preliminary                                ;
+; Power Models                    ; Preliminary                                ;
+; Device Status                   ; Advance                                    ;
+; Logic utilization (in ALMs)     ; 166 / 46,800 ( < 1 % )                     ;
+; Total dedicated logic registers ; 98                                         ;
+; Total pins                      ; 35 / 414 ( 8 % )                           ;
+; Total block memory bits         ; 0 / 7,331,840 ( 0 % )                      ;
+; Total RAM Blocks                ; 0 / 358 ( 0 % )                            ;
+; Total DSP Blocks                ; 0 / 188 ( 0 % )                            ;
+; Total GTS Transceiver Channels  ; 0 / 4 ( 0 % )                              ;
+; Total HSSI Ethernet Channels    ; 0 / 1 ( 0 % )                              ;
+; Total HSSI PCIEs                ; 0 / 1 ( 0 % )                              ;
+; Total HSSI HPS                  ; 0 / 1 ( 0 % )                              ;
+; Total PLLs                      ; 0 / 11 ( 0 % )                             ;
+; Simulation Files Creation       ; Successful                                 ;
++---------------------------------+--------------------------------------------+
+
+
++-----------------------------------------+
+; Flow Settings                           ;
++-------------------+---------------------+
+; Option            ; Setting             ;
++-------------------+---------------------+
+; Start date & time ; 10/19/2026 16:42:52 ;
+; Main task         ; Compilation         ;
+; Revision Name     ; tds_monitor_system  ;
++-------------------+---------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                                              ;
++--------------------------+-------------------------------------------------------------------------+---------------+-------------+------------+
+; Assignment Name          ; Value                                                                   ; Default Value ; Entity Name ; Section Id ;
++--------------------------+-------------------------------------------------------------------------+---------------+-------------+------------+
+; COMPILER_SIGNATURE_ID    ; 92750361018707.179244617205024                                          ; --            ; --          ; --         ;
+; MAX_CORE_JUNCTION_TEMP   ; 100                                                                     ; --            ; --          ; --         ;
+; MIN_CORE_JUNCTION_TEMP   ; 0                                                                       ; --            ; --          ; --         ;
+; PROJECT_OUTPUT_DIRECTORY ; C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/syn/output_files ; --            ; --          ; --         ;
+; VHDL_INPUT_VERSION       ; VHDL_2008                                                               ; VHDL_1993     ; --          ; --         ;
++--------------------------+-------------------------------------------------------------------------+---------------+-------------+------------+
+
+
++---------------------------------------------------------+
+; Flow Elapsed Time                                       ;
++--------------------+--------------+---------------------+
+; Module Name        ; Elapsed Time ; Peak Virtual Memory ;
++--------------------+--------------+---------------------+
+; Synthesis          ; 00:00:12     ; 795 MB              ;
+; Fitter             ; 00:01:46     ; 5113 MB             ;
+; Timing Analyzer    ; 00:00:04     ; 889 MB              ;
+; EDA Netlist Writer ; 00:00:03     ; 871 MB              ;
+; Timing Analyzer    ; 00:00:04     ; 889 MB              ;
+; Total              ; 00:02:09     ; --                  ;
++--------------------+--------------+---------------------+
+
+
++----------------------------------------------------------------------------------+
+; Flow OS Summary                                                                  ;
++--------------------+------------------+------------+------------+----------------+
+; Module Name        ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
++--------------------+------------------+------------+------------+----------------+
+; Synthesis          ; Noah-Computer    ; Windows 11 ; 10.0.26200 ; x86_64         ;
+; Fitter             ; Noah-Computer    ; Windows 11 ; 10.0.26200 ; x86_64         ;
+; Timing Analyzer    ; Noah-Computer    ; Windows 11 ; 10.0.26200 ; x86_64         ;
+; EDA Netlist Writer ; Noah-Computer    ; Windows 11 ; 10.0.26200 ; x86_64         ;
+; Timing Analyzer    ; Noah-Computer    ; Windows 11 ; 10.0.26200 ; x86_64         ;
++--------------------+------------------+------------+------------+----------------+
+
+
+------------
+; Flow Log ;
+------------
+quartus_syn --read_settings_files=on --write_settings_files=off tds_monitor_system -c tds_monitor_system
+quartus_fit --read_settings_files=on --write_settings_files=off tds_monitor_system -c tds_monitor_system
+quartus_sta tds_monitor_system -c tds_monitor_system --mode=finalize
+quartus_eda --read_settings_files=on --write_settings_files=off tds_monitor_system -c tds_monitor_system
+quartus_sta tds_monitor_system -c tds_monitor_system --mode=finalize
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2025  Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Altera and sold by Altera or its authorized distributors.  Please
+refer to the Altera Software License Subscription Agreements 
+on the Quartus Prime software download page.
+
+
+

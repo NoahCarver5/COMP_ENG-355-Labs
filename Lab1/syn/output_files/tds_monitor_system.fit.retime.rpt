@@ -1,0 +1,155 @@
+Fitter Retime Stage Report for tds_monitor_system
+Mon Oct 19 16:44:37 2026
+Quartus Prime Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Hyper-Retimer Settings
+  3. Reset Sequence Requirement
+  4. Retiming Limit Summary
+  5. Critical Chain Summary for Clock Domain clk~derived
+  6. Retime Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2025  Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Altera and sold by Altera or its authorized distributors.  Please
+refer to the Altera Software License Subscription Agreements 
+on the Quartus Prime software download page.
+
+
+
++--------------------------------------------------+
+; Hyper-Retimer Settings                           ;
++------------------------+---------+---------------+
+; Option                 ; Setting ; Default Value ;
++------------------------+---------+---------------+
+; Enable Auto-Pipelining ; On      ; On            ;
++------------------------+---------+---------------+
+
+
++-------------------------------------------+
+; Reset Sequence Requirement                ;
++-------------+-----------------------------+
+; Clock Name  ; Number of additional cycles ;
++-------------+-----------------------------+
+; clk~derived ; 0                           ;
++-------------+-----------------------------+
+Note: Due to retiming optimizations, a clock domain may require a longer reset sequence to ensure correct functionality.  The table above indicates the minimum number of additional reset sequence cycles needed for each clock domain.
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Retiming Limit Summary                                                                                                                                                                ;
++--------------------------+------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+; Clock Transfer           ; Limiting Reason        ; Recommendation                                                                                                                    ;
++--------------------------+------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+; Clock Domain clk~derived ; Insufficient Registers ; See the Fast Forward Timing Closure Recommendations report for step-by-step suggestions for RTL changes and estimated performance ;
++--------------------------+------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+
+
+Critical Chain Summary for Clock Domain clk~derived
+===============================================================================
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Recommendations for Critical Chain                                                                                                                                                                                                                                             ;
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Recommendation                                                                                                                                                                                                                                                                 ;
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; The critical chain is limited by: Insufficient Registers                                                                                                                                                                                                                       ;
+;                                                                                                                                                                                                                                                                                ;
+; Reduce the delay of 'Long Paths' in the chain                                                                                                                                                                                                                                  ;
+;   or insert more pipeline stages for 'Long Paths' in the chain                                                                                                                                                                                                                 ;
+;   or remove retiming restrictions                                                                                                                                                                                                                                              ;
+;    Refer to <a href='https://www.intel.com/content/www/us/en/docs/programmable/683353/current/insufficient-registers.html'>Insufficient Registers</a> in the <i>Intel Hyperflex Architecture High-Performance Design Handbook</i> for more information.                        ;
+;                                                                                                                                                                                                                                                                                ;
+; Retiming Restrictions at Register #1:                                                                                                                                                                                                                                          ;
+;  adc_inst|pause_count[7]                                                                                                                                                                                                                                                       ;
+;   Node uses an asynchronous clear port                                                                                                                                                                                                                                         ;
+;                                                                                                                                                                                                                                                                                ;
+; Add additional pipeline stages at Register #2:                                                                                                                                                                                                                                 ;
+;  adc_inst|bit_count[3]                                                                                                                                                                                                                                                         ;
+;  Add additional pipeline stages along these paths BEFORE the destinations                                                                                                                                                                                                      ;
+;   from adc_dout to adc_inst|shift_reg[0]                                                                                                                                                                                                                                       ;
+;                                                                                                                                                                                                                                                                                ;
+; The critical chain has Domain Boundary Entry/Exit Constraint                                                                                                                                                                                                                   ;
+;    Refer to <a href='https://www.intel.com/content/www/us/en/docs/programmable/683353/current/domain-boundary-entry-and-domain-boundary.html'>Domain Boundary Entry/Exit</a> in the <i>Intel Hyperflex Architecture High-Performance Design Handbook</i> for more information. ;
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Critical Chain Details                                                                                                                               ;
++----------------------+-------------------------+-------------+---------------------------------------------------------------------------------------+
+; Path Info            ; Register                ; Register ID ; Element                                                                               ;
++----------------------+-------------------------+-------------+---------------------------------------------------------------------------------------+
+; Retiming Restriction ; ALM Register            ; #1          ; adc_inst|pause_count[7]                                                               ;
+; Long Path (Critical) ;                         ;             ; adc_inst|pause_count[7]|q                                                             ;
+; Long Path (Critical) ;                         ;             ; adc_inst|pause_count[7]~LAB_RE_X78_Y9_N0_I104                                         ;
+; Long Path (Critical) ;                         ;             ; adc_inst|pause_count[7]~C1_X78_Y8_N0_I15                                              ;
+; Long Path (Critical) ;                         ;             ; adc_inst|pause_count[7]~LOCAL_INTERCONNECT_X78_Y8_N0_I33                              ;
+; Long Path (Critical) ; Bypassed Hyper-Register ;             ; adc_inst|pause_count[7]~BLOCK_INPUT_MUX_PASSTHROUGH_X78_Y8_N0_I61                     ;
+; Long Path (Critical) ;                         ;             ; adc_inst|pause_count[7]~LAB_RE_X78_Y8_N0_I60                                          ;
+; Long Path (Critical) ;                         ;             ; adc_inst|reduce_nor_0~3|datab                                                         ;
+; Long Path (Critical) ;                         ;             ; adc_inst|reduce_nor_0~3|combout                                                       ;
+; Long Path (Critical) ;                         ;             ; adc_inst|reduce_nor_0~3~cw_ml_mlab/laboutb[11]                                        ;
+; Long Path (Critical) ;                         ;             ; adc_inst|reduce_nor_0~3~_LAB_RE_X78_Y8_N0_I120                                        ;
+; Long Path (Critical) ;                         ;             ; adc_inst|reduce_nor_0~3~_LOCAL_INTERCONNECT_X78_Y8_N0_I60                             ;
+; Long Path (Critical) ; Bypassed Hyper-Register ;             ; adc_inst|reduce_nor_0~3~_BLOCK_INPUT_MUX_PASSTHROUGH_X78_Y8_N0_I65                    ;
+; Long Path (Critical) ;                         ;             ; adc_inst|reduce_nor_0~3~_LAB_RE_X78_Y8_N0_I69                                         ;
+; Long Path (Critical) ;                         ;             ; adc_inst|reduce_nor_0|datac                                                           ;
+; Long Path (Critical) ;                         ;             ; adc_inst|reduce_nor_0|combout                                                         ;
+; Long Path (Critical) ;                         ;             ; adc_inst|reduce_nor_0~cw_ml_mlab/laboutb[15]                                          ;
+; Long Path (Critical) ;                         ;             ; adc_inst|reduce_nor_0~LAB_RE_X78_Y8_N0_I124                                           ;
+; Long Path (Critical) ;                         ;             ; adc_inst|reduce_nor_0~LOCAL_INTERCONNECT_X78_Y8_N0_I72                                ;
+; Long Path (Critical) ; Bypassed Hyper-Register ;             ; adc_inst|reduce_nor_0~BLOCK_INPUT_MUX_PASSTHROUGH_X78_Y8_N0_I75                       ;
+; Long Path (Critical) ;                         ;             ; adc_inst|reduce_nor_0~LAB_RE_X78_Y8_N0_I79                                            ;
+; Long Path (Critical) ;                         ;             ; adc_inst|Select_38~0|datae                                                            ;
+; Long Path (Critical) ;                         ;             ; adc_inst|Select_38~0|combout                                                          ;
+; Long Path (Critical) ;                         ;             ; adc_inst|Select_38~0~cw_ml_mlab/lab_lut5outb[4]                                       ;
+; Long Path (Critical) ;                         ;             ; adc_inst|Select_38~0~_LAB_RE_X78_Y8_N0_I143                                           ;
+; Long Path (Critical) ;                         ;             ; adc_inst|Select_38~0~_R1_X79_Y8_N0_I38                                                ;
+; Long Path (Critical) ;                         ;             ; adc_inst|Select_38~0~_R1_X80_Y8_N0_I38                                                ;
+; Long Path (Critical) ;                         ;             ; adc_inst|Select_38~0~_R0_X80_Y8_N0_I69                                                ;
+; Long Path (Critical) ;                         ;             ; adc_inst|Select_38~0~_R1_X80_Y8_N0_I29                                                ;
+; Long Path (Critical) ;                         ;             ; adc_inst|Select_38~0~_LOCAL_INTERCONNECT_X79_Y8_N0_I59                                ;
+; Long Path (Critical) ;                         ;             ; adc_inst|Select_38~0~_BLOCK_INPUT_MUX_PASSTHROUGH_X79_Y8_N0_I82                       ;
+; Long Path (Critical) ;                         ;             ; adc_inst|Select_38~0~_LAB_RE_X79_Y8_N0_I80                                            ;
+; Long Path (Critical) ; Bypassed Hyper-Register ;             ; adc_inst|shift_reg[10]~xtophalf/xale1/xcw_la_le_regctrl/xcw_la_le_regctrl_reg/nce_out ;
+; Long Path (Critical) ;                         ;             ; adc_inst|bit_count[3]|ena                                                             ;
+; Domain Boundary Exit ; ALM Register            ; #2          ; adc_inst|bit_count[3]                                                                 ;
++----------------------+-------------------------+-------------+---------------------------------------------------------------------------------------+
+
+
+
++-----------------+
+; Retime Messages ;
++-----------------+
+Info (20030): Parallel compilation is enabled and will use 10 of the 10 processors detected
+Info: *******************************************************************
+Info: Running Quartus Prime Fitter
+    Info: Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+    Info: Processing started: Mon Oct 19 16:43:02 2026
+    Info: System process ID: 5308
+Info: Command: quartus_fit --read_settings_files=on --write_settings_files=off tds_monitor_system -c tds_monitor_system
+Info: qfit2_default_script.tcl version: #1
+Info: Project  = tds_monitor_system
+Info: Revision = tds_monitor_system
+Info (17966): Starting Hyper-Retimer operations.
+Info (18914): The Hyper-Retimer was unable to optimize the design due to retiming restrictions. Run Fast Forward Timing Closure Recommendations to see step-by-step suggestions for design changes and show the estimated performance improvement from making these changes.
+Info (17968): Completed Hyper-Retimer operations.
+Info (18821): Fitter Hyper-Retimer operations ending: elapsed time is 00:00:00
+
+

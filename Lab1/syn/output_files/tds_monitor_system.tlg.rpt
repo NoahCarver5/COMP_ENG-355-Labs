@@ -1,0 +1,85 @@
+Logic Generation report
+Mon Oct 19 16:42:41 2026
+Quartus Prime Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Logic Generation Tool Settings
+  2. Logic Generation Tool Simplex IP Report
+  3. Logic Generation Tool User Assignment Report
+  4. Logic Generation Tool Dual Simplex IP Report
+  5. Logic Generation Tool Messages
+
+
+
++------------------------------------------------------------------------------------------------------+
+; Logic Generation Tool Settings                                                                       ;
++------------------------------------------------------------------+-------------------+---------------+
+; Option                                                           ; Setting           ; Default Value ;
++------------------------------------------------------------------+-------------------+---------------+
+; Device                                                           ; A5ED013BB32AE4SR1 ;               ;
+; Maximum number of parallel out-of-context synthesis jobs         ; Auto              ; Auto          ;
+; Enable parallel Assembler and Timing Analyzer during compilation ; On                ; On            ;
+; Enable compact report table                                      ; Off               ; Off           ;
+; Design Assistant include IP blocks                               ; Off               ; Off           ;
+; High fanout net threshold for RAM inference                      ; 15                ; 15            ;
+; Design Assistant limit on reported violations per rule           ; 5000              ; 5000          ;
++------------------------------------------------------------------+-------------------+---------------+
+
+
++-------------------------------------------------------------+
+; Logic Generation Tool Simplex IP Report                     ;
++------------+------------+--------------+---------+----------+
+; Simplex IP ; IP Channel ; IP Direction ; IP Type ; FEC Used ;
++------------+------------+--------------+---------+----------+
+;            ;            ;              ;         ;          ;
++------------+------------+--------------+---------+----------+
+
+
++-----------------------------------------------------------------------------------+
+; Logic Generation Tool User Assignment Report                                      ;
++----------+---------------------+-------------------+-------------------+----------+
+; DS Group ; Assigned Simplex IP ; User IP Instances ; Relative Location ; Loopback ;
++----------+---------------------+-------------------+-------------------+----------+
+;          ;                     ;                   ;                   ;          ;
++----------+---------------------+-------------------+-------------------+----------+
+
+
++----------------------------------------------------------------------------+
+; Logic Generation Tool Dual Simplex IP Report                               ;
++-----------------+------------+--------------+---------+----------+---------+
+; Dual Simplex IP ; IP Channel ; IP Direction ; IP Type ; FEC Used ; IP File ;
++-----------------+------------+--------------+---------+----------+---------+
+;                 ;            ;              ;         ;          ;         ;
++-----------------+------------+--------------+---------+----------+---------+
+
+
++--------------------------------+
+; Logic Generation Tool Messages ;
++--------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Logic Generation Tool
+    Info: Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+    Info: Processing started: Mon Oct 19 16:42:39 2026
+    Info: System process ID: 8436
+Info: Command: quartus_tlg --ds_tool --read_settings_files=on --write_settings_files=off --skip_quick_elaboration tds_monitor_system -c tds_monitor_system
+Info: Loading c:/altera_pro/25.1.1/quartus/common/tcl/internal/qtlg_dr_tool_script.tcl
+Info: Loading c:/altera_pro/25.1.1/quartus/common/tcl/internal/qtlg_ds_tool_script.tcl
+Info: Launching DS tool
+Info: qtlg_default_flow_script.tcl version: #1
+Info: Initializing Hard-IP Logic Generation...
+Info: Project = "tds_monitor_system"
+Info: Revision = "tds_monitor_system"
+Info: *******************************************************************
+Info: Running Quartus Prime Logic Generation Tool
+    Info: Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+    Info: Processing started: Mon Oct 19 16:42:40 2026
+    Info: System process ID: 16024
+Info: Command: quartus_tlg --read_settings_files=on --write_settings_files=off tds_monitor_system -c tds_monitor_system --dni --disable_qmsgdb --tool=ds_synth
+Info: Loading c:/altera_pro/25.1.1/quartus/common/tcl/internal/qtlg_dr_tool_script.tcl
+Info: Loading c:/altera_pro/25.1.1/quartus/common/tcl/internal/qtlg_ds_tool_script.tcl
+Info: Launching tool main function ds_synthtool_main
+
+

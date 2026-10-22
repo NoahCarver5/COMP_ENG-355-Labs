@@ -1,0 +1,109 @@
+Synthesis Analysis & Elaboration Stage Report for tds_monitor_system
+Mon Oct 19 16:42:55 2026
+Quartus Prime Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Parameter Settings for User Entity tla2518_adc Instance: adc_inst
+  3. Parameter Settings for User Entity tds_converter Instance: tds_monitor_inst|tds_converter_instance
+  4. Top Causes of Logic Optimized Away During Sweep
+  5. Analysis & Elaboration Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2025  Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Altera and sold by Altera or its authorized distributors.  Please
+refer to the Altera Software License Subscription Agreements 
+on the Quartus Prime software download page.
+
+
+
++-------------------------------------------------------------------+
+; Parameter Settings for User Entity tla2518_adc Instance: adc_inst ;
++----------------+-----------+--------------------------------------+
+; Parameter Name ; Value     ; Type                                 ;
++----------------+-----------+--------------------------------------+
+; CLOCK_DIVIDER  ; 25        ; Untyped                              ;
+; PAUSE_CYCLES   ; 200000000 ; Untyped                              ;
++----------------+-----------+--------------------------------------+
+All Instances:
+adc_inst
+
+
+
++----------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity tds_converter Instance: tds_monitor_inst|tds_converter_instance ;
++----------------+-------+---------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                      ;
++----------------+-------+---------------------------------------------------------------------------+
+; TDS_THRESHOLD  ; 250   ; Untyped                                                                   ;
++----------------+-------+---------------------------------------------------------------------------+
+All Instances:
+tds_monitor_inst|tds_converter_instance
+
+
+
+Top root causes of logic optimization that have been identified during sweep. For more details and filtering options, ensure that you have compiled with the "Enable RTL Analysis Debug Mode " setting turned on under Assignments->Settings->Compiler Settings, then go to the " Root Causes Tab " in the " Sweep Hints Viewer " tool in the " RTL Analyzer ".
++----------------------------------------------------------------------------------------------------------------------+
+; Top Causes of Logic Optimized Away During Sweep                                                                      ;
++--------------------------------------------+------------------+--------------------------------+---------------------+
+; Root Object Path                           ; Root Object Type ; Root Reason                    ; Swept Objects Count ;
++--------------------------------------------+------------------+--------------------------------+---------------------+
+; tds_monitor_inst|bcd_instance|thousands[3] ; OUTPUT_PORT      ; stuck at 0                     ; 7                   ;
+; adc_inst|din_reg                           ; DFFE             ; stuck at 0 due to stuck port d ; 2                   ;
++--------------------------------------------+------------------+--------------------------------+---------------------+
+
+
++---------------------------------+
+; Analysis & Elaboration Messages ;
++---------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Synthesis
+    Info: Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+    Info: Processing started: Mon Oct 19 16:42:49 2026
+    Info: System process ID: 5024
+Info: Command: quartus_syn --read_settings_files=on --write_settings_files=off tds_monitor_system -c tds_monitor_system
+Info: qis_default_flow_script.tcl version: #1
+Info: Initializing Synthesis...
+Info: Project = "tds_monitor_system"
+Info: Revision = "tds_monitor_system"
+Info (21958): Initialized Quartus Message Database
+Info: Analyzing source files
+Critical Warning (20759): Use the Reset Release IP in Intel Agilex 5 FPGA designs to ensure a successful configuration. For more information about the Reset Release IP, refer to the Configuration User Guide.
+Info: Elaborating from top-level entity "tds_monitor_system"
+Info (19337): VHDL info at tds_monitor_system.vhd(7): executing entity "tds_monitor_system" with architecture "structural" File: C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tds_monitor_system.vhd Line: 7
+Info (19337): VHDL info at tla2518_adc.vhd(5): executing entity "tla2518_adc" with architecture "rtl" File: C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tla2518_adc.vhd Line: 5
+Info (19337): VHDL info at tds_monitor.vhd(35): executing entity "tds_monitor" with architecture "structural" File: C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tds_monitor.vhd Line: 35
+Info (19337): VHDL info at tds_converter.vhd(8): executing entity "tds_converter" with architecture "data_flow" File: C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/tds_converter.vhd Line: 8
+Info (19337): VHDL info at bcd.vhd(8): executing entity "bcd" with architecture "behavioral" File: C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/bcd.vhd Line: 8
+Info (19337): VHDL info at digit_display.vhd(4): executing entity "digit_display" with architecture "data_flow" File: C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/vhdl/digit_display.vhd Line: 4
+Info: Found 6 design entities
+Info: There are 9 partitions after elaboration.
+Info: Running rule checking for Agilex5 protocol IPs...
+Warning (23202): Intel FPGA IP Evaluation Mode feature is not used - it is not supported for this device
+Info: DA report generation in native DNI mode
+Info (21615): Running Design Assistant Rules for snapshot 'partitioned'
+Info: No waiver waived any violations
+Info (22360): Design Assistant Results: 28 of 29 enabled rules passed, and 1 rules was disabled, in snapshot 'partitioned'
+Info (21660): Design Assistant Results: 0 of 19 Critical severity rules issued violations in snapshot 'partitioned'
+Warning (21620): Design Assistant Results: 1 of 1 High severity rules issued violations in snapshot 'partitioned'. Please refer to DRC report 'C:/Users/noahc/AppData/Local/quartus/"C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/syn/output_files/tds_monitor_system.drc.partitioned.rpt' for more information
+Info (21621): Design Assistant Results: 0 of 1 Medium severity rules issued violations in snapshot 'partitioned'
+Info (21622): Design Assistant Results: 0 of 8 Low severity rules issued violations in snapshot 'partitioned'
+
+

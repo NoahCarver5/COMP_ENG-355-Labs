@@ -1,0 +1,163 @@
+Fitter Fastforward Stage Report for tds_monitor_system
+Mon Oct 19 00:18:43 2026
+Quartus Prime Version 25.1.1 Build 125 07/31/2025 SC Pro Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Summary
+  3. Settings
+  4. Clock Fmax Summary
+  5. Clock Worst-Case Slack Summary
+  6. Fast Forward Summary for Clock Domain clk
+  7. Critical Chain for Base Result
+  8. Meets timing requirements: No further analysis performed.
+  9. Fastforward Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2025  Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Altera and sold by Altera or its authorized distributors.  Please
+refer to the Altera Software License Subscription Agreements 
+on the Quartus Prime software download page.
+
+
+
++--------------------------------------------------------------------+
+; Summary                                                            ;
++-----------------------+--------------------------------------------+
+; Fast Forward Status   ; Successful - Mon Oct 19 00:18:43 2026      ;
+; Quartus Prime Version ; 25.1.1 Build 125 07/31/2025 SC Pro Edition ;
+; Revision Name         ; tds_monitor_system                         ;
+; Top-level Entity Name ; tds_monitor_system                         ;
+; Family                ; Agilex 5                                   ;
+; Device                ; A5ED013BB32AE4SR1                          ;
++-----------------------+--------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------+
+; Settings                                                                                          ;
++-------------------------------------------------------------------------+---------+---------------+
+; Option                                                                  ; Setting ; Default Value ;
++-------------------------------------------------------------------------+---------+---------------+
+; Enable Hyper-Retimer Fast Forward analysis during compilation           ; Off     ; Off           ;
+; Enable Hyper-Retimer Fast Forward Hierarchy analysis during compilation ; On      ; On            ;
+; Fast Forward Compile Maximum Additional Pipeline Stages                 ; -1      ; -1            ;
+; Fast Forward Compile Asynchronous Clears                                ; Auto    ; Auto          ;
+; Fast Forward Compile User Preserve Directives                           ; Auto    ; Auto          ;
+; Fast Forward Compile Fully Register DSP blocks                          ; On      ; On            ;
+; Fast Forward Compile Fully Register RAM blocks                          ; On      ; On            ;
+; Enable Critical Chain Viewer                                            ; On      ; On            ;
++-------------------------------------------------------------------------+---------+---------------+
+To turn on Fast Forward analysis during Quartus compilation, edit the setting in the HyperFlex settings menu in the Quartus GUI or set_global_assignment -name FLOW_ENABLE_HYPER_RETIMER_FAST_FORWARD ON in your QSF
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------+
+; Clock Fmax Summary                                                                                                                        ;
++------------+---------+------------------------------+--------------------------------+----------------------------------+-----------------+
+; Clock Name ; Fmax    ; Achieved with Hyper-Retiming ; Achieved with Hyper-Pipelining ; Achieved with Hyper-Optimization ; Restricted Fmax ;
++------------+---------+------------------------------+--------------------------------+----------------------------------+-----------------+
+; clk        ; 477 MHz ; 477 MHz                      ; 477 MHz                        ; 477 MHz                          ; 352 MHz         ;
++------------+---------+------------------------------+--------------------------------+----------------------------------+-----------------+
+Fast Forward Compilation enabled: Post-place & route results are analyzed to provide step-by-step recommendations for suggested RTL changes and show the estimated performance improvement from making these changes
+- Fmax/Slack: Estimated performance from retiming existing registers in the design
+- Relationship: Timing relationship between launch and latch clock edge
+- Achieved with Hyper-Retiming: Estimated performance from analyzing optimizations to remove restrictions that prevent registers from retiming
+- Achieved with Hyper-Pipelining: Estimated performance from analyzing optimizations to add new registers to the design to pipeline paths better
+- Achieved with Hyper-Optimization: Estimated performance from analyzing optimizations to further improve the design
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------+
+; Clock Worst-Case Slack Summary                                                                                                               ;
++------------+------------------------------+------------------------------+--------------------------------+----------------------------------+
+; Clock Name ; Slack                        ; Achieved with Hyper-Retiming ; Achieved with Hyper-Pipelining ; Achieved with Hyper-Optimization ;
++------------+------------------------------+------------------------------+--------------------------------+----------------------------------+
+; clk        ; 17.903 (20.000 Relationship) ; 17.903 (20.000 Relationship) ; 17.903 (20.000 Relationship)   ; 17.903 (20.000 Relationship)     ;
++------------+------------------------------+------------------------------+--------------------------------+----------------------------------+
+Fast Forward Compilation enabled: Post-place & route results are analyzed to provide step-by-step recommendations for suggested RTL changes and show the estimated performance improvement from making these changes
+- Fmax/Slack: Estimated performance from retiming existing registers in the design
+- Relationship: Timing relationship between launch and latch clock edge
+- Achieved with Hyper-Retiming: Estimated performance from analyzing optimizations to remove restrictions that prevent registers from retiming
+- Achieved with Hyper-Pipelining: Estimated performance from analyzing optimizations to add new registers to the design to pipeline paths better
+- Achieved with Hyper-Optimization: Estimated performance from analyzing optimizations to further improve the design
+
+
++-------------------------------------------------------------------------------------------------------------------------+
+; Fast Forward Summary for Clock Domain clk                                                                               ;
++--------------------+-----------------------------------------------------------+----------------+--------+--------------+
+; Step               ; Fast Forward Optimizations Analyzed                       ; Estimated Fmax ; Slack  ; Relationship ;
++--------------------+-----------------------------------------------------------+----------------+--------+--------------+
+; Base Performance   ; None                                                      ; 477 MHz        ; 17.903 ; 20.000       ;
+; Fast Forward Limit ; Meets timing requirements: No further analysis performed. ; --             ; --     ; --           ;
++--------------------+-----------------------------------------------------------+----------------+--------+--------------+
+
+
+Critical Chain for Base Result
+===============================================================================
++--------------------------------------------------------------------+
+; Critical Chain for Base Result                                     ;
++--------------------------------------------------------------------+
+; Critical Chain for Base Result                                     ;
++--------------------------------------------------------------------+
+; See 'Retiming Limit Details' results in Fitter Retime Stage folder ;
++--------------------------------------------------------------------+
+
+
+
+Meets timing requirements: No further analysis performed.
+===============================================================================
++-----------------------------------------------------------+
+; Optimizations Analyzed (Cumulative)                       ;
++-----------------------------------------------------------+
+; Optimizations Analyzed (Cumulative)                       ;
++-----------------------------------------------------------+
+; Meets timing requirements: No further analysis performed. ;
++-----------------------------------------------------------+
+
+
+
++----------------------+
+; Fastforward Messages ;
++----------------------+
+Can't read Quartus Prime message file C:/Users/noahc/Downloads/CE 355/COMP_ENG-355-Labs/Lab1/syn/qdb/_compiler/tds_monitor_system/_flat/25.1.1/legacy/1/tds_monitor_system.fit.fastforward.header.qmsgdb.
+Make sure the file exists and is up to date, and you have permission to read and write the file.
+Info (16677): Loading routed database.
+Info (16734): Loading "routed" snapshot for partition "root_partition".
+Info (16678): Successfully loaded routed database: elapsed time is 00:00:02.
+Info (21077): Low junction temperature is 0 degrees C
+Info (21077): High junction temperature is 100 degrees C
+Info (21077): Low junction temperature is 0 degrees C
+Info (21077): High junction temperature is 100 degrees C
+Info (19539): Reading the HDL-embedded SDC files elapsed 00:00:00.
+Info (23353): No SDC file assignments detected, attempting to load a default SDC file: tds_monitor_system.sdc.
+Info (332104): Reading SDC File: 'tds_monitor_system.sdc'
+Info (19449): Reading SDC files elapsed 00:00:00.
+Info (332143): No user constrained clock uncertainty found in the design. Calling "derive_clock_uncertainty"
+Warning (332158): Clock uncertainty characteristics of the Agilex 5 device family are preliminary
+Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
+Info (332129): Detected timing requirements -- optimizing circuit to achieve only the specified requirements
+Info (332111): Found 1 clocks
+    Info (332111):   Period   Clock Name
+    Info (332111): ======== ============
+    Info (332111):   20.000          clk
+Info (18747): Starting Fast Forward Timing Closure Recommendations analysis.
+Info (19245): Unable to provide further Fast Forward analysis of the design due to retiming restrictions (RTL or timing constraints).
+Info (18748): Completed Fast Forward Timing Closure Recommendations analysis.
+Info (18821): Fitter Hyper-Retimer operations ending: elapsed time is 00:00:01
+
+

@@ -72,7 +72,7 @@ begin
     begin
         servo_i : pwm_servo
             generic map(
-                INVERT => (i = THUMB_SERVO)
+                INVERT => (i /= THUMB_SERVO)
             )
             port map(
                 clk => clk,
@@ -89,6 +89,6 @@ begin
     -- TODO: Add concurrent statements to drive the led outputs. 
     ----------------------------------------------------------------
     rst <= not rst_n;
-    led <= sw;
+    led <= not sw; --expected this to just wire up. Leds only lit up correctly when the given the negated value of sw
 
 end architecture structure;
