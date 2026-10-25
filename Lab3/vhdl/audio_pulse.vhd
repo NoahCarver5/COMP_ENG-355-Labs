@@ -17,6 +17,8 @@ end entity audio_pulse;
 architecture behavioral of audio_pulse is
 
     constant AUDIO_DIVIDER : natural := CLK_FREQUENCY / SAMPLE_RATE_HZ;
+
+    signal counter : natural range 0 to AUDIO_DIVIDER - 1;
     
 begin
     ------------------------------------------------------------------------------
@@ -28,8 +30,16 @@ begin
     begin
         if ( rst = '1' ) then
             pulse <= '0';
+            counter <= 0;
         elsif ( rising_edge(clk) ) then
             pulse <= '0';
+            if (counter = AUDIO_DIVIDER - 1) then
+                counter <= 0;
+                pulse <= '1';
+            else
+                counter <= counter + 1;
+                pulse <= '0';
+            end if;
         end if;
     end process;
 

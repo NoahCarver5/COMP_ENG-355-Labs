@@ -53,7 +53,8 @@ architecture rtl of drum_voice is
     ----------------------------------------------------------------
     -- Signal declarations
     ----------------------------------------------------------------
-   
+    signal address : unsigned(ADDR_WIDTH-1 downto 0);
+    signal playing : std_logic;
 
 begin
 
@@ -70,12 +71,24 @@ begin
     clocked_process: process(clk, rst)
     begin
         if ( rst = '1' ) then
-            rom_address <= (others => '0');
-            active      <= '0';
+            address <= (others => '0');
+            playing <= '0';
         elsif ( rising_edge(clk) ) then
-            rom_address <= (others => '0');
-            active      <= '0';
+            if ( trigger = '1' ) then
+                address <= (others => '0');
+                playing <= '1';
+            elsif ( pulse = '1' and playing = '1') then
+                if (address = DATA_SIZE - 1) then
+                    address <= (others => '0');
+                    playing <= '0';
+                else
+                    address <= address + 1;
+                end if;
+            end if;
         end if;
-    end process;
+    end process clocked_process;
+
+    rom_address <= std_logic_vector(address);
+    active <= playing;
 
 end architecture rtl;
