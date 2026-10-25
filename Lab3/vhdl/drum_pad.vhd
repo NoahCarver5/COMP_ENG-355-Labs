@@ -93,7 +93,12 @@ architecture structure of drum_pad is
     ----------------------------------------------------------------
 
     signal pulse : std_logic;
-    signal trigger : std_logic;
+    signal metronome_trigger : std_logic;
+    signal voice_trigger : std_logic_vector(NUM_VOICES-1 downto 0);
+    signal voice_address : address_array_t; -- output of drum_voice into ROM
+    signal ROM_sample : sample_array_t; -- output of ROM into mixer
+    signal voice_sample : sample_array_t;
+    signal voice_sample_flat : std_logic_vector(NUM_VOICES*DATA_WIDTH - 1 downto 0);
 
     ----------------------------------------------------------------
     -- Component declarations
@@ -141,6 +146,20 @@ architecture structure of drum_pad is
         );
     end component drum_voice;
 
+    component audio_mixer is
+        generic(
+            NUM_VOICES  : natural := 5;
+            DATA_WIDTH  : natural := 16
+        );
+        port(
+            clk           : in  std_logic;
+            rst           : in  std_logic;
+            pulse         : in  std_logic;
+            voice_samples : in  std_logic_vector(NUM_VOICES * DATA_WIDTH - 1 downto 0);
+            audio         : out std_logic_vector(DATA_WIDTH-1 downto 0)
+        );
+    end component audio_mixer;
+
 begin
 
     ----------------------------------------------------------------
@@ -157,22 +176,22 @@ begin
             clk => clk,
             rst => rst,
             pulse => pulse
-        )
+        );
     
     metronome_inst : metronome
         generic map(
             SAMPLE_RATE_HZ => SAMPLE_RATE_HZ
-        );
+        )
         port map(
             clk => clk,
             rst => rst,
             pulse => pulse,
             enable => sw(0),
             speed => sw(2 downto 1),
-            trigger => trigger,
+            trigger => metronome_trigger,
             led => led
         );
-    
+
 
 
     ----------------------------------------------------------------
@@ -186,7 +205,31 @@ begin
     -- from the ROMs.
     ----------------------------------------------------------------
 
-    
+    sample_pulse <= pulse;
+
+    -- voice triggers: push_buttons are active-low (negated at system-level)
+    voice_trigger(0) <= key(0);
+    voice_trigger(1) <= key(1);
+    voice_trigger(2) <= key(2);
+    voice_trigger(3) <= key(3);
+    voice_trigger(4) <= metronome_trigger; -- Voice 4 triggered by metronome
+
+    gen_drum_voices : for i in 0 to NUM_VOICES - 1 generate
+        drum_voice_inst : drum_voice
+            generic map(
+            ADDR_WIDTH  => ROM_ADDR_WIDTH,
+            DATA_SIZE => ROM_DEPTH
+            )
+            port map(
+                clk => clk,
+                rst => rst,
+                pulse => pulse,
+                trigger => voice_trigger(i),
+                rom_address => voice_address(i),
+                active => open
+            );
+    end generate gen_drum_voices;
+
 
     ----------------------------------------------------------------
     -- TODO: Implement the ROM lookup process. It should read the 
@@ -203,7 +246,31 @@ begin
     ----------------------------------------------------------------
     rom_process : process(clk)
     begin
+        if rising_edge(clk) then
+            ROM_sample(0) <= KICK_ROM(to_integer(unsigned(voice_address(0))));
+            ROM_sample(1) <= SNARE_ROM(to_integer(unsigned(voice_address(1))));
+            ROM_sample(2) <= HIHAT_ROM(to_integer(unsigned(voice_address(2))));
+            ROM_sample(3) <= CRASH_ROM(to_integer(unsigned(voice_address(3))));
+            ROM_sample(4) <= CLICK_ROM(to_integer(unsigned(voice_address(4))));
+            voice_sample <= ROM_sample;
+        end if;
     end process rom_process;
 
+    flatten_samples : for i in 0 to NUM_VOICES - 1 generate
+        voice_sample_flat((i+1) * DATA_WIDTH - 1 downto i * DATA_WIDTH) <= voice_sample(i);
+    end generate;
+
+    audio_mixer_inst : audio_mixer
+    generic map(
+        NUM_VOICES => NUM_VOICES,
+        DATA_WIDTH => DATA_WIDTH
+    )
+    port map(
+        clk => clk,
+        rst => rst,
+        pulse => pulse,
+        voice_samples => voice_sample_flat,
+        audio => audio_out
+    );
 
 end architecture structure;
