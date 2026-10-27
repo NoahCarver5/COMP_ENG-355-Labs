@@ -157,6 +157,33 @@ begin
         wait for CLK_PERIOD_NS; 
         key(0) <= '0';
         wait for 1000 ms;
+        key(1) <= '1';
+        wait for CLK_PERIOD_NS;
+        key(1) <= '0';
+        wait for 1000 ms;
+        key(2) <= '1';
+        wait for CLK_PERIOD_NS;
+        key(2) <= '0';
+        wait for 1000 ms;
+        key(3) <= '1';
+        wait for CLK_PERIOD_NS;
+        key(3) <= '0';
+        wait for 1000 ms;
+        key(0) <= '1';
+        key(1) <= '1';
+        key(2) <= '1';
+        key(3) <= '1';
+        wait for CLK_PERIOD_NS;
+        key(0) <= '0';
+        key(1) <= '0';
+        key(2) <= '0';
+        key(3) <= '0';
+        wait for 1000 ms;
+
+
+
+
+        
 
         ---------------------------------------------------------------
         -- TODO: Add enable the different keys to test the different
