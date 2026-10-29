@@ -1,0 +1,100 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 2026  Altera Corporation. All rights reserved.
+# Your use of Altera Corporation's design tools, logic functions
+# and other software and tools, and any partner logic
+# functions, and any output files from any of the foregoing
+# (including device programming or simulation files), and any
+# associated documentation or information are expressly subject
+# to the terms and conditions of the Altera Program License
+# Subscription Agreement, the Altera Quartus Prime License Agreement,
+# the Altera IP License Agreement, or other applicable license
+# agreement, including, without limitation, that your use is for
+# the sole purpose of programming logic devices manufactured by
+# Altera and sold by Altera or its authorized distributors.  Please
+# refer to the Altera Software License Subscription Agreements
+# on the Quartus Prime software download page.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus Prime
+# Version 26.1.1 Build 130 08/06/2026 SC Pro Edition
+# Date created = 20:21:34  September 10, 2026
+#
+# -------------------------------------------------------------------------- #
+set_global_assignment -name TOP_LEVEL_ENTITY mandelbrot_system
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 26.1.1
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "20:21:34  SEPTEMBER 10, 2026"
+set_global_assignment -name LAST_QUARTUS_VERSION "26.1.1 Pro Edition"
+set_global_assignment -name SDC_FILE mandelbrot.sdc
+set_global_assignment -name IP_FILE VIDEO_PLL.ip
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 100
+set_global_assignment -name DEVICE A5ED013BB32AE4SCS
+set_global_assignment -name FAMILY "Agilex 5"
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
+set_global_assignment -name VHDL_INPUT_VERSION VHDL_2008
+set_global_assignment -name PWRMGT_VOLTAGE_OUTPUT_FORMAT "LINEAR FORMAT"
+set_global_assignment -name PWRMGT_LINEAR_FORMAT_N "-12"
+
+
+#============================================================
+# System Clock & Reset (CLOCK2_50, CPU_RESET_n)
+#
+# CLOCK2_50 rather than CLOCK0_50: it is the 50 MHz input in a
+# 1.2-V HSIO bank, which can feed the IOPLL directly.  Terasic's
+# HDMI demo clocks its PLL from the same pin.
+#============================================================
+set_instance_assignment -name IO_STANDARD "1.2-V" -to clk_50
+set_instance_assignment -name IO_STANDARD "1.2-V" -to reset_n
+
+#============================================================
+# Navigation
+#   keys_n[0..3] = KEY[0..3]  left, right, up, down (active low)
+#   keys_n[4]    = SW[0]      zoom direction (0 in, 1 out)
+#============================================================
+set_instance_assignment -name IO_STANDARD "1.2-V" -to keys_n[0]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to keys_n[1]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to keys_n[2]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to keys_n[3]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to keys_n[4]
+
+#============================================================
+# HDMI TX
+#============================================================
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hdmi_tx_clk
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_hs
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_vs
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_de
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_int -entity mandelbrot_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[12]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[13]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[14]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[15]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[16]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[17]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[18]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[19]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[20]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[21]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[22]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[23]
+
+#============================================================
+# I2C (FPGA_I2C_SCLK, FPGA_I2C_SDAT) -- HDMI transmitter config
+#============================================================
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to i2c_scl -entity mandelbrot_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to i2c_sda -entity mandelbrot_system
