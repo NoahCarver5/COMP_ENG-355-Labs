@@ -134,6 +134,14 @@ architecture rtl of mandel_engine is
     -- Signal Declarations
     --------------------------------------------------------------------------
 
+    signal z_x : std_logic_vector(35 downto 0);
+    signal z_y : std_logic_vector(35 downto 0);
+    signal c_x : std_logic_vector(35 downto 0);
+    signal c_y : std_logic_vector(35 downto 0);
+    signal escape_flag : std_logic;
+    signal escape_count : std_logic_vector((ITER_WIDTH-1) downto 0);
+    signal clock_counter : std_logic_vector((ITER_WIDTH-1) downto 0);
+
 begin
 
     --------------------------------------------------------------------------
@@ -163,13 +171,71 @@ begin
     --------------------------------------------------------------------------
 
     clocked_process : process (clock, reset) is
+        variable xx : std_logic_vector(71 downto 0);
+        variable yy : std_logic_vector(71 downto 0);
+        variable xy : std_logic_vector(71 downto 0);
+        variable xx_scaled : std_logic_vector(35 downto 0);
+        variable yy_scaled : std_logic_vector(35 downto 0);
+        variable xy_scaled : std_logic_vector(35 downto 0);
+        variable escape_test_val : std_logic_vector (COORD_WIDTH + GUARD_BITS downto 0);
     begin
         if ( reset = '1' ) then
             pixel   <= (others => '0');
             ready   <= '0';
+            z_x <= (others => '0');
+            z_y <= (others=>'0');
+            c_x <= (others => '0');
+            c_y <= (others=>'0');
+            escape_flag <= '0';
+            escape_count <= (others => '0');
+            clock_counter <= std_logic_vector(to_unsigned(MAX_ITER, ITER_WIDTH));
+
         elsif rising_edge(clock) then
-            pixel   <= (others => '0');
-            ready   <= '0';
+
+            pixel <= get_color(escape_count, MAX_ITER);
+          
+            if (start) then 
+
+                c_x <= cx;
+                c_y <= cy;
+                z_x <= (others => '0');
+                z_y <= (others => '0');
+                ready <= '0';
+                escape_flag <= '0';
+                clock_counter <= (others => '0');
+            elsif (unsigned(clock_counter) < MAX_ITER) then
+
+                xx := std_logic_vector(resize(signed(z_x) * signed(z_x), 72));
+                yy := std_logic_vector(resize(signed(z_y) * signed(z_y), 72));
+                xy := std_logic_vector(resize(signed(z_y) * signed(z_y), 72));
+
+
+                xx_scaled := xx(SCALE_BITS + COORD_WIDTH-1 downto SCALE_BITS);
+                yy_scaled := yy(SCALE_BITS + COORD_WIDTH-1 downto SCALE_BITS);
+                xy_scaled := xy(SCALE_BITS + COORD_WIDTH-1 downto SCALE_BITS);
+
+                escape_test_val := std_logic_vector(resize(unsigned(xx_scaled), COORD_WIDTH + GUARD_BITS + 1) + resize(unsigned(yy_scaled), GUARD_BITS + COORD_WIDTH + 1));
+
+                if (unsigned(escape_test_val) >= 4) then
+                    escape_flag <= '1';
+                else
+                    escape_count <= std_logic_vector(unsigned(escape_count) + 1);
+                    z_x <= std_logic_vector(signed(xx_scaled) - signed(yy_scaled) + signed(c_x));
+                    z_y <= std_logic_vector (signed(xy_scaled) + signed(xy_scaled) + signed(c_y));
+                end if;
+
+                clock_counter <= std_logic_vector(unsigned(clock_counter) + 1);
+
+                elsif (unsigned(clock_counter) = MAX_ITER) then 
+                    ready <= '1';
+
+            end if;
+
+
+
+
+
+
         end if;
     end process clocked_process;
 

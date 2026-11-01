@@ -140,7 +140,27 @@ architecture rtl of mandel_engine_bank is
     -- TODO: Declare the mandel_engine component.
     ----------------------------------------------------------------------
 
+    component mandel_engine is
+    generic (
+        MAX_ITER : natural := 120
+    );
+    port (
+        clock : in  std_logic;
+        reset : in  std_logic;                            -- async, active high
 
+        -- Start a new point.  One clock wide.
+        start : in  std_logic;
+        cx    : in  std_logic_vector(COORD_WIDTH - 1 downto 0);
+        cy    : in  std_logic_vector(COORD_WIDTH - 1 downto 0);
+
+        -- High when this engine can take a new point
+        ready : out std_logic;
+
+        -- Color of the point.  Registered, and settles on the same edge
+        -- that ready goes high.  Held until the next start.
+        pixel : out std_logic_vector(23 downto 0)
+    );
+    end component mandel_engine;
     ------------------------------------------------------------------------
     -- Signals
     ------------------------------------------------------------------------
@@ -259,7 +279,26 @@ begin
     ----------------------------------------------------------------------
     -- TODO: Implement the mandel_engine_bank process using a for-generate loop.  
     -- It should instantiate N_ENGINES instances of mandel_engine, and map each 
-    -- signal to an array element.  
+    -- signal to an array element.
+    
+    mandel_engines : for i in 0 to N_ENGINES-1 generate
+    begin
+        engine_i: mandel_engine
+        generic map(
+            MAX_ITER => (MAX_ITER)
+        )
+        port map(
+
+            clock => clock,
+            reset => reset,
+            cx => cx_r,
+            cy => cy_r,
+            start => engine_start(i),
+            ready => engine_ready(i),
+            pixel => engine_pixel(i)
+            );
+
+    end generate mandel_engines;
     --
     -- Note that you must use the registered values cx_r and cy_r to the engines, 
     -- because they must be consistent across all engines for the entire iteration. 
