@@ -177,6 +177,8 @@ begin
         variable xx_scaled : std_logic_vector(35 downto 0);
         variable yy_scaled : std_logic_vector(35 downto 0);
         variable xy_scaled : std_logic_vector(35 downto 0);
+        variable yy_scaled_big : std_logic_vector(39 downto 0);
+        variable xy_scaled_big : std_logic_vector(39 downto 0);
         variable escape_test_val : std_logic_vector (COORD_WIDTH + GUARD_BITS downto 0);
     begin
         if ( reset = '1' ) then
@@ -215,7 +217,10 @@ begin
                 yy_scaled := yy(SCALE_BITS + COORD_WIDTH-1 downto SCALE_BITS);
                 xy_scaled := xy(SCALE_BITS + COORD_WIDTH-1 downto SCALE_BITS);
 
-                escape_test_val := std_logic_vector(resize(unsigned(xx_scaled), COORD_WIDTH + GUARD_BITS + 1) + resize(unsigned(yy_scaled), GUARD_BITS + COORD_WIDTH + 1));
+                xx_scaled_big := xx(SCALE_BITS + COORD_WIDTH-1 + GUARD_BITS downto SCALE_BITS);
+                yy_scaled_big := yy(SCALE_BITS + COORD_WIDTH-1 + GUARD_BITS downto SCALE_BITS);
+
+                escape_test_val := std_logic_vector(resize(unsigned(xx_scaled_big), COORD_WIDTH + GUARD_BITS + 1) + resize(unsigned(yy_scaled_big), GUARD_BITS + COORD_WIDTH + 1));
 
                 if (escape_flag = '0') then
                     if (unsigned(escape_test_val) >= unsigned(ESCAPE_SQ)) then
