@@ -178,7 +178,7 @@ begin
         variable yy_scaled : std_logic_vector(35 downto 0);
         variable xy_scaled : std_logic_vector(35 downto 0);
         variable yy_scaled_big : std_logic_vector(39 downto 0);
-        variable xy_scaled_big : std_logic_vector(39 downto 0);
+        variable xx_scaled_big : std_logic_vector(39 downto 0);
         variable escape_test_val : std_logic_vector (COORD_WIDTH + GUARD_BITS downto 0);
     begin
         if ( reset = '1' ) then
