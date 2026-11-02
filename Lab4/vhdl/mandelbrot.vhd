@@ -126,11 +126,60 @@ architecture structural of mandelbrot is
     -- Component Declarations
     -- TODO: Declare the viewport and mandel_engine_bank components
     ----------------------------------------------------------------------
+    component viewport is
+    generic (
+        IMG_W       : natural := 640;
+        IMG_H       : natural := 480;
+        ZOOM_NUM    : natural := 2047;
+        PAN_PIXELS  : natural := 8;
+        CENTER_X_NUM : integer := -500000000;      -- -0.5
+        CENTER_Y_NUM : integer := 0;               --  0.0
+        VIEW_WIDTH   : natural := 4
+    );
+    port (
+        clock      : in  std_logic;
+        reset      : in  std_logic;
+        frame_sync : in  std_logic;
+        keys_n     : in  std_logic_vector(4 downto 0);
+        x0         : out std_logic_vector(COORD_WIDTH - 1 downto 0);
+        y0         : out std_logic_vector(COORD_WIDTH - 1 downto 0);
+        pixel_step : out std_logic_vector(COORD_WIDTH - 1 downto 0)
+    );
+    end component viewport;
+    
+    component mandel_engine_bank is
+        generic (
+            IMG_W      : natural := 640;
+            N_ENGINES  : natural := 16;
+            MAX_ITER   : natural := 120
+        );
+        port (
+            clock      : in  std_logic;
+            reset      : in  std_logic; 
 
+            -- frame_sync between frames
+            frame_sync : in  std_logic;
+
+            -- pixel_req from the display
+            pixel_req  : in  std_logic;
+
+            -- Top left corner and pixel pitch, from the viewport.
+            x0         : in  std_logic_vector(COORD_WIDTH - 1 downto 0);
+            y0         : in  std_logic_vector(COORD_WIDTH - 1 downto 0);
+            pixel_step : in  std_logic_vector(COORD_WIDTH - 1 downto 0);
+
+            -- Color of the pixel being requested right now
+            pixel      : out std_logic_vector(23 downto 0)
+    );
+    end component mandel_engine_bank;
     ----------------------------------------------------------------------
     -- Signal Declarations
     -- TODO: Declare the signals that connect the viewport and mandel_engine_bank
     ----------------------------------------------------------------------
+
+    signal viewport_x0 : std_logic_vector(COORD_WIDTH - 1 downto 0);
+    signal viewport_y0 : std_logic_vector(COORD_WIDTH - 1 downto 0);
+    signal viewport_pixel_step : std_logic_vector(COORD_WIDTH - 1 downto 0);
 
 begin
 
@@ -138,5 +187,44 @@ begin
     -- TODO: Instantiate and wire together the viewport and 
     -- mandel_engine_bank components.
     ----------------------------------------------------------------------
+
+    viewport_inst: viewport
+    
+        generic map(
+            IMG_W =>IMG_W,   
+            IMG_H => IMG_H,
+            ZOOM_NUM => ZOOM_NUM,
+            PAN_PIXELS => PAN_PIXELS,
+            CENTER_X_NUM => CENTER_X_NUM,
+            CENTER_Y_NUM => CENTER_Y_NUM,           --  0.0
+            VIEW_WIDTH => VIEW_WIDTH
+    )
+        port map(
+
+            clock => clock,
+            reset => reset,
+            frame_sync => frame_sync,
+            keys_n => keys_n,
+            x0 => viewport_x0,
+            y0 => viewport_y0,
+            pixel_step => viewport_pixel_step 
+            );
+
+    mandel_engine_bank_inst : mandel_engine_bank
+        generic map(
+            IMG_W => IMG_W,
+            N_ENGINES => N_ENGINES,
+            MAX_ITER => MAX_ITER
+        )
+        port map(
+            clock => clock,
+            reset => reset,
+            frame_sync => frame_sync,
+            pixel_req => pixel_req,
+            x0 => viewport_x0,
+            y0 => viewport_y0,
+            pixel_step => viewport_pixel_step,
+            pixel => pixel
+            );
 
 end architecture structural;

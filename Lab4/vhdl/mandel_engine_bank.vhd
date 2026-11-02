@@ -281,7 +281,7 @@ begin
     -- It should instantiate N_ENGINES instances of mandel_engine, and map each 
     -- signal to an array element.
     
-    mandel_engines : for i in 0 to N_ENGINES-1 generate
+    mandel_engines_gen : for i in 0 to N_ENGINES-1 generate
     begin
         engine_i: mandel_engine
         generic map(
@@ -298,7 +298,7 @@ begin
             pixel => engine_pixel(i)
             );
 
-    end generate mandel_engines;
+    end generate mandel_engines_gen;
     --
     -- Note that you must use the registered values cx_r and cy_r to the engines, 
     -- because they must be consistent across all engines for the entire iteration. 

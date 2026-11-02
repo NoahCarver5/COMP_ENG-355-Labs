@@ -202,12 +202,13 @@ begin
                 z_y <= (others => '0');
                 ready <= '0';
                 escape_flag <= '0';
+                escape_count <= (others => '0');
                 clock_counter <= (others => '0');
             elsif (unsigned(clock_counter) < MAX_ITER) then
 
                 xx := std_logic_vector(resize(signed(z_x) * signed(z_x), 72));
                 yy := std_logic_vector(resize(signed(z_y) * signed(z_y), 72));
-                xy := std_logic_vector(resize(signed(z_y) * signed(z_y), 72));
+                xy := std_logic_vector(resize(signed(z_x) * signed(z_y), 72));
 
 
                 xx_scaled := xx(SCALE_BITS + COORD_WIDTH-1 downto SCALE_BITS);
@@ -216,25 +217,24 @@ begin
 
                 escape_test_val := std_logic_vector(resize(unsigned(xx_scaled), COORD_WIDTH + GUARD_BITS + 1) + resize(unsigned(yy_scaled), GUARD_BITS + COORD_WIDTH + 1));
 
-                if (unsigned(escape_test_val) >= 4) then
+                if (escape_flag = '0') then
+                    if (unsigned(escape_test_val) >= unsigned(ESCAPE_SQ)) then
                     escape_flag <= '1';
-                else
+                    else
                     escape_count <= std_logic_vector(unsigned(escape_count) + 1);
                     z_x <= std_logic_vector(signed(xx_scaled) - signed(yy_scaled) + signed(c_x));
                     z_y <= std_logic_vector (signed(xy_scaled) + signed(xy_scaled) + signed(c_y));
+                    end if;
                 end if;
-
-                clock_counter <= std_logic_vector(unsigned(clock_counter) + 1);
-
-                elsif (unsigned(clock_counter) = MAX_ITER) then 
-                    ready <= '1';
 
             end if;
 
+            if (unsigned(clock_counter) = MAX_ITER) then 
+                    ready <= '1';
+            else 
+                clock_counter <= std_logic_vector(unsigned(clock_counter) + 1);
 
-
-
-
+            end if;
 
         end if;
     end process clocked_process;
