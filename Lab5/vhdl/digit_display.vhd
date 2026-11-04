@@ -1,0 +1,32 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+--------------------------------------------------------------------------
+-- One seven-segment digit.  From Lab 1, with a register added.
+--
+-- A nibble in, seven ACTIVE LOW segments out, decoding 0-F.  Bit 0 is
+-- segment a and a '0' lights it, which is how the board is wired.
+--
+-- Reset blanks the digit rather than showing a zero: the segments are
+-- active low, so all ones is dark.  "Held in reset" then looks different
+-- from "running, displaying 0", which is worth being able to tell apart.
+--------------------------------------------------------------------------
+
+entity digit_display is
+port(
+    clock : in std_logic;
+    reset : in std_logic;                      -- async, active high
+    din  : in std_logic_vector(3 downto 0);
+    dout : out std_logic_vector(6 downto 0)
+);
+end entity digit_display;
+
+architecture rtl of digit_display is
+begin
+    ----------------------------------------------------------
+    -- TODO: Implement a clocked process for a seven-segment 
+    -- digit display.  The output is active low.
+    ----------------------------------------------------------
+    dout <= (others => '1');  -- default to blank
+
+end architecture rtl;

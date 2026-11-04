@@ -1,0 +1,19 @@
+
+State Machine - Summary
+
+State Machine - u_hdmi|i2c_state
+Name i2c_state.cfg_done i2c_state.cfg_next i2c_state.cfg_stop_c i2c_state.cfg_stop_b i2c_state.cfg_stop_a i2c_state.cfg_ack_fall i2c_state.cfg_ack_high i2c_state.cfg_ack_low i2c_state.cfg_bit_fall i2c_state.cfg_bit_high i2c_state.cfg_bit_low i2c_state.cfg_start_b i2c_state.cfg_start_a i2c_state.cfg_reset_delay 
+i2c_state.cfg_reset_delay 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+i2c_state.cfg_start_a 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+i2c_state.cfg_start_b 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+i2c_state.cfg_bit_low 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+i2c_state.cfg_bit_high 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+i2c_state.cfg_bit_fall 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+i2c_state.cfg_ack_low 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+i2c_state.cfg_ack_high 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+i2c_state.cfg_ack_fall 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+i2c_state.cfg_stop_a 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+i2c_state.cfg_stop_b 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+i2c_state.cfg_stop_c 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+i2c_state.cfg_next 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+i2c_state.cfg_done 1 0 0 0 0 0 0 0 0 0 0 0 0 1 

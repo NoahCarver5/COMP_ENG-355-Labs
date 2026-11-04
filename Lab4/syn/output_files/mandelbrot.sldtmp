@@ -1,0 +1,9 @@
+<sld_project_info>
+  <sld_infos>
+    <sld_info hpath="u_video_pll" library="VIDEO_PLL" name="u_video_pll">
+      <assignment_values>
+        <assignment_value text="QSYS_NAME VIDEO_PLL HAS_SOPCINFO 1 GENERATION_ID 0"/>
+      </assignment_values>
+    </sld_info>
+  </sld_infos>
+</sld_project_info>

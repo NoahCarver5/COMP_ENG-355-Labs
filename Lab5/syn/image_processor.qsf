@@ -1,0 +1,241 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 2026  Altera Corporation. All rights reserved.
+# Your use of Altera Corporation's design tools, logic functions
+# and other software and tools, and any partner logic
+# functions, and any output files from any of the foregoing
+# (including device programming or simulation files), and any
+# associated documentation or information are expressly subject
+# to the terms and conditions of the Altera Program License
+# Subscription Agreement, the Altera Quartus Prime License Agreement,
+# the Altera IP License Agreement, or other applicable license
+# agreement, including, without limitation, that your use is for
+# the sole purpose of programming logic devices manufactured by
+# Altera and sold by Altera or its authorized distributors.  Please
+# refer to the Altera Software License Subscription Agreements
+# on the Quartus Prime software download page.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus Prime
+# Version 26.1.1 Build 130 08/06/2026 SC Pro Edition
+#
+# -------------------------------------------------------------------------- #
+set_global_assignment -name TOP_LEVEL_ENTITY image_processor_system
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 26.1.1
+set_global_assignment -name LAST_QUARTUS_VERSION "26.1.1 Pro Edition"
+set_global_assignment -name SDC_FILE image_processor.sdc
+set_global_assignment -name IP_FILE VIDEO_PLL.ip
+
+#============================================================
+# Design files, bottom up
+#============================================================
+
+#============================================================
+# D8M camera support -- vendor Verilog for the camera daughter
+# card.  d8m.vhd names only MIPI_BRIDGE_CAMERA_Config, but that
+# module pulls in all the rest; see ../vhdl/d8m/README.md.
+#
+# The *_bb.v black-box stubs are deliberately absent -- they define
+# the same module names as the implementations.  The three .qip
+# files are not added either: they carry Stratix V IP metadata and
+# list the _bb.v as a MISC_FILE, so adding the .v directly is both
+# simpler and more portable.
+#
+# R_GAIN / G_GAIN / B_GAIN are lpm_constant instances that do
+# nothing but drive a fixed 14-bit value.  If Quartus Pro rejects
+# lpm_constant on Agilex 5, apply the three-line replacement in
+# d8m/README.md and drop these three files.
+#============================================================
+set_global_assignment -name VERILOG_FILE ../vhdl/d8m/CLOCKMEM.v
+set_global_assignment -name VERILOG_FILE ../vhdl/d8m/I2C_RESET_DELAY.v
+set_global_assignment -name VERILOG_FILE ../vhdl/d8m/I2C_READ_DATA.v
+set_global_assignment -name VERILOG_FILE ../vhdl/d8m/I2C_WRITE_PTR.v
+set_global_assignment -name VERILOG_FILE ../vhdl/d8m/I2C_WRITE_WDATA.v
+set_global_assignment -name VERILOG_FILE ../vhdl/d8m/R_GAIN.v
+set_global_assignment -name VERILOG_FILE ../vhdl/d8m/G_GAIN.v
+set_global_assignment -name VERILOG_FILE ../vhdl/d8m/B_GAIN.v
+set_global_assignment -name VERILOG_FILE ../vhdl/d8m/MIPI_CAMERA_CONFIG.v
+set_global_assignment -name VERILOG_FILE ../vhdl/d8m/MIPI_BRIDGE_CONFIG.v
+set_global_assignment -name VERILOG_FILE ../vhdl/d8m/MIPI_BRIDGE_CAMERA_Config.v
+
+#============================================================
+# Device and project settings
+#============================================================
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 100
+set_global_assignment -name DEVICE A5ED013BB32AE4SCS
+set_global_assignment -name FAMILY "Agilex 5"
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
+set_global_assignment -name VHDL_INPUT_VERSION VHDL_2008
+set_global_assignment -name PWRMGT_VOLTAGE_OUTPUT_FORMAT "LINEAR FORMAT"
+set_global_assignment -name PWRMGT_LINEAR_FORMAT_N "-12"
+
+
+#============================================================
+# System Clock & Reset (CLOCK2_50, CPU_RESET_n)
+#
+# CLOCK2_50 rather than CLOCK0_50: it is the 50 MHz input in a
+# 1.2-V HSIO bank, which can feed the IOPLL directly.  The board's
+# own HDMI demo clocks its PLL from the same pin.
+#============================================================
+set_instance_assignment -name IO_STANDARD "1.2-V" -to clk_50
+set_instance_assignment -name IO_STANDARD "1.2-V" -to reset_n
+
+#============================================================
+# Filter select
+#   keys_n[0] = KEY[0], active low -- next filter
+#   keys_n[1] = KEY[1], active low -- previous filter
+#   hex1, hex0 = HEX1, HEX0 -- the filter NUMBER as two digits,
+#                "00" to "07".  Segments ACTIVE LOW; LEDR unused.
+#
+# Two keys step through the list rather than one key selecting
+# each filter, so N_FILTERS is no longer capped by how many
+# buttons the board has.  KEY[2] and KEY[3] are free.
+#============================================================
+set_instance_assignment -name IO_STANDARD "1.2-V" -to keys_n[0]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to keys_n[1]
+
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex0[0]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex0[1]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex0[2]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex0[3]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex0[4]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex0[5]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex0[6]
+
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex1[0]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex1[1]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex1[2]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex1[3]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex1[4]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex1[5]
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hex1[6]
+
+#============================================================
+# HDMI TX
+#============================================================
+set_instance_assignment -name IO_STANDARD "1.2-V" -to hdmi_tx_clk
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_hs
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_vs
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_de
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[12]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[13]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[14]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[15]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[16]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[17]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[18]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[19]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[20]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[21]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[22]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_d[23]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_tx_int -entity image_processor_system
+
+#============================================================
+# I2C (FPGA_I2C_SCLK, FPGA_I2C_SDAT) -- HDMI transmitter config
+#
+# This is the board's shared I2C bus.  The D8M has its own two
+# buses on the GPIO header, so nothing else here contends for it.
+#============================================================
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_i2c_scl -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to hdmi_i2c_sda -entity image_processor_system
+
+#============================================================
+# D8M camera, on the 2x20 GPIO expansion header
+#
+# The DE25-Standard has no dedicated D8M connector.  Its onboard
+# camera interface (CAM_CLK_p/n, CAM_D_p/n) is a 2-lane MIPI D-PHY
+# link for a CSI-2 module such as the IMX519, which is a different
+# thing entirely from the D8M's TC358748 bridge and its parallel
+# output.  So the D8M plugs into the 40-pin GPIO header instead,
+# and these are the pins that header position lands on.
+#
+# The D8M-GPIO daughter card decides which HEADER POSITION carries
+# which signal -- that is fixed in the card's wiring and nothing on
+# this board can change it.  The GPIO_D index below is that header
+# position; the pin beside it is what the DE25 routes it to, per
+# the board's golden_top.qsf.
+#
+#   Signal            GPIO_D   DE25 pin
+#   ---------------   ------   --------
+#   mipi_pixel_clk       1     PIN_BE43
+#   mipi_pixel_d[0]      3     PIN_BF40
+#   mipi_pixel_d[1]      4     PIN_BK28
+#   mipi_pixel_d[2]      5     PIN_BM31
+#   mipi_pixel_d[3]      6     PIN_BM28
+#   mipi_pixel_d[4]      7     PIN_BP31
+#   mipi_pixel_d[5]      8     PIN_BR31
+#   mipi_pixel_d[6]      9     PIN_BU28
+#   mipi_pixel_d[7]     10     PIN_BU31
+#   mipi_pixel_d[8]     11     PIN_BW28
+#   mipi_pixel_d[9]     12     PIN_BR22
+#   mipi_refclk         18     PIN_BF36
+#   mipi_pixel_vs       20     PIN_BM22
+#   mipi_pixel_hs       22     PIN_BR19
+#   mipi_cs_n           23     PIN_BM19
+#   mipi_reset_n        24     PIN_BK19
+#   camera_pwdn_n       25     PIN_BH19
+#   camera_i2c_scl      26     PIN_BF25
+#   camera_i2c_sda      27     PIN_CF9
+#   mipi_i2c_scl        30     PIN_CK2
+#   mipi_i2c_sda        31     PIN_CJ2
+#
+# The card also brings an MCLK out on GPIO_D[28], but nothing ever
+# drives it -- the bridge makes its own clocks from mipi_refclk --
+# so d8m.vhd has no port for it and index 28 stays free.
+#
+# Free for other use: 0, 2, 13-17, 19, 21, 28, 29, 32-35.
+#============================================================
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_pixel_clk -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_pixel_d[0] -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_pixel_d[1] -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_pixel_d[2] -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_pixel_d[3] -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_pixel_d[4] -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_pixel_d[5] -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_pixel_d[6] -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_pixel_d[7] -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_pixel_d[8] -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_pixel_d[9] -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_pixel_hs -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_pixel_vs -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_refclk -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_cs_n -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_reset_n -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_i2c_scl -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mipi_i2c_sda -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to camera_i2c_scl -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to camera_i2c_sda -entity image_processor_system
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to camera_pwdn_n -entity image_processor_system
+set_instance_assignment -name GLOBAL_SIGNAL "GLOBAL CLOCK" -to mipi_pixel_clk -entity image_processor_system
+
+
+#============================================================
+# Unused pins
+#
+# AS INPUT TRI-STATED, NOT DRIVING GROUND.  The GPIO header has a
+# daughter card on it, and a card drives signals back.  A pin the
+# FPGA holds at 0 while the card drives it to 3.3 V is a short
+# through both drivers -- "driving ground" is still driving.
+#
+# High impedance is what "emits no signal" actually means.  The weak
+# pull-up costs nothing and keeps genuinely unconnected inputs from
+# floating around the switching threshold, which otherwise leaves
+# both halves of the input buffer partly on.
+#============================================================
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED WITH WEAK PULL-UP"

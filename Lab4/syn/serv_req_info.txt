@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<internal_error>
+	<sub_system>ERR</sub_system>
+	<callstack>	0x7ff930a932dc: CCL_ERR + 0x132dc (?err_terminator@@YAXXZ + 0x1c)
+	0x7ff86d5cb320: dni_dms + 0x13b320 (`anonymous namespace&amp;apos;::main_terminator + 0x80)
+	0x7ff86d6789a1: dni_dms + 0x1e89a1 (quartus_dllmain$catch$0 + 0x11)
+	0x7ff93efb107f: VCRUNTIME140_1 + 0x107f
+	0x7ff93efb26f4: VCRUNTIME140_1 + 0x26f4 (__NLG_Return2 + 0x15a4)
+	0x7ff96cc44645: ntdll + 0x124645 (RtlCaptureContext2 + 0x4a5)
+	0x7ff86d5cb3fd: dni_dms + 0x13b3fd (quartus_dllmain + 0x2d)
+	0x7ff96cc3ef69: ntdll + 0x11ef69 (RtlWow64SuspendThread + 0x4f99)
+	0x7ff96cb3b2e2: ntdll + 0x1b2e2 (RtlRaiseException + 0x1532)
+	0x7ff96cb38e1b: ntdll + 0x18e1b (RtlDeleteElementGenericTableAvlEx + 0x4fb)
+	0x7ff96cbb00a9: ntdll + 0x900a9 (LdrGetProcedureAddressForCaller + 0xb29)
+	0x7ff96cbb00d5: ntdll + 0x900d5 (LdrGetProcedureAddressForCaller + 0xb55)
+	0x7ff96cbb00d5: ntdll + 0x900d5 (LdrGetProcedureAddressForCaller + 0xb55)
+	0x7ff96cbb00d5: ntdll + 0x900d5 (LdrGetProcedureAddressForCaller + 0xb55)
+	0x7ff96cbb00d5: ntdll + 0x900d5 (LdrGetProcedureAddressForCaller + 0xb55)
+	0x7ff96cbb00d5: ntdll + 0x900d5 (LdrGetProcedureAddressForCaller + 0xb55)
+	0x7ff96cbb00d5: ntdll + 0x900d5 (LdrGetProcedureAddressForCaller + 0xb55)
+	0x7ff96cbb00d5: ntdll + 0x900d5 (LdrGetProcedureAddressForCaller + 0xb55)
+	0x7ff96cbb00d5: ntdll + 0x900d5 (LdrGetProcedureAddressForCaller + 0xb55)
+	0x7ff96cbb62ba: ntdll + 0x962ba (EtwEventWriteNoRegistration + 0x28ea)
+	0x7ff96cbb43d7: ntdll + 0x943d7 (EtwEventWriteNoRegistration + 0xa07)
+	0x7ff96cbb41c1: ntdll + 0x941c1 (EtwEventWriteNoRegistration + 0x7f1)
+	0x7ff96cbff09d: ntdll + 0xdf09d (LdrInitializeThunk + 0xd)
+</callstack>
+	<error>*** Fatal Error: Program termination requested</error>
+	<date>Mon Nov  2 16:06:28 2026
+</date>
+	<version>Version 25.1.1 Build 125 07/31/2025 SC Pro Edition</version>
+</internal_error>
