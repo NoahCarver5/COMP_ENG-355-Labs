@@ -32,7 +32,7 @@ use work.pixel_pkg.all;
 -- it makes the arithmetic readable, and unpack686 / pack888 translate at
 -- the boundary.
 --------------------------------------------------------------------------
-entity filter_gray is
+entity filter_threshold is
     port (
         clock     : in  std_logic;
         reset     : in  std_logic;                       -- async, active high
@@ -43,10 +43,10 @@ entity filter_gray is
         data_out  : out std_logic_vector(23 downto 0);   -- 8:8:8
         valid_out : out std_logic
     );
-end entity filter_gray;
+end entity filter_threshold;
 
 
-architecture rtl of filter_gray is
+architecture rtl of filter_threshold is
 begin
 
     -----------------------------------------------------------------
@@ -75,12 +75,12 @@ begin
                 p_red := p.r;
                 p_blue := p.b;
 
-                sum_div := std_logic_vector(resize(unsigned((resize(unsigned(p_green), 10) + resize(unsigned(p_red), 10) + resize(unsigned(p_blue), 10)))/3), 8);
+                sum_div := std_logic_vector(resize(unsigned((resize(unsigned(p_green), 10) + resize(unsigned(p_red), 10) + resize(unsigned(p_blue), 10))/3), 8));
 
                 if (unsigned(sum_div) > 100) then
-                    d_out <= (others => '0');
+                    data_out <= (others => '0');
                 else 
-                    d_out <= (others => '1');
+                    data_out <= (others => '1');
                 end if;
 
             end if;
