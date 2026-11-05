@@ -35,13 +35,28 @@ port
 end entity bram;
 
 
-architecture behavior of bram is 
+architecture behavior of bram is
+	
+	type mem_type is array (0 to BRAM_ADDR_WIDTH) of std_logic_vector(BRAM_DATA_WIDTH-1 downto 0);
+	signal rd_addr_r : std_logic_vector((BRAM_ADDR_WIDTH -1) downto 0);
+	signal mem : mem_type;
+
     ------------------------------------------------------------------------
     -- Type and signal declarations
     ------------------------------------------------------------------------
 
 begin
 
+	dout <= mem(to_integer(unsigned(rd_addr_r)));
+
+	process(clock) begin
+		if rising_edge(clock) then
+			rd_addr_r <= rd_addr;
+			if (wr_en = '1') then
+				mem(to_integer(unsigned(wr_addr))) <= din;  
+			end if;  
+		end if;
+	end process;
     ------------------------------------------------------------------------
     -- TODO: Implement the clocked read and write process
     ------------------------------------------------------------------------

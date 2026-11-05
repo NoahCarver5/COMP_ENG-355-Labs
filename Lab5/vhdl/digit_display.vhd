@@ -27,6 +27,29 @@ begin
     -- TODO: Implement a clocked process for a seven-segment 
     -- digit display.  The output is active low.
     ----------------------------------------------------------
-    dout <= (others => '1');  -- default to blank
+    
+    process(clock, reset) begin
+
+        if (reset = '1') then
+
+            dout <= "1111111";
+        
+        elsif rising_edge(clock) then
+
+            case din is
+                when "0000" => dout <= "1000000";
+                when "0001" => dout <= "1111001";
+                when "0010" => dout <= "0100100";
+                when "0011" => dout <= "0110000";
+                when "0100" => dout <= "0011001";
+                when "0101" => dout <= "0010010";
+                when "0110" => dout <= "0000010";
+                when "0111" => dout <= "1111000";
+                when "1000" => dout <= "0000000";
+                when "1001" => dout <= "0011000";
+                when others => dout <= "1111111";
+            end case;
+        end if;
+    end process;
 
 end architecture rtl;
