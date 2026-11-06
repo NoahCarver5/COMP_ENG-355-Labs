@@ -37,7 +37,7 @@ end entity bram;
 
 architecture behavior of bram is
 	
-	type mem_type is array (0 to BRAM_ADDR_WIDTH) of std_logic_vector(BRAM_DATA_WIDTH-1 downto 0);
+	type mem_type is array (0 to BRAM_BUFFER_SIZE-1) of std_logic_vector(BRAM_DATA_WIDTH-1 downto 0);
 	signal rd_addr_r : std_logic_vector((BRAM_ADDR_WIDTH -1) downto 0);
 	signal mem : mem_type;
 

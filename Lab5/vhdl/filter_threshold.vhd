@@ -59,7 +59,7 @@ begin
         variable p_red : byte_t;
         variable p_blue : byte_t;
         variable p_green : byte_t;
-        variable sum_div : std_logic_vector(9 downto 0);
+        variable sum_div : std_logic_vector(7 downto 0);
         variable final_pixel : pixel_t;
     
     begin
@@ -70,14 +70,15 @@ begin
             valid_out <= valid_in;
 
             if ( valid_in = '1' ) then
+
                 p := unpack686(data_in);
                 p_green := p.g;
                 p_red := p.r;
                 p_blue := p.b;
 
-                sum_div := std_logic_vector(resize(unsigned((resize(unsigned(p_green), 10) + resize(unsigned(p_red), 10) + resize(unsigned(p_blue), 10))/3), 8));
+                sum_div := std_logic_vector (resize((unsigned((resize(unsigned(p_green), 10) + resize(unsigned(p_red), 10) + resize(unsigned(p_blue), 10)))/3), 8));
 
-                if (unsigned(sum_div) > 100) then
+                if (unsigned(sum_div) < 100) then
                     data_out <= (others => '0');
                 else 
                     data_out <= (others => '1');

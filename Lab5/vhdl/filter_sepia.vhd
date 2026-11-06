@@ -62,7 +62,12 @@ begin
         variable p_red_sepia : std_logic_vector(17 downto 0);
         variable p_blue_sepia : std_logic_vector(17 downto 0);
         variable p_green_sepia : std_logic_vector(17 downto 0);
-        variable final_pixel : pixel_t;
+        variable p_red_long : std_logic_vector(17 downto 0);
+        variable p_blue_long : std_logic_vector(17 downto 0);
+        variable p_green_long : std_logic_vector(17 downto 0);
+        variable p_red_final : std_logic_vector(7 downto 0);
+        variable p_blue_final : std_logic_vector(7 downto 0);
+        variable p_green_final : std_logic_vector(7 downto 0);
 
 
     begin
@@ -78,11 +83,28 @@ begin
                 p_red := p.r;
                 p_blue := p.b;
 
-                p_red_sepia := std_logic_vector(shift_right((resize((100*unsigned(p_red)) + (197*unsigned(p_green)) + (48*unsigned(p_blue)), 18)), 8));
-                p_blue_sepia := std_logic_vector(shift_right((resize((89*unsigned(p_red)) + (176*unsigned(p_green)) + (43*unsigned(p_blue)), 18)), 8));
-                p_green_sepia := std_logic_vector(shift_right((resize((70*unsigned(p_red)) + (137*unsigned(p_green)) + (34*unsigned(p_blue)), 18)), 8));
+                p_red_long := std_logic_vector(resize(unsigned(p_red), 18));
+                p_blue_long := std_logic_vector(resize(unsigned(p_blue), 18));
+                p_green_long := std_logic_vector(resize(unsigned(p_green), 18));
 
-                data_out <= p_red_sepia(7 downto 0) & p_green_sepia(7 downto 0);
+                p_red_sepia := std_logic_vector(shift_right((resize((100*unsigned(p_red_long)), 18) + resize(197*unsigned(p_green_long), 18) + resize(48*unsigned(p_blue_long), 18)), 8));
+                p_green_sepia := std_logic_vector(shift_right((resize((89*unsigned(p_red_long)), 18) + resize(176*unsigned(p_green_long), 18) + resize(43*unsigned(p_blue_long), 18)), 8));
+                p_blue_sepia := std_logic_vector(shift_right((resize((70*unsigned(p_red_long)), 18) + resize(137*unsigned(p_green_long), 18) + resize(38*unsigned(p_blue_long), 18)), 8));
+
+                if(unsigned(p_red_sepia) > 255) then p_red_final := "11111111";
+                else p_red_final := p_red_sepia(7 downto 0);
+                end if;
+
+                if(unsigned(p_green_sepia) > 255) then p_green_final := "11111111";
+                else p_green_final := p_green_sepia(7 downto 0);
+                end if;
+
+                if(unsigned(p_blue_sepia) > 255) then p_blue_final := "11111111";
+                else p_blue_final := p_blue_sepia(7 downto 0);
+                end if;
+
+                data_out <= p_red_final & p_green_final & p_blue_final;
+
 
             end if;
         end if;

@@ -85,11 +85,176 @@ architecture structural of image_processor is
     -- Component Declarations
     --------------------------------------------------------------------
 
+    component video_store is
+        generic (
+            ADDR_W : natural := 19          -- 640*480 = 307_200 fits in 19 bits
+        );
+        port (
+            clock     : in  std_logic;      -- system clock, >= 4x cam_clk
+            reset     : in  std_logic;      -- active high
+
+            -- ---- camera stream, 25 MHz ----
+            cam_clk   : in  std_logic;                       -- sampled, not a clock
+            cam_vs    : in  std_logic;                       -- frame valid
+            cam_de    : in  std_logic;                       -- pixel valid
+            cam_pixel : in  std_logic_vector(23 downto 0);   -- RGB888
+
+            -- ---- to the block ram ----
+            wr_addr   : out std_logic_vector(ADDR_W - 1 downto 0);
+            wr_data   : out std_logic_vector(19 downto 0);   -- RGB686
+            wr_en     : out std_logic
+        );
+    end component video_store;
+    
+    
+    component bram is
+        generic
+        (
+            constant BRAM_BUFFER_SIZE : integer := 1024;
+            constant BRAM_ADDR_WIDTH : integer := 10;
+            constant BRAM_DATA_WIDTH : integer := 32
+        );
+        port
+        (
+            signal clock : in std_logic;
+            signal rd_addr : in std_logic_vector ((BRAM_ADDR_WIDTH - 1) downto 0);
+            signal wr_addr : in std_logic_vector ((BRAM_ADDR_WIDTH - 1) downto 0);
+            signal wr_en : in std_logic;
+            signal dout : out std_logic_vector ((BRAM_DATA_WIDTH - 1) downto 0);
+            signal din : in std_logic_vector ((BRAM_DATA_WIDTH - 1) downto 0)
+        );
+    end component bram;
+
+    component digit_display is
+        port(
+        clock : in std_logic;
+        reset : in std_logic;                      -- async, active high
+        din  : in std_logic_vector(3 downto 0);
+        dout : out std_logic_vector(6 downto 0)
+    );
+    end component digit_display;
+
+    component filters is
+    generic (
+        IMG_W           : natural := 640;
+        IMG_H           : natural := 480;
+        ADDR_W          : natural := 19;
+        N_FILTERS       : natural := 1;
+        DEBOUNCE_TICKS  : natural := 2**20
+    );
+    port (
+        clock   : in  std_logic;
+        reset   : in  std_logic;                      -- active high
+        keys_n  : in  std_logic_vector(1 downto 0);
+
+        filter_num : out std_logic_vector(7 downto 0);
+
+        rd_addr : out std_logic_vector(ADDR_W - 1 downto 0);
+        rd_data : in  std_logic_vector(19 downto 0);  -- RGB686
+
+        frame_sync  : in  std_logic;                      -- holds address at 0
+        pixel_req : in  std_logic;                      -- next active pixel
+
+        pixel       : out std_logic_vector(23 downto 0);  -- 8:8:8
+        pixel_valid : out std_logic                       -- pixel is this one
+    ); end component;
+
+    
     --------------------------------------------------------------------
     -- Signal Declarations
     --------------------------------------------------------------------
+    signal wr_addr : std_logic_vector(ADDR_W - 1 downto 0);
+    signal wr_data : std_logic_vector(19 downto 0);
+    signal wr_en : std_logic;
+    
+    signal rd_data : std_logic_vector ((BRAM_DATA_WIDTH - 1) downto 0);
+    signal rd_addr : std_logic_vector(ADDR_W - 1 downto 0);
+
+    signal pixel_out : std_logic_vector(23 downto 0);
+
+    signal hex_out : std_logic_vector(7 downto 0);
+
 
 begin
+
+
+    u_video_store : video_store generic map(
+        ADDR_W => ADDR_W
+    )
+        port map(  
+        clock => clock,
+        reset => reset,
+        cam_clk => cam_clk,                       -- sampled, not a clock
+        cam_vs => cam_vs,                   -- frame valid
+        cam_de => cam_de,                       -- pixel valid
+        cam_pixel => cam_pixel,
+
+         -- ---- to the block ram ----
+        wr_addr => wr_addr,
+        wr_data => wr_data,
+        wr_en => wr_en
+    );
+
+    u_bram : bram generic map (
+
+        BRAM_BUFFER_SIZE => BRAM_BUFFER_SIZE,
+        BRAM_ADDR_WIDTH => BRAM_ADDR_WIDTH,
+        BRAM_DATA_WIDTH => BRAM_DATA_WIDTH
+        
+    )
+    port map(
+
+        clock => clock,
+        rd_addr => rd_addr,
+        wr_addr => wr_addr,
+        wr_en => wr_en,
+        dout => rd_data,
+        din => wr_data
+    );
+
+    u_filters : filters generic map (
+
+        IMG_W => IMG_W,
+        IMG_H => IMG_H,
+        ADDR_W => ADDR_W,
+        N_FILTERS => N_FILTERS,
+        DEBOUNCE_TICKS => DEBOUNCE_TICKS
+    )
+        port map(
+
+        clock => clock,
+        reset => reset,                   -- active high
+        keys_n => keys_n,
+
+        filter_num => hex_out,
+
+        rd_addr => rd_addr,
+        rd_data => rd_data,
+
+        frame_sync => frame_sync,                -- holds address at 0
+        pixel_req => pixel_req,                      -- next active pixel
+
+        pixel => pixel,   -- 8:8:8
+        pixel_valid => pixel_valid
+        
+    );
+
+    hex_0 : digit_display port map(
+
+        clock => clock,
+        reset => reset,
+        din => hex_out(3 downto 0),
+        dout => hex0
+    );
+
+    hex_1 : digit_display port map(
+        clock => clock,
+        reset => reset,
+        din => hex_out(7 downto 4),
+        dout => hex1
+    );
+
+
 
     --------------------------------------------------------------------
     -- TODO: Instantiate and wire together the components: 

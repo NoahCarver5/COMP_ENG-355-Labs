@@ -47,6 +47,12 @@ begin
                 when "0111" => dout <= "1111000";
                 when "1000" => dout <= "0000000";
                 when "1001" => dout <= "0011000";
+                when "1010" => dout <= "0001000";
+                when "1011" => dout <= "0000011";
+                when "1100" => dout <= "1000110";
+                when "1101" => dout <= "0100001";
+                when "1110" => dout <= "0000110";
+                when "1111" => dout <= "0001110";
                 when others => dout <= "1111111";
             end case;
         end if;

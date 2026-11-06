@@ -92,6 +92,95 @@ architecture rtl of filters is
         );
     end component;
 
+    component filter_threshold is
+    port (
+        clock     : in  std_logic;
+        reset     : in  std_logic;                       -- async, active high
+        data_in   : in  std_logic_vector(19 downto 0);   -- RGB686
+        valid_in  : in  std_logic;
+        data_out  : out std_logic_vector(23 downto 0);   -- 8:8:8
+        valid_out : out std_logic
+    );
+    end component;
+
+    component filter_swap is
+    port (
+        clock     : in  std_logic;
+        reset     : in  std_logic;                       -- async, active high
+        data_in   : in  std_logic_vector(19 downto 0);   -- RGB686
+        valid_in  : in  std_logic;
+        data_out  : out std_logic_vector(23 downto 0);   -- 8:8:8
+        valid_out : out std_logic
+    );
+    end component;
+
+    component filter_sepia is
+    port (
+        clock     : in  std_logic;
+        reset     : in  std_logic;                       -- async, active high
+
+        data_in   : in  std_logic_vector(19 downto 0);   -- RGB686
+        valid_in  : in  std_logic;
+
+        data_out  : out std_logic_vector(23 downto 0);   -- 8:8:8
+        valid_out : out std_logic
+    );
+    end component;
+
+    component filter_gray is
+    port (
+        clock     : in  std_logic;
+        reset     : in  std_logic;                       -- async, active high
+
+        data_in   : in  std_logic_vector(19 downto 0);   -- RGB686
+        valid_in  : in  std_logic;
+
+        data_out  : out std_logic_vector(23 downto 0);   -- 8:8:8
+        valid_out : out std_logic
+    );
+    end component;
+
+    component filter_edge is
+    generic (
+        EDGE_LEVEL : natural := 24
+        );
+    port (
+        clock     : in  std_logic;
+        reset     : in  std_logic;                       -- async, active high
+        data_in   : in  std_logic_vector(19 downto 0);   -- RGB686
+        valid_in  : in  std_logic;
+        data_out  : out std_logic_vector(23 downto 0);   -- 8:8:8
+        valid_out : out std_logic
+    );
+    end component;
+
+    component filter_cartoonify is
+    generic (
+        EDGE_LEVEL : natural := 24
+        );
+    port (
+        clock     : in  std_logic;
+        reset     : in  std_logic;                       -- async, active high
+        data_in   : in  std_logic_vector(19 downto 0);   -- RGB686
+        valid_in  : in  std_logic;
+        data_out  : out std_logic_vector(23 downto 0);   -- 8:8:8
+        valid_out : out std_logic
+    );
+    end component;
+
+    component filter_invert is
+    port (
+        clock     : in  std_logic;
+        reset     : in  std_logic;                       -- async, active high
+
+        data_in   : in  std_logic_vector(19 downto 0);   -- RGB686
+        valid_in  : in  std_logic;
+
+        data_out  : out std_logic_vector(23 downto 0);   -- 8:8:8
+        valid_out : out std_logic
+    );
+    end component;
+
 
     --------------------------------------------------------------------
     -- Constants
@@ -108,9 +197,12 @@ architecture rtl of filters is
 
     signal valid_in   : std_logic;
 
+    signal last_key : std_logic_vector(1 downto 0);
+
     -- Which filter is showing.  0 is the passthrough.
     signal filter_sel : natural range 0 to N_FILTERS - 1;
     signal key_cnt    : natural range 0 to DEBOUNCE_TICKS;
+    signal new_addr : std_logic;   
 
 begin
 
@@ -122,8 +214,39 @@ begin
     -- be set high when the data from the block RAM is valid, which is one 
     -- clock cycle after the address is presented.
     ----------------------------------------------------------------------
-    rd_addr <= (others => '0');
-    valid_in <= '0';
+    process(clock, reset) is
+    begin
+
+        if (reset) then
+            new_addr <= '0';
+            rd_addr <= (others => '0');
+            valid_in <= '1';
+        end if;   
+
+        if rising_edge(clock) then
+            if (frame_sync = '1') then
+                rd_addr <= (others => '0');
+                new_addr <= '1';
+            else
+                valid_in <= '1';  
+                if (pixel_req = '1') then
+                    if (unsigned(rd_addr) = N_PIXELS - 1) then
+                        rd_addr <= (others => '0');
+                    else
+                        rd_addr <= std_logic_vector(unsigned(rd_addr) + 1);
+                    
+                    end if;
+
+                    new_addr <= '1';
+                else
+                    new_addr <= '0';
+
+
+                end if;
+            end if;
+        valid_in <= new_addr;
+        end if;
+    end process;
 
     ----------------------------------------------------------------------
     -- TODO: Implement a for-generate loop to add more filters along with 
@@ -142,13 +265,124 @@ begin
     --     7 edge        shows the edges only, in white on black.
     --
     ----------------------------------------------------------------------
-    u_filter_pass : filter_pass
-        port map ( clock => clock, 
-                   reset => reset,
-                   data_in => rd_data, 
-                   valid_in => valid_in,
-                   data_out => pixels(0), 
-                   valid_out => valids(0) );
+    filters : for i in 0 to N_FILTERS-1 generate
+
+        pass_filter : if (i = 0) generate begin
+
+            u_filter_pass: filter_pass  
+            port map(
+            clock => clock,
+            reset => reset,
+            data_in => rd_data,
+            valid_in => valid_in,
+            data_out => pixels(i),
+            valid_out => valids(i)
+            );
+
+        end generate;
+
+        gray_filter : if (i = 1) generate begin
+
+            u_filter_gray : filter_gray  
+            port map(
+            clock => clock,
+            reset => reset,
+            data_in => rd_data,
+            valid_in => valid_in,
+            data_out => pixels(i),
+            valid_out => valids(i)
+            );
+
+        end generate;
+
+        sepia_filter : if (i = 2) generate begin
+
+            u_filter_sepia : filter_sepia  
+            port map(
+            clock => clock,
+            reset => reset,
+            data_in => rd_data,
+            valid_in => valid_in,
+            data_out => pixels(i),
+            valid_out => valids(i)
+            );
+
+        end generate;
+
+        
+        swap_filter : if (i = 3) generate begin
+
+            u_filter_swap : filter_swap  
+            port map(
+            clock => clock,
+            reset => reset,
+            data_in => rd_data,
+            valid_in => valid_in,
+            data_out => pixels(i),
+            valid_out => valids(i)
+            ); end generate;
+
+        
+        invert_filter : if (i = 4) generate begin
+
+            u_filter_invert : filter_invert  
+            port map(
+            clock => clock,
+            reset => reset,
+            data_in => rd_data,
+            valid_in => valid_in,
+            data_out => pixels(i),
+            valid_out => valids(i)
+            );
+
+        end generate;
+
+        threshold_filter : if (i = 5) generate begin
+
+            u_filter_threshold : filter_threshold  
+            port map(
+            clock => clock,
+            reset => reset,
+            data_in => rd_data,
+            valid_in => valid_in,
+            data_out => pixels(i),
+            valid_out => valids(i)
+            );
+
+        end generate;
+
+        edge_filter : if (i = 7) generate begin
+
+            u_filter_edge : filter_edge  
+            port map(
+            clock => clock,
+            reset => reset,
+            data_in => rd_data,
+            valid_in => valid_in,
+            data_out => pixels(i),
+            valid_out => valids(i)
+            );
+
+        end generate;
+
+        cartoonify_filter : if (i = 6) generate begin
+
+            u_filter_cartoonify : filter_cartoonify 
+            port map(
+            clock => clock,
+            reset => reset,
+            data_in => rd_data,
+            valid_in => valid_in,
+            data_out => pixels(i),
+            valid_out => valids(i)
+            );
+
+        end generate;
+
+        
+
+        end generate;
+
 
     ----------------------------------------------------------------------
     -- TODO: Implement a clocked process to step the filter index up or 
@@ -175,8 +409,45 @@ begin
     -- Both keys down does nothing, which is the honest answer to being
     -- asked to go two ways at once.
     ----------------------------------------------------------------------
-    filter_sel <= 0;
-    key_cnt    <= 0;
+    process (clock) begin
+
+        if rising_edge(clock) then
+
+            last_key <= keys_n;
+
+            if (unsigned(last_key) = unsigned(keys_n) and keys_n /= "11") then
+
+                if (key_cnt = DEBOUNCE_TICKS-1) then
+
+                    key_cnt <= key_cnt + 1;
+
+                    if (keys_n(0) = '0' and keys_n(1) = '0') then
+                        filter_sel <= filter_sel;
+
+                    elsif (keys_n(0) = '0') then
+
+                        if (filter_sel = N_FILTERS-1) then filter_sel <= 0;
+                        else filter_sel <= filter_sel + 1;
+                        end if;
+
+                    else
+
+                        if (filter_sel = 0) then filter_sel <= N_FILTERS -1;
+                        else filter_sel <= filter_sel - 1;
+                        end if; 
+
+                    end if;
+
+                elsif (key_cnt < DEBOUNCE_TICKS) then
+                    key_cnt <= key_cnt + 1;
+                end if;
+
+            else
+                key_cnt <= 0;
+            end if;
+        end if;
+    end process;
+
 
     ----------------------------------------------------------------------
     -- Multiplexer to select one of the N_FILTERS pixels.

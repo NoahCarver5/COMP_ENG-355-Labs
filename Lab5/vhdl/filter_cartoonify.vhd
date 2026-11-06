@@ -53,7 +53,7 @@ end entity filter_cartoonify;
 
 
 architecture rtl of filter_cartoonify is
-    signal prev_brightness : std_logic_vector(9 downto 0);
+    signal prev_gray_scale : std_logic_vector(9 downto 0);
 begin
 
     -----------------------------------------------------------------
@@ -67,7 +67,6 @@ begin
         variable p_blue : byte_t;
         variable p_green : byte_t;
         variable gray_scale : std_logic_vector(9 downto 0);
-        variable prev_gray_scale : std_logic_vector(9 downto 0);
         variable gray_scale_dif : std_logic_vector(9 downto 0);
         variable b_level : std_logic_vector(1 downto 0);
         variable r_level : std_logic_vector(1 downto 0);
@@ -84,6 +83,7 @@ begin
         if ( reset = '1' ) then
             data_out  <= (others => '0');
             valid_out <= '0';
+            prev_gray_scale <= (others => '0');
         elsif rising_edge(clock) then
             valid_out <= valid_in;
 
@@ -94,14 +94,15 @@ begin
                 p_blue := p.b;
 
                 gray_scale := std_logic_vector(unsigned((resize(unsigned(p_green), 10) + resize(unsigned(p_red), 10) + resize(unsigned(p_blue), 10))/3));
+                prev_gray_scale <= gray_scale;
 
-                r_level := std_logic_vector((unsigned(p_red)*3 + 127) / 255);
-                g_level := std_logic_vector((unsigned(p_green)*3 + 127) / 255);
-                b_level := std_logic_vector((unsigned(p_blue)*3 + 127) / 255);
+                r_level := std_logic_vector(resize(((unsigned(p_red)*to_unsigned(3,2) + 127) / 255), 2));
+                g_level := std_logic_vector(resize(((unsigned(p_green)*to_unsigned(3,2) + 127) / 255), 2));
+                b_level := std_logic_vector(resize(((unsigned(p_blue)*to_unsigned(3,2) + 127) / 255), 2));
 
-                r_poster := std_logic_vector (resize(((unsigned(r_level) * 255)/3), 8));
-                g_poster := std_logic_vector(resize(((unsigned(g_level) * 255)/3), 8));
-                b_poster := std_logic_vector(resize(((unsigned(b_level) * 255)/3), 8));
+                r_poster := std_logic_vector (resize(((unsigned(r_level) * to_unsigned(255,8))/3), 8));
+                g_poster := std_logic_vector(resize(((unsigned(g_level) * to_unsigned(255,8))/3), 8));
+                b_poster := std_logic_vector(resize(((unsigned(b_level) * to_unsigned(255,8))/3), 8));
 
 
 

@@ -53,7 +53,7 @@ end entity filter_edge;
 
 
 architecture rtl of filter_edge is
-    signal prev_brightness : std_logic_vector(9 downto 0);
+    signal prev_grayscale : std_logic_vector(9 downto 0);
 begin
 
     -----------------------------------------------------------------
@@ -67,7 +67,6 @@ begin
         variable p_blue : byte_t;
         variable p_green : byte_t;
         variable gray_scale : std_logic_vector(9 downto 0);
-        variable prev_gray_scale : std_logic_vector(9 downto 0);
         variable gray_scale_dif : std_logic_vector(9 downto 0);
         variable final_pixel : pixel_t;
     
@@ -75,8 +74,10 @@ begin
         if ( reset = '1' ) then
             data_out  <= (others => '0');
             valid_out <= '0';
+            prev_grayscale <= (others => '0');
         elsif rising_edge(clock) then
             valid_out <= valid_in;
+
 
             if ( valid_in = '1' ) then
                 p := unpack686(data_in);
@@ -86,10 +87,12 @@ begin
 
                 gray_scale := std_logic_vector(unsigned((resize(unsigned(p_green), 10) + resize(unsigned(p_red), 10) + resize(unsigned(p_blue), 10))/3));
 
-                if (unsigned(prev_gray_scale) < unsigned(gray_scale)) then
-                    gray_scale_dif := std_logic_vector(unsigned(gray_scale) - unsigned(prev_gray_scale));
+                prev_grayscale <= gray_scale;
+
+                if (unsigned(prev_grayscale) < unsigned(gray_scale)) then
+                    gray_scale_dif := std_logic_vector(unsigned(gray_scale) - unsigned(prev_grayscale));
                 else
-                    gray_scale_dif := std_logic_vector(unsigned(prev_gray_scale) - unsigned(gray_scale));
+                    gray_scale_dif := std_logic_vector(unsigned(prev_grayscale) - unsigned(gray_scale));
 
                 end if;
 
