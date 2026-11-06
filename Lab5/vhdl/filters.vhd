@@ -217,16 +217,14 @@ begin
     process(clock, reset) is
     begin
 
-        if (reset) then
+        if (reset = '1') then
             new_addr <= '0';
             rd_addr <= (others => '0');
-            valid_in <= '1';
-        end if;   
-
-        if rising_edge(clock) then
+            valid_in <= '0';
+        elsif rising_edge(clock) then
             if (frame_sync = '1') then
                 rd_addr <= (others => '0');
-                new_addr <= '1';
+                new_addr <= '0';
             else
                 valid_in <= '1';  
                 if (pixel_req = '1') then
@@ -236,15 +234,12 @@ begin
                         rd_addr <= std_logic_vector(unsigned(rd_addr) + 1);
                     
                     end if;
-
                     new_addr <= '1';
                 else
                     new_addr <= '0';
-
-
                 end if;
             end if;
-        valid_in <= new_addr;
+            valid_in <= new_addr;
         end if;
     end process;
 

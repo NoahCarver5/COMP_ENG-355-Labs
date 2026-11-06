@@ -33,6 +33,9 @@ use work.pixel_pkg.all;
 -- the boundary.
 --------------------------------------------------------------------------
 entity filter_threshold is
+    generic(
+        THRESHOLD : integer := 100
+    );
     port (
         clock     : in  std_logic;
         reset     : in  std_logic;                       -- async, active high
@@ -78,7 +81,7 @@ begin
 
                 sum_div := std_logic_vector (resize((unsigned((resize(unsigned(p_green), 10) + resize(unsigned(p_red), 10) + resize(unsigned(p_blue), 10)))/3), 8));
 
-                if (unsigned(sum_div) < 100) then
+                if (unsigned(sum_div) < THRESHOLD) then
                     data_out <= (others => '0');
                 else 
                     data_out <= (others => '1');

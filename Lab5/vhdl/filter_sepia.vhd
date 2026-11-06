@@ -89,7 +89,7 @@ begin
 
                 p_red_sepia := std_logic_vector(shift_right((resize((100*unsigned(p_red_long)), 18) + resize(197*unsigned(p_green_long), 18) + resize(48*unsigned(p_blue_long), 18)), 8));
                 p_green_sepia := std_logic_vector(shift_right((resize((89*unsigned(p_red_long)), 18) + resize(176*unsigned(p_green_long), 18) + resize(43*unsigned(p_blue_long), 18)), 8));
-                p_blue_sepia := std_logic_vector(shift_right((resize((70*unsigned(p_red_long)), 18) + resize(137*unsigned(p_green_long), 18) + resize(38*unsigned(p_blue_long), 18)), 8));
+                p_blue_sepia := std_logic_vector(shift_right((resize((70*unsigned(p_red_long)), 18) + resize(137*unsigned(p_green_long), 18) + resize(34*unsigned(p_blue_long), 18)), 8));
 
                 if(unsigned(p_red_sepia) > 255) then p_red_final := "11111111";
                 else p_red_final := p_red_sepia(7 downto 0);

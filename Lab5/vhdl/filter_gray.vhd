@@ -60,7 +60,6 @@ begin
         variable p_blue : byte_t;
         variable p_green : byte_t;
         variable sum_div : std_logic_vector(7 downto 0);
-        variable final_pixel : pixel_t;
     
     begin
         if ( reset = '1' ) then
