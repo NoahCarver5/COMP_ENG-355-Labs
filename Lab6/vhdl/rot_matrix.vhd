@@ -48,10 +48,20 @@ architecture rtl of rot_matrix is
     --------------------------------------------------------------------------------
     -- Constant Declarations
     --------------------------------------------------------------------------------
-
+    type state is (IDLE, LOOKUP, TWO_TERM, THREE_TERM, ASSEMBLE);
     --------------------------------------------------------------------------------
     -- Signal Declarations
     --------------------------------------------------------------------------------
+
+    signal ready_in_reg : std_logic;
+    signal cur_state : state;
+    signal next_state : state;
+
+    signal cx_c, sx_c, cy_c, sy_c, sz_c, cz_c : std_logic_vector (ANGLE_WIDTH-1 downto 0);
+    signal cx_r, sx_r, cy_r, sy_r, sz_r, cz_r : std_logic_vector (ANGLE_WIDTH-1 downto 0);
+    signal cy_cz_c, cy_sz_c, cy_sx_c, cy_cx_c, cz_sx_c, sz_sx_c, sz_cx_c, cz_cx_c : std_logic_vector (ANGLE_WIDTH-1 downto 0);
+    signal r00_c, r01_c, r02_c, r10_c, r11_c, r12_c, r20_c, r21_c, r22_c : std_logic_vector(TRIG_WIDTH - 1 downto 0);
+
 
 
 begin
@@ -103,16 +113,48 @@ begin
     -- right by TRIG_WIDTH bits to get the correct value.
     --------------------------------------------------------------------------------
 
-    r00 <= (others => '0');
-    r01 <= (others => '0');
-    r02 <= (others => '0');
-    r10 <= (others => '0');
-    r11 <= (others => '0');
-    r12 <= (others => '0');
-    r20 <= (others => '0');
-    r21 <= (others => '0');
-    r22 <= (others => '0');
-    valid_out <= '0';
-    ready_in <= '0';
+    rot_matrix_fsm:  process(valid_in) is begin
+
+        ready_in_reg <= '0';
+
+        case cur_state is
+            when IDLE =>
+                if (valid_in = '1') then next_state <= LOOKUP;
+                else next_state <= IDLE;
+                end if;
+                ready_in_reg <= '1';
+            when LOOKUP =>
+                
+                cx_c <= cos_lut(rx);
+                cy_c <= cos_lut(ry);
+                cz_c <= cos_lut(rz);
+
+                sx_c <= sin_lut(rx);
+                sy_c <= sin_lut(ry);
+                sz_c <= sin_lut(rz);
+
+                next_state <= TWO_TERM;
+
+            when TWO_TERM =>
+
+                cy_cz_c <= mult_fixed(cy_r, cz_r);
+                cy_cx_c <= mult_fixed(cy_r, cx_r);
+                cy_sx_c <= mult_fixed(cy_r, sx_r);
+                cy_sz_c <= mult_fixed(cy_r, sz_r);
+                sz_cx_c <= mult_fixed(sz_r, cx_r);
+                sz_sx_c <= mult_fixed(sz_r, sx_r);
+                cz_cx_c <= mult_fixed(cz_r, cx_r);
+                cz_sx_c <= mult_fixed(cz_r, sx_r);
+
+                next_state <= THREE_TERM;
+
+            when THREE_TER<
+
+                
+
+        end case;
+
+    end process;
+                
 
 end architecture rtl;

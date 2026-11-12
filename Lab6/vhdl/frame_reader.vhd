@@ -79,6 +79,12 @@ architecture rtl of frame_reader is
     -- Signal Declarations
     ----------------------------------------------------------
 
+    signal rd_addr_comb : std_logic_vector(ADDR_WIDTH-1 downto 0);
+    signal rd_addr_reg : std_logic_vector(ADDR_WIDTH-1 downto 0);
+    signal pixel_req_reg : std_logic;
+    signal pixel_valid_reg : std_logic;
+
+
 begin
 
     ----------------------------------------------------------------------
@@ -93,8 +99,32 @@ begin
     --    pixel_req, which is when the pixel (rd_data) is returned and valid. 
     -- 
     ----------------------------------------------------------------------
-    rd_addr <= (others => '0');
-    pixel   <= (others => '0');
-    pixel_valid <= '0';
+
+    frame_reader_clocked : process (reset, clk) is
+    begin
+        if (reset = '1') then
+            rd_addr_reg <= (others => '0');
+            pixel_req_reg <= '0';
+            pixel_valid_reg <= '0';
+        
+        elsif (rising_edge(clk)) then
+
+            rd_addr_reg <= rd_addr_comb;
+            pixel_req_reg <= pixel_req;
+            pixel_valid_reg <= not pixel_req_reg;
+        end if;
+
+    end process;
+
+
+    frame_reader_fsm: process(rd_data, frame_sync) is
+    begin
+        rd_addr_comb <= std_logic_vector(unsigned(rd_addr) + 1);
+        if (frame_sync = '1') then 
+            rd_addr_comb <= (others => '0');
+        elsif (unsigned(rd_addr_reg) = N_PIXELS-1) then 
+            rd_addr_comb <= (others => '0');
+        end if;
+    end process;
 
 end architecture rtl;
