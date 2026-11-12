@@ -48,19 +48,24 @@ architecture rtl of rot_matrix is
     --------------------------------------------------------------------------------
     -- Constant Declarations
     --------------------------------------------------------------------------------
-    type state is (IDLE, LOOKUP, TWO_TERM, THREE_TERM, ASSEMBLE);
+    type state is (IDLE, LOOKUP, TWO_TERM, THREE_TERM, ASSEMBLE, READY);
     --------------------------------------------------------------------------------
     -- Signal Declarations
     --------------------------------------------------------------------------------
 
-    signal ready_in_reg : std_logic;
+    signal ready_in_reg, ready_in_c : std_logic;
+    signal valid_out_reg, valid_out_c : std_logic;
     signal cur_state : state;
     signal next_state : state;
 
     signal cx_c, sx_c, cy_c, sy_c, sz_c, cz_c : std_logic_vector (ANGLE_WIDTH-1 downto 0);
     signal cx_r, sx_r, cy_r, sy_r, sz_r, cz_r : std_logic_vector (ANGLE_WIDTH-1 downto 0);
     signal cy_cz_c, cy_sz_c, cy_sx_c, cy_cx_c, cz_sx_c, sz_sx_c, sz_cx_c, cz_cx_c : std_logic_vector (ANGLE_WIDTH-1 downto 0);
+    signal cy_cz_r, cy_sz_r, cy_sx_r, cy_cx_r, cz_sx_r, sz_sx_r, sz_cx_r, cz_cx_r : std_logic_vector (ANGLE_WIDTH-1 downto 0);
+    signal cz_sy_sx_c, sz_sy_sx_c, cz_sy_cx_c, sz_sy_cx_c : std_logic_vector (ANGLE_WIDTH-1 downto 0);
+    signal cz_sy_sx_r, sz_sy_sx_r, cz_sy_cx_r, sz_sy_cx_r : std_logic_vector (ANGLE_WIDTH-1 downto 0);
     signal r00_c, r01_c, r02_c, r10_c, r11_c, r12_c, r20_c, r21_c, r22_c : std_logic_vector(TRIG_WIDTH - 1 downto 0);
+
 
 
 
@@ -115,14 +120,34 @@ begin
 
     rot_matrix_fsm:  process(valid_in) is begin
 
-        ready_in_reg <= '0';
+        ready_in_c <= '0';
+
+        cx_c <= cx_c;
+        cy_c <= cy_c;
+        cz_c <= cz_c;
+        sx_c <= sx_c;
+        sy_c <= sy_c;
+        sz_c <= sz_c;
+
+        cy_cz_c <= cy_cz_c;
+        cy_cx_c <= cy_cx_c;
+        cy_sx_c <= cy_sx_c;
+        cy_sz_c <= cy_sz_c;
+        sz_cx_c <= sz_cx_c;
+        sz_sx_c <= sz_sx_c;
+        cz_cx_c <= cz_cx_c;
+        cz_sx_c <= cz_sx_c;
+
+        cz_sy_cx_c <= cz_sy_cx_c;
+        sz_sy_sx_c <= sz_sy_sx_c;
+        cz_sy_sx_c <= cz_sy_sx_c;
+        sz_sy_cx_c <= sz_sy_cx_c;
 
         case cur_state is
             when IDLE =>
                 if (valid_in = '1') then next_state <= LOOKUP;
                 else next_state <= IDLE;
                 end if;
-                ready_in_reg <= '1';
             when LOOKUP =>
                 
                 cx_c <= cos_lut(rx);
@@ -148,10 +173,40 @@ begin
 
                 next_state <= THREE_TERM;
 
-            when THREE_TER<
+            when THREE_TERM =>
 
-                
+                cz_sy_cx_c <= mult_fixed(cz_cx_r, sy_r);
+                sz_sy_sx_c <= mult_fixed(sz_sx_r, sy_r);
+                cz_sy_sx_c <= mult_fixed(cz_sx_r, sy_r);
+                sz_sy_cx_c <= mult_fixed(sz_cx_r, sy_r);
 
+                next_state <= ASSEMBLE;
+
+            when ASSEMBLE =>
+
+                r00_c <= cy_cz_r;
+                r01_c <= std_logic_vector(signed(cz_sy_sx_r) - signed(sz_cx_r));
+                r02_c <= std_logic_vector(signed(cz_sy_cx_r) - signed(sz_sx_r));
+                r10_c <= cy_sz_r;
+                r11_c <= std_logic_vector(signed(sz_sy_sx_r) - signed(cz_cx_r));
+                r12_c <= std_logic_vector(signed(sz_sy_cx_r) - signed(cz_sx_r));
+                r20_c <= std_logic_vector(0 - signed(sy_r));
+                r21_c <= cy_sx_r;
+                r22 <= cy_cx_r;
+
+                valid_out_c <= '1';
+
+                next_state <= READY;
+
+            when READY =>
+
+                if (ready_out) then
+                    valid_out_c <= '0';
+                    ready_in_c <= '1';
+                    next_state <= IDLE;
+                else
+                    next_state <= READY;
+        
         end case;
 
     end process;
