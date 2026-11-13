@@ -104,6 +104,27 @@ architecture rtl of mat_vec_mult is
     ----------------------------------------------------------------------
     -- Signal Declarations
     ----------------------------------------------------------------------
+    type state_t is (IDLE, MULT, ADD);
+    signal state_reg  : state_t;
+    signal state_c : state_t;
+
+    signal v0_reg, v0_c : std_logic_vector(TRIG_WIDTH - 1 downto 0);
+    signal v1_reg, v1_c : std_logic_vector(TRIG_WIDTH - 1 downto 0);
+    signal v2_reg, v2_c : std_logic_vector(TRIG_WIDTH - 1 downto 0);
+
+    signal row_reg, row_c : std_logic_vector(ROW_WIDTH - 1 downto 0);
+    signal col_reg, col_c : std_logic_vector(COL_WIDTH - 1 downto 0);
+
+    signal p00_reg, p00_c : std_logic_vector(TRIG_WIDTH - 1 downto 0);
+    signal p01_reg, p01_c : std_logic_vector(TRIG_WIDTH - 1 downto 0);
+    signal p02_reg, p02_c : std_logic_vector(TRIG_WIDTH - 1 downto 0);
+    signal p10_reg, p10_c : std_logic_vector(TRIG_WIDTH - 1 downto 0);
+    signal p11_reg, p11_c : std_logic_vector(TRIG_WIDTH - 1 downto 0);
+    signal p12_reg, p12_c : std_logic_vector(TRIG_WIDTH - 1 downto 0);
+    signal p20_reg, p20_c : std_logic_vector(TRIG_WIDTH - 1 downto 0);
+    signal p21_reg, p21_c : std_logic_vector(TRIG_WIDTH - 1 downto 0);
+    signal p22_reg, p22_c : std_logic_vector(TRIG_WIDTH - 1 downto 0);
+
 
 begin
 
@@ -113,6 +134,43 @@ begin
     -- FSM signals across cycles. 
     --
     ----------------------------------------------------------------------
+
+    process(clk, reset) is
+    begin
+        if reset = '1' then
+            state_reg <= IDLE;
+            v0_reg  <= (others => '0');
+            v1_reg  <= (others => '0');
+            v2_reg  <= (others => '0');
+            row_reg <= (others => '0');
+            col_reg <= (others => '0');
+            p00_reg <= (others => '0');
+            p01_reg <= (others => '0');
+            p02_reg <= (others => '0');
+            p10_reg <= (others => '0');
+            p11_reg <= (others => '0');
+            p12_reg <= (others => '0');
+            p20_reg <= (others => '0');
+            p21_reg <= (others => '0');
+            p22_reg <= (others => '0');
+        elsif rising_edge(clk) then
+            state_reg <= state_c;
+            v0_reg    <= v0_c;
+            v1_reg    <= v1_c;
+            v2_reg    <= v2_c;
+            row_reg   <= row_c;
+            col_reg   <= col_c;
+            p00_reg   <= p00_c;
+            p01_reg   <= p01_c;
+            p02_reg   <= p02_c;
+            p10_reg   <= p10_c;
+            p11_reg   <= p11_c;
+            p12_reg   <= p12_c;
+            p20_reg   <= p20_c;
+            p21_reg   <= p21_c;
+            p22_reg   <= p22_c;
+        end if;
+    end process;
 
     ----------------------------------------------------------------------
     --
@@ -126,12 +184,66 @@ begin
     --  4. row_out and col_out should be registered copies of row_in and 
     --     col_in, respectively.
     ----------------------------------------------------------------------
-    valid_out <= '0';
-    ready_in  <= '0';
-    o0        <= (others => '0');
-    o1        <= (others => '0');
-    o2        <= (others => '0');
-    row_out   <= row_in;
-    col_out   <= col_in;
+
+    process(all) is
+    begin
+        state_c <= state_reg;
+        v0_c    <= v0_reg;
+        v1_c    <= v1_reg;
+        v2_c    <= v2_reg;
+        row_c   <= row_reg;
+        col_c   <= col_reg;
+        p00_c   <= p00_reg;
+        p01_c   <= p01_reg;
+        p02_c   <= p02_reg;
+        p10_c   <= p10_reg;
+        p11_c   <= p11_reg;
+        p12_c   <= p12_reg;
+        p20_c   <= p20_reg;
+        p21_c   <= p21_reg;
+        p22_c   <= p22_reg;
+
+        ready_in  <= '0';
+        valid_out <= '0';
+        o0        <= (others => '0');
+        o1        <= (others => '0');
+        o2        <= (others => '0');
+        row_out   <= row_reg;
+        col_out   <= col_reg;
+
+        case state_reg is
+
+            when IDLE =>
+                ready_in <= '1'; -- assert ready, latch inputs on valid_in
+                if valid_in = '1' then
+                    v0_c <= v0;
+                    v1_c <= v1;
+                    v2_c <=v2;
+                    row_c <= row_in;
+                    col_c <= col_in;
+                    state_c <= MULT;
+                end if;
+            when MULT =>
+                p00_c   <= mult_fixed(m00, v0_reg);
+                p01_c   <= mult_fixed(m01, v1_reg);
+                p02_c   <= mult_fixed(m02, v2_reg);
+                p10_c   <= mult_fixed(m10, v0_reg);
+                p11_c   <= mult_fixed(m11, v1_reg);
+                p12_c   <= mult_fixed(m12, v2_reg);
+                p20_c   <= mult_fixed(m20, v0_reg);
+                p21_c   <= mult_fixed(m21, v1_reg);
+                p22_c   <= mult_fixed(m22, v2_reg);
+                state_c <= ADD;
+
+            when ADD =>
+                o0 <= std_logic_vector(signed(p00_reg) + signed(p01_reg) + signed(p02_reg));
+                o1 <= std_logic_vector(signed(p10_reg) + signed(p11_reg) + signed(p12_reg));
+                o2 <= std_logic_vector(signed(p20_reg) + signed(p21_reg) + signed(p22_reg));
+                valid_out <= '1'; 
+                if ready_out = '1' then
+                    state_c <= IDLE;
+                end if;
+        end case;
+    end process;
 
 end architecture rtl;
