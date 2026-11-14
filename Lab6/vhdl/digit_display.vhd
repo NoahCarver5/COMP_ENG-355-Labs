@@ -14,8 +14,8 @@ use ieee.std_logic_1164.all;
 
 entity digit_display is
 port(
-    clock : in std_logic;
-    reset : in std_logic;                      -- async, active high
+    clk  : in std_logic;
+    rst  : in std_logic;                      -- async, active high
     din  : in std_logic_vector(3 downto 0);
     dout : out std_logic_vector(6 downto 0)
 );
@@ -28,13 +28,13 @@ begin
     -- digit display.  The output is active low.
     ----------------------------------------------------------
     
-    process(clock, reset) begin
+    process(clk, rst) begin
 
-        if (reset = '1') then
+        if (rst = '1') then
 
             dout <= "1111111";
         
-        elsif rising_edge(clock) then
+        elsif rising_edge(clk) then
 
             case din is
                 when "0000" => dout <= "1000000";
