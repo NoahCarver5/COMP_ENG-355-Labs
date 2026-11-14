@@ -87,6 +87,12 @@ architecture rtl of image_reader is
     ----------------------------------------------------------
     -- Signal Declarations
     ----------------------------------------------------------
+    type state_t is (IDLE, WAITING);
+    signal state_reg, state_c : state_t;
+
+    signal addr_reg, addr_c : unsigned(ADDR_WIDTH - 1 downto 0);
+    signal row_reg,  row_c  : std_logic_vector(ROW_WIDTH - 1 downto 0);
+    signal col_reg,  col_c  : std_logic_vector(COL_WIDTH - 1 downto 0);
 
 begin
 
@@ -98,6 +104,20 @@ begin
     --
     ----------------------------------------------------------------------
 
+    process(clk, reset) is
+    begin
+        if reset = '1' then
+            state_reg <= IDLE;
+            addr_reg  <= (others => '0');
+            row_reg   <= (others => '0');
+            col_reg   <= (others => '0');
+        elsif rising_edge(clk) then
+            state_reg <= state_c;
+            addr_reg  <= addr_c;
+            row_reg   <= row_c;
+            col_reg   <= col_c;
+        end if;
+    end process;
 
     ----------------------------------------------------------------------
     --
@@ -136,12 +156,72 @@ begin
     -- 5. Write the pixel to the frame buffer
     --
     ----------------------------------------------------------------------
-    rd_addr  <= (others => '0');
-    rd_req   <= '0';
-    ready_in <= '0';
-    wr_addr  <= (others => '0');
-    wr_data  <= (others => '0');
-    wr_en    <= '0';
+
+
+
+    process(all) is
+        variable x            : unsigned(ANGLE_WIDTH - 1 downto 0);
+        variable y            : unsigned(ANGLE_WIDTH - 1 downto 0);
+        variable lat_centered : integer;
+    begin
+        -- defaults
+        state_c  <= state_reg;
+        addr_c   <= addr_reg;
+        row_c    <= row_reg;
+        col_c    <= col_reg;
+
+        ready_in <= '0';
+        rd_req   <= '0';
+        rd_addr  <= (others => '0');
+        wr_en    <= '0';
+        wr_addr  <= (others => '0');
+        wr_data  <= (others => '0');
+
+        case state_reg is
+
+            when IDLE =>
+                ready_in <= '1';
+                if valid_in = '1' then
+                    -- compute x
+                    x := resize(umin(
+                        shift_right(unsigned(longitude) + HALF_TURN, ANGLE_WIDTH - IMAGE_COL_WIDTH),
+                        to_unsigned(IMAGE_WIDTH - 1, ANGLE_WIDTH)
+                    ), ANGLE_WIDTH);
+
+                    -- compute y
+                    lat_centered := LATITUDE_CENTER - to_integer(signed(latitude));
+                    lat_centered := smax(lat_centered, 0); -- clamp lower bound
+                    if lat_centered > 2 ** (ANGLE_WIDTH - 1) then -- clamp upper bound
+                        lat_centered := 2 ** (ANGLE_WIDTH - 1);
+                    end if;
+                    y := resize(umin(
+                        to_unsigned(lat_centered / (2 ** (ANGLE_WIDTH - IMAGE_ROW_WIDTH - 1)), ANGLE_WIDTH),
+                        to_unsigned(IMAGE_HEIGHT - 1, ANGLE_WIDTH)
+                    ), ANGLE_WIDTH);
+
+                    -- addr = y * IMAGE_WIDTH + x
+                    addr_c  <= shift_left(resize(y, ADDR_WIDTH), IMAGE_COL_WIDTH)
+                               + resize(x, ADDR_WIDTH);
+                    row_c   <= row;
+                    col_c   <= col;
+                    rd_req  <= '1';
+                    state_c <= WAITING;
+                end if;
+
+            when WAITING =>
+                -- set rd_addr, wait for rd_valid, write to frame buffer
+                rd_addr <= std_logic_vector(addr_reg);
+                if rd_valid = '1' then
+                    wr_en <= '1';
+                    wr_data <= rd_data;
+                    -- wr_addr = row*OUT_WIDTH + col
+                    wr_addr <= std_logic_vector(resize(unsigned(row_reg), FB_ADDR_WIDTH) 
+                               * to_unsigned(OUT_WIDTH, FB_ADDR_WIDTH) 
+                               + resize(unsigned(col_reg), FB_ADDR_WIDTH));
+                    state_c <= IDLE;
+                end if;
+        end case;
+    end process;
 
 
 
