@@ -103,9 +103,9 @@ architecture behavioral of vr360_tb is
     -- defect -- a wrong capture latency, a swapped halfword, a dropped
     -- refresh -- shows up here exactly as it does on the board.
     ---------------------------------------------------------------------
-    constant OUT_WIDTH       : natural := 160;
-    constant OUT_HEIGHT      : natural := 120;
-    constant FOCAL_LENGTH    : natural := 80;
+    constant OUT_WIDTH       : natural := 640;
+    constant OUT_HEIGHT      : natural := 480;
+    constant FOCAL_LENGTH    : natural := 320;
 
     constant PIXEL_WIDTH     : natural := 24;
 

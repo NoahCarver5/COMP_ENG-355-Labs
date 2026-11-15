@@ -26,33 +26,29 @@ use work.trig_pkg.all;
 --    | m20   m21   m22 |        | v2  |       | o2  |   o2 = m20*v0 + m21*v1 + m22*v2
 --    +-----------------+        +-----+       +-----+
 --
--- Column j of R is always multiplied by ray component vj.  The work breaks
--- down into the following tasks:
+-- The work breaks down into the following tasks:
 --
 --    1. Accept a ray: raise ready_in, and take v0..v2 when valid_in is high.
 --       Register row_in and col_in at the same time, so row_out and col_out
 --       stay with the ray they belong to.
 --
---    2. Multiply: nine products, one per matrix element.  They are
---       independent, so they can all be computed at once (one DSP block each).
---
---          v0          v1          v2
---          |           |           |
---     m00--(x)    m01--(x)    m02--(x)   ->  p00   p01   p02
---     m10--(x)    m11--(x)    m12--(x)   ->  p10   p11   p12
---     m20--(x)    m21--(x)    m22--(x)   ->  p20   p21   p22
+--    2. Multiply: nine products, computed at once and registered.
 --
 --    3. Add: sum the three products in each row to get one output component.
---
---     p00 + p01 + p02  ->  o0
---     p10 + p11 + p12  ->  o1
---     p20 + p21 + p22  ->  o2
 --
 --    4. Send the result: raise valid_out and hold o0..o2 until ready_out is
 --       high, then return to accepting the next ray.
 --
 -- Register the products before adding them, so that no clock cycle contains
 -- both a multiply and an add.
+--
+-- OUTPUT HOLD.  o0..o2 are computed continuously from the product registers,
+-- not only while valid_out is high.  The product registers keep their values
+-- until the next MULT, so the outputs stay valid for the cycles AFTER the
+-- transfer.  This matters: vector_to_angles reads y again in its second
+-- state, one cycle after it accepts the vector.  If the outputs dropped to
+-- zero the moment the transfer happened, that second read would see y = 0
+-- and every latitude would come out as 0.
 --------------------------------------------------------------------------------
 
 entity mat_vec_mult is
@@ -98,10 +94,6 @@ end entity mat_vec_mult;
 architecture rtl of mat_vec_mult is
 
     ----------------------------------------------------------------------
-    -- Constant Declarations
-    ----------------------------------------------------------------------
-
-    ----------------------------------------------------------------------
     -- Signal Declarations
     ----------------------------------------------------------------------
     type state_t is (IDLE, MULT, ADD);
@@ -129,12 +121,8 @@ architecture rtl of mat_vec_mult is
 begin
 
     ----------------------------------------------------------------------
-    --
-    -- TODO: Implement a clocked process that resets and registers the 
-    -- FSM signals across cycles. 
-    --
+    -- Clocked process: reset and register the FSM signals across cycles.
     ----------------------------------------------------------------------
-
     process(clk, reset) is
     begin
         if reset = '1' then
@@ -173,18 +161,8 @@ begin
     end process;
 
     ----------------------------------------------------------------------
-    --
-    -- TODO: Implement a combinational FSM process that computes o = M * v.  
-    --
-    --  1. Assert ready_in = '1' and wait for valid_in = '1'.
-    --  2. Compute the 9 products in parallel with mult_fixed (from trig_pkg):
-    --        p[i,j] = mult_fixed(m[i,j], v[j]) for i, j in 0..2
-    --  3. Add the result into each of the 3 output elements:
-    --        q[i] = p[i,0] + p[i,1] + p[i,2] for i in 0..2
-    --  4. row_out and col_out should be registered copies of row_in and 
-    --     col_in, respectively.
+    -- Combinational FSM: computes o = M * v.
     ----------------------------------------------------------------------
-
     process(all) is
     begin
         state_c <= state_reg;
@@ -205,24 +183,28 @@ begin
 
         ready_in  <= '0';
         valid_out <= '0';
-        o0        <= (others => '0');
-        o1        <= (others => '0');
-        o2        <= (others => '0');
         row_out   <= row_reg;
         col_out   <= col_reg;
+
+        -- Outputs follow the registered products at all times, so they
+        -- stay valid after the transfer (see OUTPUT HOLD above).
+        o0 <= std_logic_vector(signed(p00_reg) + signed(p01_reg) + signed(p02_reg));
+        o1 <= std_logic_vector(signed(p10_reg) + signed(p11_reg) + signed(p12_reg));
+        o2 <= std_logic_vector(signed(p20_reg) + signed(p21_reg) + signed(p22_reg));
 
         case state_reg is
 
             when IDLE =>
                 ready_in <= '1'; -- assert ready, latch inputs on valid_in
                 if valid_in = '1' then
-                    v0_c <= v0;
-                    v1_c <= v1;
-                    v2_c <=v2;
-                    row_c <= row_in;
-                    col_c <= col_in;
+                    v0_c    <= v0;
+                    v1_c    <= v1;
+                    v2_c    <= v2;
+                    row_c   <= row_in;
+                    col_c   <= col_in;
                     state_c <= MULT;
                 end if;
+
             when MULT =>
                 p00_c   <= mult_fixed(m00, v0_reg);
                 p01_c   <= mult_fixed(m01, v1_reg);
@@ -236,13 +218,11 @@ begin
                 state_c <= ADD;
 
             when ADD =>
-                o0 <= std_logic_vector(signed(p00_reg) + signed(p01_reg) + signed(p02_reg));
-                o1 <= std_logic_vector(signed(p10_reg) + signed(p11_reg) + signed(p12_reg));
-                o2 <= std_logic_vector(signed(p20_reg) + signed(p21_reg) + signed(p22_reg));
-                valid_out <= '1'; 
+                valid_out <= '1';
                 if ready_out = '1' then
                     state_c <= IDLE;
                 end if;
+
         end case;
     end process;
 

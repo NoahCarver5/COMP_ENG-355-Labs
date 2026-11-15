@@ -96,14 +96,9 @@ architecture rtl of image_reader is
 
 begin
 
-
     ----------------------------------------------------------------------
-    --
-    -- TODO: Implement a clocked process that resets and registers the 
-    -- FSM signals across cycles. 
-    --
+    -- Clocked process: reset and register the FSM signals across cycles.
     ----------------------------------------------------------------------
-
     process(clk, reset) is
     begin
         if reset = '1' then
@@ -120,49 +115,19 @@ begin
     end process;
 
     ----------------------------------------------------------------------
+    -- Combinational FSM: longitude/latitude -> panorama address, fetch the
+    -- pixel from SDRAM, write it to the frame buffer.
     --
-    -- TODO: Implement a combinational FSM process that converts the 
-    -- longitude/latitude to a panorama address, fetches the pixel from 
-    -- SDRAM, and writes it to the frame buffer.
-    --
-    -- Requirements:
-    -- 1. Assert ready_in.
-    -- 2. When valid_in = '1', convert longitude/latitude to pixel (x, y):
-    --
-    --    * x: add HALF_TURN to longitude so 0 degrees lands at the image
-    --      center, then keep the top IMAGE_COL_WIDTH bits (shift right by
-    --      ANGLE_WIDTH - IMAGE_COL_WIDTH).  Clamp to IMAGE_WIDTH - 1.
-    --
-    --      x <= resize(umin(shift_right((unsigned(longitude) + HALF_TURN), 
-    --                  ANGLE_WIDTH - IMAGE_COL_WIDTH), 
-    --                  to_unsigned(IMAGE_WIDTH - 1, ANGLE_WIDTH)), ANGLE_WIDTH);
-
-    --    * y: +90 degrees is the top row, 0 the center, -90 the bottom.
-    --      Compute LATITUDE_CENTER - latitude (as a signed integer, to
-    --      avoid 16-bit overflow), clamp it to [0, 2**(ANGLE_WIDTH-1)],
-    --      divide by 2**(ANGLE_WIDTH - IMAGE_ROW_WIDTH - 1), and clamp
-    --      the result to IMAGE_HEIGHT - 1.
-    --
-    --      lat_centered := LATITUDE_CENTER - to_integer(signed(latitude));
-    --      lat_centered := umin(lat_centered_i, 2 ** (ANGLE_WIDTH - 1));
-    --      lat_centered := umax(lat_centered_i, 0);
-    --      y <= resize(lat_centered / (2 ** (ANGLE_WIDTH - IMAGE_ROW_WIDTH - 1)), ANGLE_WIDTH), 
-    --                  to_unsigned(IMAGE_HEIGHT - 1, ANGLE_WIDTH)), ANGLE_WIDTH);
-    --
-    -- 3. addr_c = y * IMAGE_WIDTH + x.  IMAGE_WIDTH is a power of two, so
-    --    the multiply is a shift left by IMAGE_COL_WIDTH.
-    -- 4. Fetch the pixel from SDRAM by asserting rd_req and setting rd_addr, 
-    --    then wait for rd_valid = '1'. 
-    -- 5. Write the pixel to the frame buffer
-    --
+    -- IDLE computes the panorama address and registers it.  WAITING then
+    -- drives rd_addr from that register and holds rd_req high until
+    -- rd_valid, so the address and the request rise together and stay
+    -- steady for the whole access (as the lab handout describes).
     ----------------------------------------------------------------------
-
-
-
     process(all) is
         variable x            : unsigned(ANGLE_WIDTH - 1 downto 0);
         variable y            : unsigned(ANGLE_WIDTH - 1 downto 0);
         variable lat_centered : integer;
+        variable next_addr    : unsigned(ADDR_WIDTH - 1 downto 0);
     begin
         -- defaults
         state_c  <= state_reg;
@@ -200,29 +165,35 @@ begin
                     ), ANGLE_WIDTH);
 
                     -- addr = y * IMAGE_WIDTH + x
-                    addr_c  <= shift_left(resize(y, ADDR_WIDTH), IMAGE_COL_WIDTH)
-                               + resize(x, ADDR_WIDTH);
+                    next_addr := shift_left(resize(y, ADDR_WIDTH), IMAGE_COL_WIDTH)
+                                 + resize(x, ADDR_WIDTH);
+
+                    addr_c  <= next_addr;
                     row_c   <= row;
                     col_c   <= col;
-                    rd_req  <= '1';
                     state_c <= WAITING;
                 end if;
 
             when WAITING =>
-                -- set rd_addr, wait for rd_valid, write to frame buffer
+                -- Present the address and HOLD rd_req high until the
+                -- controller answers with rd_valid.  rd_req drops in the
+                -- rd_valid cycle so the controller cannot see a second
+                -- request while it returns to idle.
                 rd_addr <= std_logic_vector(addr_reg);
+                rd_req  <= '1';
                 if rd_valid = '1' then
-                    wr_en <= '1';
+                    rd_req  <= '0';
+                    wr_en   <= '1';
                     wr_data <= rd_data;
                     -- wr_addr = row*OUT_WIDTH + col
-                    wr_addr <= std_logic_vector(resize(unsigned(row_reg), FB_ADDR_WIDTH) 
-                               * to_unsigned(OUT_WIDTH, FB_ADDR_WIDTH) 
-                               + resize(unsigned(col_reg), FB_ADDR_WIDTH));
+                    wr_addr <= std_logic_vector(resize(
+                                   resize(unsigned(row_reg), FB_ADDR_WIDTH)
+                                       * to_unsigned(OUT_WIDTH, FB_ADDR_WIDTH)
+                                   + resize(unsigned(col_reg), FB_ADDR_WIDTH),
+                                   FB_ADDR_WIDTH));
                     state_c <= IDLE;
                 end if;
         end case;
     end process;
-
-
 
 end architecture rtl;
