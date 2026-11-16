@@ -1,0 +1,21 @@
+# ModelSim / Questa
+work/
+*.wlf
+transcript
+*.vstf
+modelsim.ini
+output_*.bmp
+
+# Quartus
+db/
+incremental_db/
+output_files/
+qdb/
+tmp-clearbox/
+*.sof
+*.rpt
+*.summary
+
+# macOS
+__MACOSX/
+.DS_Store
