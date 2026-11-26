@@ -20,8 +20,8 @@ Per-pixel layer compositor. Given a pixel coordinate request, outputs RGB888 col
 
 1. **Background** — solid green field.
 2. **Holes** — dark circle at each `HOLE_CX/CY` with radius `HOLE_R`.
-3. **Moles** — 32×32 sprite from `sprite_rom`, centered on hole, only when `mole_state ≠ HIDDEN`. Vertical offset interpolated during RISING/FALLING.
-4. **Cursor/hammer** — 32×32 sprite, centered on `hand.x/y`. Flashes 1 frame on `hand.strike`.
+3. **Moles** — 32×32 sprite from `sprite_rom`, centered on hole, only when `mole_state = VISIBLE`.
+4. **Cursor/hammer** — 32×32 sprite, centered on `HOLE_CX/CY(hand.hole_idx)`. Flashes 1 frame on `hand.strike`.
 5. **Overlays** — `IDLE`: "Press KEY0 to start" text; `GAME_OVER`: "GAME OVER" + final score text. (Simple pixel-font or colored rectangle placeholder.)
 
 ## Behavior

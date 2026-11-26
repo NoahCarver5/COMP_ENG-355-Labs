@@ -26,8 +26,8 @@ Central FSM that runs the game: mole scheduling, hit detection, scoring, and cou
 
 **PLAY state:**
 - **Mole scheduler:** 6-bit LFSR picks which hole to show next and how long it stays visible. At most 2 holes active simultaneously.
-- **Mole lifecycle:** `HIDDEN → RISING → VISIBLE → FALLING → HIDDEN`. Rising/falling durations are fixed cycle counts; visible duration is LFSR-derived.
-- **Hit detection:** on `hand.strike`, check whether `hand.x/y` maps to a `VISIBLE` or `RISING` hole. If yes, force that hole to `FALLING` and increment score.
+- **Mole lifecycle:** `HIDDEN → VISIBLE → HIDDEN`. Visible duration is LFSR-derived.
+- **Hit detection:** on `hand.strike`, check whether `hand.hole_idx` points to a `VISIBLE` hole. If yes, hide that hole and increment score.
 - **Timer:** a 100 MHz prescaler counts down `time_left` by 1 BCD second each second. Saturates at 00; triggers `GAME_OVER`.
 - **Score:** BCD increment on each hit; saturates at 99.
 

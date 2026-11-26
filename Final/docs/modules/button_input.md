@@ -16,9 +16,7 @@ Translates raw KEY presses into the shared `hand_t` cursor interface.
 - Double-flop `key` for metastability; detect falling edge for each button.
 - **KEY3** → move cursor left; **KEY2** → move cursor right. Cursor wraps around (0↔5) through the 3×2 hole grid.
 - **KEY0** → assert `hand.strike` for exactly 1 clock cycle; also acts as start signal in IDLE.
-- `hand.x` and `hand.y` output the pixel-center coordinates of the currently selected hole (from `HOLE_CX`/`HOLE_CY` in `whac_pkg`).
-- `hand.valid` is always `'1'` once out of reset.
-- `hand.update` pulses for 1 cycle whenever the cursor moves.
+- `hand.hole_idx` outputs the index (0–5) of the currently selected hole; wraps on left/right.
 
 ## Notes
 

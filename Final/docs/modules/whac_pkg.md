@@ -11,8 +11,8 @@ Shared package imported by every module. No entity — package only.
 | `HOLE_CY` | integer array (0–5) | Pixel row of each hole center |
 | `HOLE_R` | constant integer | Hole radius in pixels |
 | `game_state_t` | enum | `IDLE`, `PLAY`, `GAME_OVER` |
-| `mole_state_t` | enum | `HIDDEN`, `RISING`, `VISIBLE`, `FALLING` |
-| `hand_t` | record | `x` (10-bit), `y` (9-bit), `valid`, `strike`, `update` |
+| `mole_state_t` | enum | `HIDDEN`, `VISIBLE` |
+| `hand_t` | record | `hole_idx` (3-bit, 0–5), `strike` (1-bit) |
 | `bcd_pair_t` | record | `tens` (3-bit), `ones` (4-bit) |
 
 ## Notes

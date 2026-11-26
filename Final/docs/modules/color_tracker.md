@@ -17,7 +17,7 @@ Detects the centroid of a colored glove in the D8M video stream and outputs a `h
 1. **Frame start detection:** `wr_addr = 0` signals the start of a new frame; reset accumulators.
 2. **Color classification:** convert RGB888 → YCbCr per pixel. A pixel is "glove" if Cb and Cr fall within a calibrated green (or colored) range.
 3. **Centroid accumulation:** running sums `sum_x`, `sum_y`, `count` over glove pixels in the current frame.
-4. **End-of-frame output:** when `wr_addr` wraps back to 0 (or hits last pixel), compute `centroid_x = sum_x / count`, `centroid_y = sum_y / count`. Output as `hand.x/y` with `hand.update = '1'` for one cycle.
+4. **End-of-frame output:** when `wr_addr` wraps back to 0 (or hits last pixel), compute `centroid_x = sum_x / count`, `centroid_y = sum_y / count`. Snap to nearest hole by comparing against `HOLE_CX/CY`; output as `hand.hole_idx`.
 5. **Strike detection:** a glove pixel count spike (fist → open hand area change) generates `hand.strike` for 1 cycle. TBD: threshold values.
 6. **No-glove guard:** if `count < MIN_PIXELS`, do not update `hand` (hold previous position).
 

@@ -32,7 +32,7 @@ Week 3  Demo prep + report
 
 | Module | Source | Description |
 |--------|--------|-------------|
-| `button_input` | write | Sync + edge-detect KEY[3:0]; output hand interface (x, y, valid, strike) |
+| `button_input` | write | Sync + edge-detect KEY[3:0]; output hand interface (hole_idx, strike) |
 | `game_logic` | write | FSM (IDLE→PLAY→GAME_OVER), LFSR mole scheduler, BCD score/timer |
 | `renderer` | write | Per-pixel layer compositor → RGB888 output; uses sprite_rom |
 | `sprite_rom` | write | M20K BRAM, 32×32 RGB888 sprites, transparent = 0xFF00FF, .mif init |
@@ -51,11 +51,9 @@ Week 3  Demo prep + report
 ## Hand Interface (shared between both input paths)
 
 ```
-hand_x     : std_logic_vector(9 downto 0)   -- cursor column (0–639)
-hand_y     : std_logic_vector(8 downto 0)   -- cursor row   (0–479)
-hand_valid : std_logic                       -- position is live
-hand_strike: std_logic                       -- smash pulse (1 cycle)
-hand_update: std_logic                       -- new position available
+-- hand_t record (whac_pkg)
+hole_idx : unsigned(2 downto 0)  -- selected hole 0–5
+strike   : std_logic             -- smash pulse, 1 cycle
 ```
 
 ---
