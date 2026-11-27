@@ -10,6 +10,9 @@ package whac_pkg is
     -- Mole visibility states
     type mole_state_t is (HIDDEN, VISIBLE);
 
+    type mole_time_array_t is array (0 to 5) of natural range 0 to 255;
+
+    type mole_state_array_t is array (natural range <>) of mole_state_t;
     -- Shared cursor interface (button and camera paths both output this)
     type hand_t is record
         hole_idx : unsigned(2 downto 0);  -- selected hole 0–5
@@ -18,6 +21,8 @@ package whac_pkg is
 
     -- BCD digit (0–9)
     subtype bcd_digit_t is unsigned(3 downto 0);
+
+    type bcd_pair_t is array(0 to 1) of bcd_digit_t;
 
     -- Hole layout: 3 columns x 2 rows, indexed 0–5 (row-major)
     -- Fill in pixel coordinates and radius below
